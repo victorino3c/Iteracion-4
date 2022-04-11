@@ -239,7 +239,7 @@ STATUS space_set_light_status (Space *space, Light ls);
  * @author Nicolas Victorino
  *
  * @param l a pointer to the space
- * @return NULL if error
+ * @return UNKNOWN if error
  */
 Light space_get_light_status (Space *space);
 
