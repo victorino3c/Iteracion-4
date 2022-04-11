@@ -15,7 +15,7 @@
 #include "space_test.h"
 #include "test.h"
 
-#define MAX_TESTS 42 /*!< It defines the maximun tests in this file */
+#define MAX_TESTS 46 /*!< It defines the maximun tests in this file */
 
 /**
  * @brief Main function for SPACE unit tests.
@@ -133,17 +133,31 @@ int main(int argc, char **argv)
   i++;
   if (all || test == i) test2_space_get_id();
   i++;
-
+/*
   if (all || test == i) test1_space_set_gdesc();
   i++;
   if (all || test == i) test2_space_set_gdesc();
   i++;
 
+
   if (all || test == i) test1_space_get_gdesc();
   i++;
   if (all || test == i) test2_space_get_gdesc();
   i++;
-  
+*/
+
+  if (all || test == i) test1_space_set_light_status();
+  i++;
+  if (all || test == i) test2_space_set_light_status();
+  i++;
+
+
+  if (all || test == i) test1_space_get_light_status();
+  i++;
+  if (all || test == i) test2_space_get_light_status();
+  i++;
+
+
   PRINT_PASSED_PERCENTAGE;
 
   return 1;
@@ -448,6 +462,7 @@ void test2_space_get_link_west()
 }
 
 /*  space_set_gdesc*/
+/*
 void test1_space_set_gdesc()
 {
   Space *s = NULL;
@@ -470,8 +485,9 @@ void test3_space_set_gdesc()
   PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == ERROR);
   space_destroy(s);
 }
-
+*/
 /*  space_get_desc*/
+/*
 void test1_space_get_gdesc()
 {
   Space *s = NULL;
@@ -491,4 +507,31 @@ void test2_space_get_gdesc()
 {
   Space *s = NULL;  
   PRINT_TEST_RESULT(space_get_gdesc(s) == NULL);
+}
+*/
+
+/* space_set_light_status*/
+void test1_space_set_light_status()
+{
+  Space *s = space_create(1);
+  PRINT_TEST_RESULT(space_set_light_status(s, DARK) == OK);
+  space_destroy(s);
+}
+void test2_space_set_light_status()
+{
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_set_light_status(s, DARK) == ERROR);
+}
+
+/* space_get_light_status*/
+void test1_space_get_light_status()
+{
+  Space *s = space_create(1);
+  PRINT_TEST_RESULT(space_get_light_status(s) == BRIGHT);
+  space_destroy(s);
+}
+void test2_space_get_light_status()
+{
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_get_light_status(s) == UNKNOWN_LIGHT);
 }
