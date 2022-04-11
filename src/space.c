@@ -106,7 +106,7 @@ Space *space_create(Id id)
   }
   newSpace->objects = set_create();
   newSpace->gdesc = NULL;
-  newSpace->ls = BRIGHT; //Mirar a que queremos inicializarlo
+  newSpace->ls = BRIGHT; /*Mirar a que queremos inicializarlo--------------------------------------------------------------------------------*/
 
   return newSpace;
 }
@@ -546,7 +546,7 @@ STATUS space_print(Space *space)
   ls = space_get_light_status(space);
   if (ls == BRIGHT)
   {
-    fprintf(stdout, "---> The space is bright\n", nobj);
+    fprintf(stdout, "---> The space is bright\n");
   }
   else
   {
