@@ -597,7 +597,7 @@ Light space_get_light_status (Space *space)
 {
 
   if (!space) {
-    return UNKNOWN;
+    return UNKNOWN_LIGHT;
   }
 
   return space->ls;
