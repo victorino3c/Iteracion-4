@@ -29,6 +29,7 @@ struct _Space
   Id link[MAX_LINKS_SPACE];    /*!< Id from links between space with this space as origin */
   Set *objects;                /*!< Conjunto de ids de los objetos que se encuentran en el espacio */
   char **gdesc;                /*!< Array de 5 strings de 9 caracteres */
+  Light ls;                    /*!< Status of light (Brief for Light Status) */
 } ;
 
 /**
@@ -105,6 +106,7 @@ Space *space_create(Id id)
   }
   newSpace->objects = set_create();
   newSpace->gdesc = NULL;
+  newSpace->ls = BRIGHT; //Mirar a que queremos inicializarlo
 
   return newSpace;
 }
@@ -480,6 +482,7 @@ STATUS space_print(Space *space)
 {
   Id idaux = NO_ID;
   int nobj, i, j;
+  Light ls;
 
   /* Error Control */
   if (!space)
@@ -539,7 +542,18 @@ STATUS space_print(Space *space)
     fprintf(stdout, "---> No object in the space.\n");
   }
 
-  /* 4. Print gdesc*/
+  /* 4. Print if the space has light or not */
+  ls = space_get_light_status(space);
+  if (ls == BRIGHT)
+  {
+    fprintf(stdout, "---> The space is bright\n", nobj);
+  }
+  else
+  {
+    fprintf(stdout, "---> The space is dark\n");
+  }
+
+  /* 5. Print gdesc*/
   printf("=> Gdesc:\n");
   for (i = 0; i < TAM_GDESC_Y && space->gdesc[i]; i++)
   {
@@ -565,4 +579,26 @@ Id space_get_id_dest_by_link (Link *l)
 
   return (Id)link_get_destination(l);
 
+}
+
+STATUS space_set_light_status (Space *space, Light ls)
+{
+
+  if (! space||!ls ) {
+    return ERROR;
+  } 
+
+  space->ls = ls;
+
+  return OK;
+}
+
+Light space_get_light_status (Space *space)
+{
+
+  if (!space) {
+    return NULL;
+  }
+
+  return space->ls;
 }
