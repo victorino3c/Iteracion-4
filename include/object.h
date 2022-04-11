@@ -117,12 +117,102 @@ STATUS obj_set_location(Object *obj, Id id);
 
 /**
  * @brief Prints the info regarding an object 
- * @author Miguel Soto
- * 
+ * @author Miguel Soto and Nicolas Victorino
+ *  
  * obj_print prints an object's name and id
  * @param obj is a pointer to the target object.
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
  */
 STATUS obj_print(Object *obj);
+
+/**
+ * @brief Sets the movable condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object @param cond new value of the condition
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_movable(Object *obj, BOOL cond);
+
+/**
+ * @brief Sets the dependency condition of an object, assigining it the id of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object @param id id of the object the has dependency with the given
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_dependency(Object *obj, Id id);
+
+/**
+ * @brief Sets the open condition of an object, assigining it the id of an space
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object @param id id of the space that can be opened by the given object
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_open(Object *obj, Id id);
+
+/**
+ * @brief Sets the illuminate condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object @param cond new value of the condition
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_illuminate(Object *obj, BOOL cond);
+
+/**
+ * @brief Sets the turned on condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object @param cond new value of the condition
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_turnedon(Object *obj, BOOL cond);
+
+/**
+ * @brief Gets the movable condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object
+ * @return TRUE if object is movable, FALSE if not
+ */
+BOOL object_get_movable(Object *obj);
+
+/**
+ * @brief Gets the dependency condition of an object, in the form of an Id
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object
+ * @return Id of the object that is dependent of the given one, NO_ID if no object has dependency
+ */
+Id object_get_dependency(Object *obj);
+
+/**
+ * @brief Gets the open condition of an object, in the form of an Id
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object
+ * @return Id of the space that is opened by the given object, NO_ID if the object doesnt open any space
+ */
+Id object_get_open(Object *obj);
+
+/**
+ * @brief Gets the illuminate condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object
+ * @return TRUE if object con illuminate, FALSE if not
+ */
+BOOL object_get_illuminate(Object *obj);
+
+/**
+ * @brief Gets the turned on condition of an object
+ * @author Nicolas Victorino
+ *  
+ * @param obj is a pointer to the target object
+ * @return TRUE if object is turned on (can illuminate), FALSE if not
+ */
+BOOL object_get_turnedon(Object *obj);
 
 #endif
