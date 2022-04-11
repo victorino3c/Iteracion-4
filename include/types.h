@@ -55,4 +55,14 @@ typedef enum
   W        /* !< Short for West */
 } DIRECTION;
 
+/**
+ * @brief Luminosity status of a space (DARK, BRIGHT)
+ */
+typedef enum
+{
+  DARK = -1,  /* !< Dark status of a space */
+  BRIGHT      /* !< Bright status of a space */
+} Light;
+
 #endif
+
