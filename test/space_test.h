@@ -304,19 +304,19 @@ void test2_space_get_link_west();
  * @pre pointer to space != NULL
  * @post Output==OK
  */
-void test1_space_set_gdesc();
+/*void test1_space_set_gdesc();*/
 /**
  * @test Test function for setting space_gdesc
  * @pre pointer to space = NULL
  * @post Output==ERROR
  */
-void test2_space_set_gdesc();
+/*void test2_space_set_gdesc();*/
 /**
  * @test Test function for setting space_gdesc
  * @pre pointer to space != NULL (char **gdesc = NULL)
  * @post Output==ERROR
  */
-void test3_space_set_gdesc();
+/*void test3_space_set_gdesc();*/
 
 
 /**
@@ -324,12 +324,40 @@ void test3_space_set_gdesc();
  * @pre pointer to space != NULL
  * @post Output==gdesc
  */
-void test1_space_get_gdesc();
+/*void test1_space_get_gdesc();*/
 /**
  * @test Test function for getting space_gdesc
  * @pre pointer to space = NULL
  * @post Output==NULL
  */
-void test2_space_get_gdesc();
+/*void test2_space_get_gdesc();*/
+
+
+/**
+ * @test Test function setting light status
+ * @pre pointer to space != NULL
+ * @post Output==OK
+ */
+void test1_space_set_light_status();
+/**
+ * @test Test function for setting light status
+ * @pre pointer to space = NULL
+ * @post Output==ERROR
+ */
+void test2_space_set_light_status();
+
+
+/**
+ * @test Test function for getting light status
+ * @pre pointer to space != NULL
+ * @post Output==BRIGHT
+ */
+void test1_space_get_light_status();
+/**
+ * @test Test function for getting light status
+ * @pre pointer to space = NULL
+ * @post Output==UNKNOWN_LIGHT
+ */
+void test2_space_get_light_status();
 
 #endif
