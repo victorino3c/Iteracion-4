@@ -225,4 +225,23 @@ STATUS space_print(Space *space);
  */
 Id space_get_id_dest_by_link(Link *l);
 
+/**
+ * @brief It changes the light status of a space
+ * @author Nicolas Victorino
+ *
+ * @param space a pointer to the space @param ls the given light status
+ * @return ERROR if problem, Ok if everything has gone right
+ */
+STATUS space_set_light_status (Space *space, Light ls);
+
+/**
+ * @brief It returns the light status of a given space
+ * @author Nicolas Victorino
+ *
+ * @param l a pointer to the space
+ * @return NULL if error
+ */
+Light space_get_light_status (Space *space);
+
 #endif
+
