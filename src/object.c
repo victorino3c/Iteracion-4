@@ -25,6 +25,11 @@ struct _Object
   char name[OBJ_NAME_LEN];  /*!< Object name */
   char description[WORD_SIZE];  /*!< Object description */
   Id location;  /*!< Object space location */
+  BOOL movable; /*!< Movable condition of an object (Por defecto FALSE)*/
+  Id dependency; /*!< Dependency condtion of an object (If and object is dependent of another it saves its id here, if not NO_ID) */
+  Id open; /*!< Open condition of an object (If an object can open a certain space it saves the id here, if not NO_ID)*/
+  BOOL illuminate; /*!< Illuminate condition of an object (Por defecto FALSE)*/
+  BOOL turnedon; /*!< Turned on condition of an object (Por defecto FALSE)*/
 } ;
 
 /** obj_create reserva memoria para un nuevo objeto e inicializa sus miembros.
@@ -49,6 +54,12 @@ Object *obj_create(Id id)
   new_obj->id = id;
   new_obj->name[0] = '\0';
   new_obj->description[0] = '\0';
+  new_obj->movable = FALSE;
+  new_obj->dependency = NO_ID;
+  new_obj->open = NO_ID;
+  new_obj->illuminate = FALSE;
+  new_obj->turnedon = FALSE;
+
   return new_obj;
 }
 
@@ -209,7 +220,157 @@ STATUS obj_print(Object *obj)
     return ERROR;
   }
 
-  fprintf(stdout, "--> Object (Id: %ld; Name: %s)\n", obj->id, obj->name);
+  /*General information*/
+  fprintf(stdout, "--> Object (Id: %ld; Name: %s; Location: %ld;\nDescription: %s)\n", obj->id, obj->name, obj->location, obj->description);
+
+  /*Movable condition*/
+  if (obj->movable == TRUE)
+  {
+    fprintf(stdout, "Movable: TRUE");
+  } else {
+    fprintf(stdout, "Movable: FALSE");
+  }
+
+  /*Dependency condition*/
+  if (obj->dependency == NO_ID)
+  {
+    fprintf(stdout, "Depenency: NO_ID");
+  } else {
+    fprintf(stdout, "Dependency: %ld", obj->dependency);
+  }
+
+  /*Open condition*/
+  if (obj->open == NO_ID)
+  {
+    fprintf(stdout, "Open: NO_ID");
+  } else {
+    fprintf(stdout, "Open: %ld", obj->open);
+  }
+
+  /*Illuminate condition*/
+  if (obj->illuminate == TRUE)
+  {
+    fprintf(stdout, "Illuminate: TRUE");
+  } else {
+    fprintf(stdout, "Illuminate: FALSE");
+  }
+
+  /*Turned on condition*/
+  if (obj->turnedon == TRUE)
+  {
+    fprintf(stdout, "Turned on: TRUE");
+  } else {
+    fprintf(stdout, "Turned on: FALSE");
+  }
+  return OK;
+}
+
+STATUS object_set_movable(Object *obj, BOOL cond)
+{
+  if (!obj)
+  {
+    return ERROR;
+  }
+
+  obj->movable = cond;
 
   return OK;
+}
+
+STATUS object_set_dependency(Object *obj, Id id)
+{
+  if (!obj)
+  {
+    return ERROR;
+  }
+
+  obj->dependency = id;
+
+  return OK;
+}
+
+STATUS object_set_open(Object *obj, Id id)
+{
+  if (!obj)
+  {
+    return ERROR;
+  }
+
+  obj->open = id;
+
+  return OK;
+}
+
+STATUS object_set_illuminate(Object *obj, BOOL cond)
+{
+  if (!obj)
+  {
+    return ERROR;
+  }
+
+  obj->illuminate = cond;
+
+  return OK;
+}
+
+STATUS object_set_turnedon(Object *obj, BOOL cond)
+{
+  if (!obj)
+  {
+    return ERROR;
+  }
+
+  obj->turnedon = cond;
+
+  return OK;
+}
+
+BOOL object_get_movable(Object *obj)
+{
+  if (!obj)
+  {
+    return FALSE;
+  }
+
+  return obj->movable;
+}
+
+Id object_get_dependency(Object *obj)
+{
+  if (!obj)
+  {
+    return NO_ID;
+  }
+
+  return obj->dependency;
+}
+
+Id object_get_open(Object *obj)
+{
+  if (!obj)
+  {
+    return NO_ID;
+  }
+
+  return obj->open;
+}
+
+BOOL object_get_illuminate(Object *obj)
+{
+  if (!obj)
+  {
+    return FALSE;
+  }
+
+  return obj->illuminate;
+}
+
+BOOL object_get_turnedon(Object *obj)
+{
+  if (!obj)
+  {
+    return FALSE;
+  }
+
+  return obj->turnedon;
 }
