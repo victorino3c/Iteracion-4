@@ -1,0 +1,74 @@
+#s:12|A_Entry|Entrance to the attic|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
+#s:127|A_Corridor|Who is it guarding that door |  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
+#s:17|A_Alcove|This looks like a key to me|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
+#s:11|Cell|Starting position|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
+#s:121|Corridor1|First main corridor|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |
+#s:16|Secret_Chamber|Secret OP loot chamber |_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
+#s:122|Hall|Hall leading to the throne room|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
+#s:123|Throne_Room|Lair of the Dusk_King  |  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |
+#s:125|Dining_Room|Dark at the beginning, hides many mysteries|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |
+#s:126|Corridor2|Second main corridor|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|
+#s:13|Library|What about the third candle |  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
+#s:14|Bedroom|This trapdoor may lead somewhere|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
+#s:15|D_Chamber|Anteroom to the D_Treasury| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |
+#s:124|D_Treasury|Where the Dusk_Key lays|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|
+#o:310|Stick|Wooden stick that can be lit up |11|
+#o:311|Stick|Wooden stick that can be lit up |11|
+#o:312|Apple|Recovers 1 health|121|
+#o:313|Sword|+0,2 power|121|
+#o:314|Sword|+0,2 power|122|
+#o:315|Candle1|Can be lit up|125|
+#o:316|Small_key1|This opens something|127|                    
+#o:317|Small_key2|This opens something|126|                     
+#o:318|Armor|+1 Max_health|126|                      
+#o:319|Candle2|Cannot be moved|13|
+#o:320|Candle3|Cannot be moved|13|
+#o:321|Armor|+1 Max_health|14|    
+#o:322|Armor|+1 Max_health|124|
+#o:323|Elixir|Recovers 3 health|124|
+#o:324|Elixir|Recovers 3 health|124|
+#o:325|Apple|Recovers 1 health|12|
+#o:326|Apple|Recovers 1 health|12|
+#o:327|Bed| Makes it night or day time |17|
+#o:328|Bed| Makes it night or day time |14|
+#o:31|Ladder|Ladder to access the attic on the cell |122| 
+#o:32|Dawn_Key|The key to defeat him|125|
+#o:33|Bread_Crumbs|Someone might appreciate them|125|
+#o:34|Crit_Sword|+0,4 Crit chance|14|
+#o:35|Dusk_Key|A key to his doorstep|124|
+#o:36|Hook|To grab something unreachable|124|
+#o:37|Treasure_key|An old looking key|17|
+#o:38|Moon_Armor|+10 permanent health and recovers 10 health |16|
+#o:39|Sun_Sword|+1 permanent attack, deals you 1 damage per attack, +1 all healing items|16|
+#p:21|Player|11|5|3|
+#e:41|Beggar|11|20|
+#e:42|Guard1|127|5|
+#e:43|Guard2|126|5|
+#e:44|Dusk_Assassin|15|7|
+#e:45|Dusk_King|123|10|
+#l:504|A_Alcove_w|17|127|3|1|
+#l:505|A_Corridor_e|127|17|2|0|
+#l:506|A_Corridor_w|127|12|3|1|
+#l:507|A_Entry_e|12|127|2|1|
+#l:508|A_Entry_d|12|11|1|1|
+#l:509|Cell_u|11|12|0|1|
+#l:510|Cell_s|11|121|1|1|
+#l:511|Corridor1_n|121|11|0|1|
+#l:512|Corridor1_s|121|122|1|1|
+#l:513|Hall_n|122|121|0|1|
+#l:514|Hall_s|122|123|1|0|
+#l:515|Throne_Room_n|123|122|0|1|
+#l:516|Corridor1_e|121|16|2|0|
+#l:517|Secret_Chamber_w|16|121|3|1|
+#l:518|D_Treasury_s|124|15|1|1|
+#l:519|D_Chamber_n|13|124|0|0|
+#l:529|D_Chamber_u|14|15|2|1|
+#l:520|Hall_e|122|125|2|1|
+#l:521|Dining_Room_w|125|122|3|1|
+#l:522|Dining_Room_e|125|126|2|1|
+#l:523|Corridor2_w|126|125|3|1|
+#l:524|Corridor2_e|126|13|2|0|
+#l:525|Library_w|13|126|3|1|
+#l:526|Library_e|13|14|2|0|
+#l:527|Bedroom_w|14|13|3|1|
+#l:528|Bedroom_d|14|15|1|1|
