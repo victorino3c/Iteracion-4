@@ -1,13 +1,13 @@
-#s:11|Entrada|Habitacion inicial|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
-#s:121|Pasillo1|Primera habitacion|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |
-#s:122|Pasillo2|Segunda habitacion|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
-#s:123|Pasillo3|Tercera habitacion|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |
-#s:124|Pasillo4|Cuarta habitacion|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |
-#s:13|Despensa|Main habitacion| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |
-#s:125|Pasillo5|Quinta habitacion|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|
-#s:126|Pasillo6|Sexta habitacion|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|
-#s:127|Pasillo7|Septima habitacion|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
-#s:14|Agujero|Cuidado no te caigas|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
+#s:11|Entrada|Habitacion inicial|Descripcion-larga|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
+#s:121|Pasillo1|Primera habitacion|Descripcion-larga|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |
+#s:122|Pasillo2|Segunda habitacion|Descripcion-larga|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
+#s:123|Pasillo3|Tercera habitacion|Descripcion-larga|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |
+#s:124|Pasillo4|Cuarta habitacion|Descripcion-larga|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |
+#s:13|Despensa|Main habitacion|Descripcion-larga| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |
+#s:125|Pasillo5|Quinta habitacion|Descripcion-larga|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|
+#s:126|Pasillo6|Sexta habitacion|Descripcion-larga|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|
+#s:127|Pasillo7|Septima habitacion|Descripcion-larga|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
+#s:14|Agujero|Cuidado no te caigas|Descripcion-larga|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
 #o:31|Grano|Un grano de trigo comun|11|
 #o:32|Hoja|Una hoja buena|14|
 #o:33|Pipa|Una pipa extraordinaria|124|
