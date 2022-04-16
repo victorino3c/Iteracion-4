@@ -1301,7 +1301,7 @@ STATUS game_command_inspect(Game *game, char *arg)
   /*SPACE CASE*/
   if (strcmp(arg, "space") == 0 || strcmp(arg, "s") == 0)
   {
-    game->description = (char *)space_get_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
+    game->description = (char *)space_get_brief_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
     return OK;
   }
 
