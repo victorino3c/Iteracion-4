@@ -28,7 +28,7 @@ struct _Game
   Enemy *enemy[MAX_ENEMYS];    /*!< Pointer to enemy's array */
   Space *spaces[MAX_SPACES];   /*!< Pointer to space's array */
   Link *links[MAX_LINKS];      /*!< Pointer to link's array */
-  char *description;           /*!< Description that should be shown*/
+  char *inspection;            /*!< Long description for inspect space*/
   T_Command last_cmd;          /*!< Last command input */
 } ;
 
@@ -82,7 +82,7 @@ STATUS game_alloc(Game *game)
     }
   }
 
-  game->description = " ";
+  game->inspection = " ";
   return OK;
 }
 
@@ -459,9 +459,9 @@ Enemy *game_get_enemy(Game *game, Id id)
 }
 
 /**
- * returns description that is on screen
+ * returns long description that is on screen
  */
-char *game_get_description(Game *game)
+char *game_get_inspection(Game *game)
 {
   /* Error control*/
   if (!game)
@@ -469,7 +469,7 @@ char *game_get_description(Game *game)
     return NULL;
   }
 
-  return game->description;
+  return game->inspection;
 }
 
 /**
@@ -723,7 +723,7 @@ int game_update(Game *game, T_Command cmd, char *arg)
   }
   
   game->last_cmd = cmd;
-  game->description = 0;
+  game->inspection = 0;
 
   switch (cmd)
   {
@@ -1301,7 +1301,12 @@ STATUS game_command_inspect(Game *game, char *arg)
   /*SPACE CASE*/
   if (strcmp(arg, "space") == 0 || strcmp(arg, "s") == 0)
   {
-    game->description = (char *)space_get_brief_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
+    if(space_get_light_status(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1]))) == BRIGHT){
+      game->inspection = (char *)space_get_long_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
+    }
+    else{
+      game->inspection = "El lugar está muy oscuro, no puedes ver nada";
+    }
     return OK;
   }
 
@@ -1310,20 +1315,20 @@ STATUS game_command_inspect(Game *game, char *arg)
   {
     if (arg == NULL)
     {
-      game->description = " ";
+      game->inspection = " ";
       return ERROR;
     }
 
     if (obj == NULL)
     {
-      game->description = " ";
+      game->inspection = " ";
       return ERROR;
     }
     if (player_has_object(game->player[0], obj_get_id(obj)) == FALSE && player_get_location(game->player[0]) != obj_get_location(obj))
     {
       return ERROR;
     }
-    game->description = (char *)obj_get_description(obj);
+    game->inspection = (char *)obj_get_description(obj);
     return OK;
   }
   return ERROR;
@@ -1383,7 +1388,7 @@ Game *game_alloc2()
     fprintf(stderr, "Error saving memory for game(game_create)");
     return NULL;
   }
-  game->description = "\0";
+  game->inspection = "\0";
 
   return game;
 }
