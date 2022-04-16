@@ -103,6 +103,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   int i;
   char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL;
   char *description;
+  char *inspection;
   char *obj_name[MAX_OBJS];
   char link_up = '\0', link_down = '\0';
 
@@ -111,7 +112,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   id_act = player_loc;
   player_inventory = player_get_inventory(game_get_player(game, game_get_player_id(game)));
   player_health = player_get_health(game_get_player(game, game_get_player_id(game)));
-  description = game_get_description(game);
+  description = (char*) space_get_brief_description(game_get_space(game, player_loc));
+  inspection = game_get_inspection(game);
 
   for(i=0;i<MAX_ENEMYS;i++)
   { 
@@ -574,10 +576,17 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
     sprintf(str, "   ");
     screen_area_puts(ge->descript, str);
+    sprintf(str, "  Info:");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  %s", description);
+    screen_area_puts(ge->descript, str);
+
+    sprintf(str, "   ");
+    screen_area_puts(ge->descript, str);
     sprintf(str, "  Descriptions:");
     screen_area_puts(ge->descript, str);
-    if(description){
-      sprintf(str, "  %s", description);
+    if(inspection){
+      sprintf(str, "  %s", inspection);
       screen_area_puts(ge->descript, str);
     }
   }
