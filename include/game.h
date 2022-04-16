@@ -34,13 +34,13 @@
 typedef struct _Game Game;
 
 /**
-  * @brief returns description' pointer
+  * @brief returns inspection' pointer
   * @author Antonio Van-Oers
   * 
   * @param game a pointer to game
-  * @return description pointer (can be NULL)
+  * @return inspection pointer (can be NULL)
   */
-char *game_get_description(Game *game);
+char *game_get_inspection(Game *game);
 
 /**
  * @brief Allocs memory for some of game's members
