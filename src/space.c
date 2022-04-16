@@ -23,13 +23,14 @@
  */
 struct _Space
 {
-  Id id;                       /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1];    /*!< Name of the space */
-  char description[WORD_SIZE]; /*!< Description of the space*/
-  Id link[MAX_LINKS_SPACE];    /*!< Id from links between space with this space as origin */
-  Set *objects;                /*!< Conjunto de ids de los objetos que se encuentran en el espacio */
-  char **gdesc;                /*!< Array de 5 strings de 9 caracteres */
-  Light ls;                    /*!< Status of light (Brief for Light Status) */
+  Id id;                             /*!< Id number of the space, it must be unique */
+  char name[WORD_SIZE + 1];          /*!< Name of the space */
+  char brief_description[WORD_SIZE]; /*!< Brief description of the space*/
+  char long_description[WORD_SIZE];  /*!< Detailed description of the space*/
+  Id link[MAX_LINKS_SPACE];          /*!< Id from links between space with this space as origin */
+  Set *objects;                      /*!< Conjunto de ids de los objetos que se encuentran en el espacio */
+  char **gdesc;                      /*!< Array de 5 strings de 9 caracteres */
+  Light ls;                          /*!< Status of light (Brief for Light Status) */
 } ;
 
 /**
@@ -99,14 +100,15 @@ Space *space_create(Id id)
   /* Initialization of an empty space*/
   newSpace->id = id;
   newSpace->name[0] = '\0';
-  newSpace->description[0] = '\0';
+  newSpace->brief_description[0] = '\0';
+  newSpace->long_description[0] = '\0';
   for (i = 0; i < 4; i++)
   {
     newSpace->link[i] = NO_ID;
   }
   newSpace->objects = set_create();
   newSpace->gdesc = NULL;
-  newSpace->ls = BRIGHT; /*Mirar a que queremos inicializarlo--------------------------------------------------------------------------------*/
+  newSpace->ls = BRIGHT;
 
   return newSpace;
 }
@@ -223,9 +225,9 @@ const char *space_get_name(Space *space)
   return space->name;
 }
 
-/** space_get_description returns the description of a space.
+/** space_get_description returns the brief description of a space.
  */
-const char *space_get_description(Space *space)
+const char *space_get_brief_description(Space *space)
 {
   /*CONTROL ERRORS*/
   if (!space)
@@ -233,20 +235,52 @@ const char *space_get_description(Space *space)
     return NULL;
   }
 
-  return space->description;
+  return space->brief_description;
 }
 
 /** space_set_description set a new description for an space.
  */
-STATUS space_set_description(Space *space, char *description)
+STATUS space_set_brief_description(Space *space, char *brief_description)
 {
   /* CONTROL ERROR */
-  if (!space || !description)
+  if (!space || !brief_description)
   {
     return ERROR;
   }
 
-  if (!strcpy(space->description, description))
+  if (!strcpy(space->brief_description, brief_description))
+  {
+    /*CONTROL ERROR*/
+    return ERROR;
+  }
+
+  return OK;
+}
+
+/** space_get_long_description returns the detailed description of a space.
+ */
+const char *space_get_long_description(Space *space)
+{
+  /*CONTROL ERRORS*/
+  if (!space)
+  {
+    return NULL;
+  }
+
+  return space->long_description;
+}
+
+/** space_set_long_description set a new detailed description for an space.
+ */
+STATUS space_set_long_description(Space *space, char *long_description)
+{
+  /* CONTROL ERROR */
+  if (!space || !long_description)
+  {
+    return ERROR;
+  }
+
+  if (!strcpy(space->long_description, long_description))
   {
     /*CONTROL ERROR*/
     return ERROR;
