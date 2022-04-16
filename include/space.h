@@ -83,23 +83,42 @@ STATUS space_set_name(Space *space, char *name);
 const char *space_get_name(Space *space);
 
 /**
- * @brief It sets the description of a space
+ * @brief It sets the brief description of a space
  * @author Ignacio Nunnez
  *
  * @param space a pointer to the space
  * @param description a string with the description to store
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-STATUS space_set_description(Space *space, char *description);
+STATUS space_set_brief_description(Space *space, char *brief_description);
 
 /**
- * @brief It gets the description of a space
+ * @brief It gets the brief description of a space
  * @author Ignacio Nunnez
  *
  * @param space a pointer to the space
  * @return  a string with the description of the space
  */
-const char *space_get_description(Space *space);
+const char *space_get_brief_description(Space *space);
+
+/**
+ * @brief It sets the detailed description of a space
+ * @author Ignacio Nunnez
+ *
+ * @param space a pointer to the space
+ * @param long_description a string with the description to store
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+STATUS space_set_long_description(Space *space, char *long_description);
+
+/**
+ * @brief It gets the detailed description of a space
+ * @author Ignacio Nunnez
+ *
+ * @param space a pointer to the space
+ * @return  a string with the description of the space
+ */
+const char *space_get_long_description(Space *space);
 
 /**
  * @brief It sets the link of the space in an specific direction
