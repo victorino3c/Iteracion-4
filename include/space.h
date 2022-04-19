@@ -262,5 +262,14 @@ STATUS space_set_light_status (Space *space, Light ls);
  */
 Light space_get_light_status (Space *space);
 
+/**
+ * @brief It prints the space information in the save file
+ * @author Nicolas Victorino
+ *
+ * @param space a pointer to the space we want to print
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+STATUS space_print_save(char *filename, Space *space);
+
 #endif
 

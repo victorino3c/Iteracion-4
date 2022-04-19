@@ -215,4 +215,12 @@ BOOL object_get_illuminate(Object *obj);
  */
 BOOL object_get_turnedon(Object *obj);
 
+/** @brief obj_print_save prints the information of an object in the save file
+ *  @author Nicolas Victorino
+ * 
+ *  @param obj pointer to the object we want to print
+ *  @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS obj_print_save(char *filename, Object *obj);
+
 #endif

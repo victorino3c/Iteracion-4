@@ -164,4 +164,13 @@ LINK_STATUS link_get_status(Link *link);
  */
 int link_print(Link *link);
 
+/**
+ * @brief It prints link and its elements in the save file
+ * @author Nicolas Victorino
+ * 
+ * @param link a ponter to link struct we want to save
+ * @return STATUS OK, if everything goes well or ERROR if there was some mistake. 
+ */
+STATUS link_print_save(char *filename, Link *link);
+
 #endif

@@ -374,3 +374,25 @@ BOOL object_get_turnedon(Object *obj)
 
   return obj->turnedon;
 }
+
+/** obj_print_save prints the information of an object in the save file
+ */
+STATUS obj_print_save(char *filename, Object *obj)
+{
+
+  FILE *file = NULL;
+
+  file = fopen(filename, "w");
+
+ /* Error control */
+  if (!obj || !file)
+  {
+    return ERROR;
+  }
+  fprintf(file, "o:%ld|%s|%s|%ld|%d|%ld|%ld|%d|%d|\n", obj->id, obj->name, obj->description, obj->location, obj->movable, obj->dependency, obj->open, obj->illuminate, obj->turnedon);
+
+  fclose(file);
+
+  return OK;
+}
+

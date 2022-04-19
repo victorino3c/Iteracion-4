@@ -126,8 +126,17 @@ STATUS enemy_set_name(Enemy *enemy, char *name);
  * @author Antonio Van-Oers
  * 
  * @param enemy a pointer to a certain enemy
- * return OK, if everything goes well o ERROR, if there was some mistake.
+ * @return OK, if everything goes well o ERROR, if there was some mistake.
  */
 STATUS enemy_print(Enemy *enemy);
+
+/** 
+ * @brief enemy_print  Prints the info on the enemy's interface in the save file
+ * @author Nicolas Victorino
+ * 
+ * @param a pointer to the enemy we want to print
+ * @return OK, if everything goes well o ERROR, if there was some mistake.
+ */
+STATUS enemy_print_save(char *filename, Enemy *enemy);
 
 #endif

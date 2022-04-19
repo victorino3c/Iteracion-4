@@ -1392,3 +1392,48 @@ Game *game_alloc2()
 
   return game;
 }
+
+STATUS game_save(char *filename, Game* game)
+{
+ int i = 0;
+
+  /*Spaces*/
+  for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++)
+  {
+    space_print_save(filename, game->spaces[i]);
+  }
+
+  /*Objects*/
+  for (i = 0; i < MAX_OBJS && game->object[i] != NULL; i++)
+  {
+    obj_print_save(filename, game->object[i]);
+  }
+
+  /*Players*/
+  for (i = 0; i < MAX_PLAYERS && game->player[i] != NULL; i++)
+  {
+    player_print_save(filename, game->player[i]);
+  }
+
+  /*Enemies*/
+  for (i = 0; i < MAX_ENEMYS && game->enemy[i] != NULL; i++)
+  {
+    enemy_print_save(filename, game->enemy[i]);
+  }
+
+  /*Links*/
+  for (i = 0; i < MAX_LINKS && game->links[i] != NULL; i++)
+  {
+    link_print_save(filename, game->links[i]);
+  }
+
+  /*Inventory*/
+
+  for (i = 0; i < inventory_get_maxObjs(player_get_inventory(game->player[0])) && set_get_ids_by_number(inventory_get_objects(player_get_inventory(game->player[0])), i) != NO_ID; i++)
+  {
+    inventory_print_save(filename, player_get_inventory(game->player[0]), player_get_id(game->player[0]));
+  }
+
+  return OK;
+}
+

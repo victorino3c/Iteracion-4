@@ -299,3 +299,22 @@ STATUS player_set_max_inventory(Player* player, int num)
   return OK;
 }
 
+STATUS player_print_save(char *filename, Player *player)
+{
+
+  FILE *file = NULL;
+
+  file = fopen(filename, "w");
+
+ /* Error control */
+  if (!player || !file)
+  {
+    return ERROR;
+  }
+
+  fprintf(file, "p:%ld|%s|%ld|%d|%d|\n", player->id, player->name, player->location, player->health, inventory_get_maxObjs(player->inventory));
+
+  fclose(file);
+
+  return OK;
+}

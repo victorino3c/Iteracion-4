@@ -178,3 +178,34 @@ STATUS inventory_print(Inventory* inventory) {
 
   return OK;
 }
+
+/** It prints the enemy information in the save file
+  */
+STATUS inventory_print_save(char *filename, Inventory* inventory, Id player) {
+  
+  int i = 0;
+  Id id = NO_ID;
+  FILE *file = NULL;
+
+  file = fopen(filename, "w");
+
+ /* Error control */
+  if (!inventory || !file)
+  {
+    return ERROR;
+  }
+
+  for (i = 0; id != NO_ID; i++) {
+    id = set_get_ids_by_number(inventory->objects, i);
+
+    if (id != NO_ID)
+    {
+      fprintf(file, "i:%ld|%ld|\n", id, player);
+    } else {
+      break;
+    }
+  }
+
+  fclose(file);
+  return OK;
+}

@@ -117,4 +117,13 @@ BOOL inventory_has_id(Inventory* inventory, Id object);
   */
 STATUS inventory_print(Inventory* inventory);
 
+/**
+  * @brief It prints the inventory information in the save file
+  * @author Nicolas Victorino
+  *
+  * @param inventory a pointer to the inventory we want to print
+  * @return OK, if everything goes well or ERROR if there was some mistake
+  */
+STATUS inventory_print_save(char *filename, Inventory* inventory, Id player);
+
 #endif

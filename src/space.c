@@ -636,3 +636,36 @@ Light space_get_light_status (Space *space)
 
   return space->ls;
 }
+
+/** It prints the space information in the save file
+ */
+STATUS space_print_save(char *filename, Space *space)
+{
+  int i = 0, j = 0;
+  FILE *file = NULL;
+
+  file = fopen(filename, "w");
+
+ /* Error control */
+  if (!space || !file)
+  {
+    return ERROR;
+  }
+
+  fprintf(file, "s:%ld|%s|%s|%s|", space->id, space->name, space->brief_description, space->long_description);
+
+  for (i = 0; i < TAM_GDESC_Y && space->gdesc[i]; i++)
+  {
+    for (j = 0; j < TAM_GDESC_X && space->gdesc[i][j]; j++)
+    {
+      fprintf(file, "%c", space->gdesc[i][j]);
+    }
+    fprintf(file, "|");
+  }
+
+  fprintf(file, "\n"); 
+
+  fclose(file);
+
+  return OK;
+}

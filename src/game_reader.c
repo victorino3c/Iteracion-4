@@ -32,6 +32,7 @@ STATUS game_load_objs(Game *game, char *filename);
 STATUS game_load_players(Game *game, char *filename);
 STATUS game_load_enemy(Game *game, char *filename);
 STATUS game_load_link(Game *game, char *filename);
+STATUS game_load_inventory(Game *game, char *filename);
 
 GAME_IS_ELEMENT id_type(Id id);
 
@@ -71,6 +72,11 @@ STATUS game_create_from_file(Game *game, char *filename)
   }
 
   if (game_load_link(game, filename) == ERROR)
+  {
+    return ERROR;
+  }
+
+  if (game_load_inventory(game, filename) == ERROR)
   {
     return ERROR;
   }
@@ -542,6 +548,67 @@ STATUS game_load_link(Game *game, char *filename)
   fclose(file);
 
   return st;
+}
+
+STATUS game_load_inventory(Game *game, char *filename)
+{
+ FILE *file = NULL;
+  char line[WORD_SIZE] = "";
+  char *toks = NULL;
+  Id id = NO_ID, id_player = NO_ID;
+  STATUS status = OK;
+
+  /*Error control*/
+  if (!filename)
+  {
+    return ERROR;
+  }
+  /*Error control*/
+  file = fopen(filename, "r");
+  if (file == NULL)
+  {
+    return ERROR;
+  }
+
+  /*
+   * While the loop reads information in the current line from the file:
+   * "hormiguero.dat", it divides that line in smaller tokens.
+   * Each token has a piece of information, in the following order:
+   * ID of the object and id of the player.
+   */
+  while (fgets(line, WORD_SIZE, file))
+  {
+    if (strncmp("#i:", line, 3) == 0)
+    {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      id_player = atol(toks);
+
+      /*If debug is being used, it will print all the information
+      from the current enemy that is being loaded*/
+#ifdef DEBUG
+      printf("Leido: %ld|%ld\n", id, id_player);
+#endif
+
+      /*Adds the object to the given player*/
+      obj_set_location(game_get_object(game, id), player_get_location(game_get_player(game, id_player)));
+      inventory_add_object(player_get_inventory(game_get_player(game, id_player)), id);
+    }
+  }
+
+  /*Error control, if it has given an error at any moment
+  while using the file, ferror while make the if condition be true.
+   This will change the private status variable declared at
+   the beggining of the function from OK to ERROR. */
+  if (ferror(file))
+  {
+    status = ERROR;
+  }
+
+  fclose(file);
+
+  return status;
 }
 
 /**

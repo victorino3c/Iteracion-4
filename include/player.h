@@ -177,5 +177,14 @@ BOOL player_has_object(Player *player, Id obj_id);
  */
 STATUS player_print(Player *player);
 
+/**
+ * @brief Prints all player related information in the save file
+ * @author Nicolas Victorino
+ * 
+ * @param player a pointer to target player
+ * @return OK, if the task was successfully completed or ERROR, if anything goes wrong.
+ */
+STATUS player_print_save(char *filename, Player *player);
+
 #endif
 

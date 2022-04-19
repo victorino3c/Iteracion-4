@@ -226,3 +226,24 @@ STATUS enemy_print(Enemy *enemy)
 
   return OK;
 }
+
+/** enemy_print  Prints the info on the enemy's interface in the save file
+ */
+STATUS enemy_print_save(char *filename, Enemy *enemy)
+{
+  FILE *file = NULL;
+
+  file = fopen(filename, "w");
+
+ /* Error control */
+  if (!enemy || !file)
+  {
+      return ERROR;
+  }
+
+  fprintf(file, "e:%ld|%s|%ld|%d|\n", enemy->id, enemy->name, enemy->location, enemy->health);
+
+  fclose(file);
+
+  return OK;
+}

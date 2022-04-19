@@ -361,5 +361,14 @@ STATUS game_set_object_location(Game *game, Id obj_id, Id space_id);
  */
 STATUS game_set_enemy_location(Game *game, Id enemy_id, Id space_id);
 
+/**
+ * @brief Saves the information of the actual game in the save file
+ * @author Nicolas Victorino
+ *
+ * @param game pointer to the game we want to save
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
+STATUS game_save(char *filename, Game* game);
+
 
 #endif
