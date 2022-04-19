@@ -16,7 +16,7 @@ $(O)command.o: $(S)command.c $(I)command.h
 $(O)enemy.o: $(S)enemy.c $(I)enemy.h
 	$(CC) -o $@ $(FLAGS) $< $(LIBRARY)
 	
-$(O)game_reader.o: $(S)game_reader.c $(I)game_reader.h $(I)command.h $(I)space.h $(I)types.h $(I)game.h
+$(O)game_managment.o: $(S)game_managment.c $(I)game_managment.h $(I)command.h $(I)space.h $(I)types.h $(I)game.h
 	$(CC) -o $@ $(FLAGS) $<
 
 $(O)game.o: $(S)game.c $(I)game.h $(I)command.h $(I)space.h $(I)types.h $(I)link.h $(I)player.h $(I)object.h $(I)enemy.h $(I)inventory.h
@@ -46,7 +46,7 @@ $(O)space.o: $(S)space.c $(I)space.h $(I)types.h $(I)set.h $(I)object.h
 $(O)game_loop.o: $(S)game_loop.c $(I)game.h $(I)command.h $(I)graphic_engine.h
 	$(CC) -o $@ $(FLAGS) $< 
 
-juego: $(O)command.o $(O)game.o $(O)game_reader.o $(O)graphic_engine.o $(O)object.o $(O)link.o $(O)player.o $(O)space.o $(O)game_loop.o $(L)libscreen.a $(O)enemy.o $(O)set.o $(O)inventory.o
+juego: $(O)command.o $(O)game.o $(O)game_managment.o $(O)graphic_engine.o $(O)object.o $(O)link.o $(O)player.o $(O)space.o $(O)game_loop.o $(L)libscreen.a $(O)enemy.o $(O)set.o $(O)inventory.o
 	$(CC) -o $@ -Wall $^ $(LIBRARY)
 
 #GAME
@@ -185,3 +185,4 @@ xclean:
 	rm -f *_test
 
 sclean: oclean xclean
+
