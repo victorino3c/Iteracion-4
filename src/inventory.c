@@ -187,7 +187,7 @@ STATUS inventory_print_save(char *filename, Inventory* inventory, Id player) {
   Id id = NO_ID;
   FILE *file = NULL;
 
-  file = fopen(filename, "w");
+  file = fopen(filename, "a");
 
  /* Error control */
   if (!inventory || !file)

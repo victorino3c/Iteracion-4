@@ -303,7 +303,7 @@ STATUS link_print_save(char *filename, Link *link)
 {
     FILE *file = NULL;
 
-    file = fopen(filename, "w");
+    file = fopen(filename, "a");
 
     /* Error control */
     if (!link || !file)

@@ -233,7 +233,7 @@ STATUS enemy_print_save(char *filename, Enemy *enemy)
 {
   FILE *file = NULL;
 
-  file = fopen(filename, "w");
+  file = fopen(filename, "a");
 
  /* Error control */
   if (!enemy || !file)

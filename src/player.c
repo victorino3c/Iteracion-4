@@ -304,7 +304,7 @@ STATUS player_print_save(char *filename, Player *player)
 
   FILE *file = NULL;
 
-  file = fopen(filename, "w");
+  file = fopen(filename, "a");
 
  /* Error control */
   if (!player || !file)

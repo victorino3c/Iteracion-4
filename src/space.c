@@ -644,7 +644,7 @@ STATUS space_print_save(char *filename, Space *space)
   int i = 0, j = 0;
   FILE *file = NULL;
 
-  file = fopen(filename, "w");
+  file = fopen(filename, "a");
 
  /* Error control */
   if (!space || !file)

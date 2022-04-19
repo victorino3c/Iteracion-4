@@ -382,7 +382,7 @@ STATUS obj_print_save(char *filename, Object *obj)
 
   FILE *file = NULL;
 
-  file = fopen(filename, "w");
+  file = fopen(filename, "a");
 
  /* Error control */
   if (!obj || !file)
