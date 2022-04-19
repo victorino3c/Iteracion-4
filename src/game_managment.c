@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "../include/game_reader.h"
+#include "../include/game_managment.h"
 /*
 STATUS game_add_space(Game *game, Space *space);
 STATUS game_add_object(Game *game, Object *obj);
