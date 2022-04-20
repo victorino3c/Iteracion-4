@@ -108,7 +108,7 @@ Space *space_create(Id id)
   }
   newSpace->objects = set_create();
   newSpace->gdesc = NULL;
-  newSpace->ls = BRIGHT;
+  newSpace->ls = UNKNOWN_LIGHT;
 
   return newSpace;
 }

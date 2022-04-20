@@ -1396,6 +1396,9 @@ Game *game_alloc2()
 STATUS game_save(char *filename, Game* game)
 {
  int i = 0;
+ FILE *file = NULL;
+ file = fopen(filename, "w");
+ fclose(file);
 
   /*Spaces*/
   for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++)

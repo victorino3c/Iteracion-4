@@ -106,6 +106,7 @@ STATUS game_load_spaces(Game *game, char *filename)
   char *toks = NULL, *aux;
   char **gdesc = NULL;
   Id id = NO_ID;
+  Light ls;
   Space *space = NULL;
   STATUS status = OK;
   int i, j;
@@ -133,6 +134,8 @@ STATUS game_load_spaces(Game *game, char *filename)
       strcpy(brief_description, toks);
       toks = strtok(NULL, "|");
       strcpy(long_description, toks);
+      toks = strtok(NULL, "|");
+      ls = atol(toks);
 
       gdesc = space_create_gdesc();
       if (gdesc == NULL)
@@ -159,6 +162,7 @@ STATUS game_load_spaces(Game *game, char *filename)
         space_set_brief_description(space, brief_description);
         space_set_long_description(space, long_description);
         space_set_gdesc(space, gdesc);
+        space_set_light_status(space, ls);
         game_add_space(game, space);
       }
     }

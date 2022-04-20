@@ -60,9 +60,9 @@ typedef enum
  */
 typedef enum
 {
-  DARK = -1,      /* !< Dark status of a space */
-  BRIGHT,         /* !< Bright status of a space */
-  UNKNOWN_LIGHT   /* !< Light status not defined*/
+  UNKNOWN_LIGHT = -1,   /* !< Light status not defined*/
+  DARK,      /* !< Dark status of a space */
+  BRIGHT         /* !< Bright status of a space */
 } Light;
 
 #endif
