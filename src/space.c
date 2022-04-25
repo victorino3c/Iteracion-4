@@ -652,7 +652,7 @@ STATUS space_print_save(char *filename, Space *space)
     return ERROR;
   }
 
-  fprintf(file, "#s:%ld|%s|%s|%s|", space->id, space->name, space->brief_description, space->long_description);
+  fprintf(file, "#s:%ld|%s|%s|%s|%d|", space->id, space->name, space->brief_description, space->long_description, space->ls);
 
   for (i = 0; i < TAM_GDESC_Y && space->gdesc[i]; i++)
   {
@@ -660,10 +660,10 @@ STATUS space_print_save(char *filename, Space *space)
     {
       fprintf(file, "%c", space->gdesc[i][j]);
     }
-    fprintf(file, "|po");
+    fprintf(file, "|");
   }
 
-  /*fprintf(file, "\n"); */
+  fprintf(file, "\n"); 
 
   fclose(file);
 
