@@ -28,7 +28,8 @@ struct _Game
   Enemy *enemy[MAX_ENEMYS];    /*!< Pointer to enemy's array */
   Space *spaces[MAX_SPACES];   /*!< Pointer to space's array */
   Link *links[MAX_LINKS];      /*!< Pointer to link's array */
-  char *inspection;            /*!< Long description for inspect space*/
+  char *inspection;            /*!< Long description for inspect space */
+  Time day_time;               /*!< Time cycle of the game */
   T_Command last_cmd;          /*!< Last command input */
 } ;
 
@@ -361,6 +362,31 @@ Space *game_get_space(Game *game, Id id)
   }
 
   return NULL;
+}
+
+/** Sets the day time of the game
+ */
+STATUS game_set_time(Game *game, Time time)
+{
+  if (!game || (time != DAY && time != NIGHT))
+  {
+    return ERROR;
+  }
+
+  game->day_time = time;
+  return OK;
+}
+
+/** Gets if it is day or night
+ */
+Time game_get_time(Game *game)
+{
+  if (!game)
+  {
+    return -1;
+  }
+
+  return game->day_time;
 }
 
 /**
