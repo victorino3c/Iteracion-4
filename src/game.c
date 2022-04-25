@@ -1371,6 +1371,11 @@ STATUS game_command_save(Game* game, char *arg){
 }
 
 STATUS game_command_load(Game* game, char *arg){
+
+  if(strcasecmp(arg, "savedata.dat") != 0 && strcasecmp(arg, "hormiguero.dat") != 0){
+    return ERROR;
+  }
+
   return game_managment_load(arg, game);
 }
 
