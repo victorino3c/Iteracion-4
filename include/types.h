@@ -65,5 +65,11 @@ typedef enum
   BRIGHT         /* !< Bright status of a space */
 } Light;
 
+typedef enum 
+{
+  DAY,    /*!< Day time*/
+  NIGHT   /*!< Night time*/
+} Time;
+
 #endif
 
