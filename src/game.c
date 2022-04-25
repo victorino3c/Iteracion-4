@@ -1405,10 +1405,10 @@ Game *game_alloc2()
 
   return game;
 }
-
 STATUS game_save(char *filename, Game* game)
 {
  int i = 0;
+ Inventory *player_inventory = player_get_inventory(game_get_player(game, 21));
  FILE *file = NULL;
  file = fopen(filename, "w");
  fclose(file);
@@ -1445,10 +1445,7 @@ STATUS game_save(char *filename, Game* game)
 
   /*Inventory*/
 
-  for (i = 0; i < inventory_get_maxObjs(player_get_inventory(game->player[0])) && set_get_ids_by_number(inventory_get_objects(player_get_inventory(game->player[0])), i) != NO_ID; i++)
-  {
-    inventory_print_save(filename, player_get_inventory(game->player[0]), player_get_id(game->player[0]));
-  }
+  inventory_print_save(filename, player_inventory, 21);
 
   return OK;
 }
