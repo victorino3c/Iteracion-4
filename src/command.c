@@ -36,6 +36,7 @@ char *cmd_to_str[N_CMD]
       {"m", "Move"},               /*!< If a "m" or "move" received, it is interpreted as move */
       {"i", "Inspect"},            /*!< If an "i" or "inspect" received, it is interpreted as inspect */
       {"g", "Save"},               /*!< If an "g" or "save" received, it is interpreted as Save */
+      {"l", "Load"},               /*!< If an "l" or "load" received, it is interpreted as Load */
       };
         
 /**It scans the cmd searching for key words introduced by the user 
@@ -61,11 +62,11 @@ T_Command command_get_user_input(char *arg)
       if (!strcasecmp(input, cmd_to_str[i][CMDS]) || !strcasecmp(input, cmd_to_str[i][CMDL]))
       {
         cmd = i + NO_CMD;                   /*!< If any differences are detected between CMDS, CMDL and the input, cmd is modified */
-        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE)
+        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE || cmd == LOAD)
         {
           if (scanf("%s", arg) < 0)
           {
-            fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE necesitan un argumento mas como el nombre del objeto .\n");
+            fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE LOAD necesitan un argumento mas como el nombre del objeto .\n");
           }
         }
         
