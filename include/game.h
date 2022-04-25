@@ -119,6 +119,25 @@ void game_print_data(Game *game);
 Space *game_get_space(Game *game, Id id);
 
 /**
+ * @brief Sets the day time of the game
+ * @author Nicolas Victorino
+ * 
+ * @param game 
+ * @param time 
+ * @return STATUS 
+ */
+STATUS game_set_time(Game *game, Time time);
+
+/**
+ * @brief Gets if it is day or night
+ * @author Nicolas Victorino
+ * 
+ * @param game Given game
+ * @return Day or night, -1 if error 
+ */
+Time game_get_time(Game *game);
+
+/**
  * @brief Gets an object via target id
  * @author Miguel Soto
  * 
