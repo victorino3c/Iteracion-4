@@ -35,7 +35,7 @@ char *cmd_to_str[N_CMD]
       {"q", "Attack"},             /*!< If a "q" or "attack" is received, it is interpreted as Attack */
       {"m", "Move"},               /*!< If a "m" or "move" received, it is interpreted as move */
       {"i", "Inspect"},            /*!< If an "i" or "inspect" received, it is interpreted as inspect */
-      {"g", "Save"}, 
+      {"g", "Save"},               /*!< If an "g" or "save" received, it is interpreted as Save */
       };
         
 /**It scans the cmd searching for key words introduced by the user 
