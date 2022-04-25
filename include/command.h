@@ -44,7 +44,7 @@ typedef enum enum_Command
   ATTACK,       /*!< Command type is to attack an enemy. Id of the enemy must be included as a second argument. */
   MOVE,         /*!< Command type is to move player (direction specify in another argument). */
   INSPECT,      /*!< Command type is to inspect. */
-  SAVE          /*!< Command type is to move player (direction specify in another argument). */
+  SAVE          /*!< Command type is to save (name of the file as a second argument). */
 } T_Command;
 
 /**
