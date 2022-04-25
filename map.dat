@@ -1,17 +1,17 @@
-#s:12|A_Entry|Entrance to the attic|descripcion-larga|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
-#s:127|A_Corridor|Who is it guarding that door |descripcion-larga|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
-#s:17|A_Alcove|This looks like a key to me|descripcion-larga|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
-#s:11|Cell|Starting position|descripcion-larga|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
-#s:121|Corridor1|First main corridor|descripcion-larga|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |
-#s:16|Secret_Chamber|Secret OP loot chamber |descripcion-larga|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
-#s:122|Hall|Hall leading to the throne room|descripcion-larga|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
-#s:123|Throne_Room|Lair of the Dusk_King  |descripcion-larga|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |
-#s:125|Dining_Room|Dark at the beginning, hides many mysteries|descripcion-larga|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |
-#s:126|Corridor2|Second main corridor|descripcion-larga|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|
-#s:13|Library|What about the third candle |descripcion-larga|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
-#s:14|Bedroom|This trapdoor may lead somewhere|descripcion-larga|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
-#s:15|D_Chamber|Anteroom to the D_Treasury|descripcion-larga| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |
-#s:124|D_Treasury|Where the Dusk_Key lays|descripcion-larga|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|
+#s:12|A_Entry|Entrance to the attic|descripcion-larga|-1|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
+#s:127|A_Corridor|Who is it guarding that door |descripcion-larga|-1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
+#s:17|A_Alcove|This looks like a key to me|descripcion-larga|-1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
+#s:11|Cell|Starting position|descripcion-larga|-1|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
+#s:121|Corridor1|First main corridor|descripcion-larga|-1|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |
+#s:16|Secret_Chamber|Secret OP loot chamber |descripcion-larga|-1|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|
+#s:122|Hall|Hall leading to the throne room|descripcion-larga|-1|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |
+#s:123|Throne_Room|Lair of the Dusk_King  |descripcion-larga|-1|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |
+#s:125|Dining_Room|Dark at the beginning, hides many mysteries|descripcion-larga|-1|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |
+#s:126|Corridor2|Second main corridor|descripcion-larga|-1|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|
+#s:13|Library|What about the third candle |descripcion-larga|-1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|
+#s:14|Bedroom|This trapdoor may lead somewhere|descripcion-larga|-1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|
+#s:15|D_Chamber|Anteroom to the D_Treasury|descripcion-larga|-1| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |
+#s:124|D_Treasury|Where the Dusk_Key lays|descripcion-larga|-1|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|
 #o:310|Stick|Wooden stick that can be lit up |11|
 #o:311|Stick|Wooden stick that can be lit up |11|
 #o:312|Apple|Recovers 1 health|121|
