@@ -38,4 +38,22 @@ typedef enum
   */
 STATUS game_create_from_file(Game *game, char *filename);
 
+/**
+ * @brief Saves the information of the actual game in the save file
+ * @author Nicolas Victorino
+ *
+ * @param game pointer to the game we want to save @param filename file where we print save
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
+STATUS game_managment_save(char *filename, Game* game);
+
+/**
+ * @brief Loads the information of the actual game in the save file
+ * @author Nicolas Victorino
+ *
+ * @param game pointer to the game we want to load @param filename file from where we load save
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
+STATUS game_managment_load(char *filename, Game* game);
+
 #endif
