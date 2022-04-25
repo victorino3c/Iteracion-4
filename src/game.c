@@ -15,6 +15,7 @@
 #include <strings.h>
 #include <time.h>
 #include "../include/game.h"
+#include "../include/game_managment.h"
 
 /**
  * @brief Game
@@ -1366,11 +1367,11 @@ STATUS game_command_inspect(Game *game, char *arg)
 }
 
 STATUS game_command_save(Game* game, char *arg){
-  return game_save(arg, game);
+  return game_managment_save(arg, game);
 }
 
 STATUS game_command_load(Game* game, char *arg){
-  
+  return game_managment_load(arg, game);
 }
 
 /*Function that gets the enemy id based on the position it is located in the enemy array located in the game structure */
