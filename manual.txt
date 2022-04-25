@@ -1,0 +1,87 @@
+WELCOME TO "DAY-NIGHT DUNGEON"
+Here you would find all the necessary information to enjoy and play the game
+
+Your goal is to escape alive from the Dusk King's Castle. 
+
+BASICS:
+The player can move through the castle using the command move, followed
+by (space) n, s, w, e, u, d to move North, South, West, East, Up or Down. Note that
+this command also works when typing move and the full coordinate as in move north.
+
+We encourage our players to always inspect (lit up or not) spaces and each of the objects
+there (when a space is dark, much of its details, including objects,
+are unaccessible). In order to obtain info about something, use the command inspect followed 
+by space, to explore the space your player is in, or inspect plus <obj_name>
+to  examine the target object.
+
+To pick up or drop any item (some might be hidden depending on the time it is
+or unless some objects are in our inventory) we must use the drop or take command 
+followed by the target object's name as in take/drop apple. All taken objects(the ones 
+that can be) will be stored in the player's inventory. 
+
+VERY IMPORTANT NOTE: 
+The use command will usually act as a "use object", in addition, for some 
+objects, once they are dropped in the correct place, we won't be able to move them anymore.
+This for example, is the case for the ladder but doesn't apply for torches.
+Otherwise, for consumable objects(like healing ones or keys), after using them,
+they will be destroyed/consumed.
+
+Done with the basics, let's carry on with other mechanics of the game
+
+
+
+KEY WORDS:
+When inspecting objects, some descriptions might not be clear enough so here is a 
+guide for some terms:
+
+Power: Chance to win a combat round (hit an enemy).
+
+Recover: Means heal, not increase Max_health, as long as we are hurt, 
+this object will be useful.
+
+Dusk_Key: A key to his doorstep meaning a key to the Throne_Room,
+the blocked door at the Hall.
+
+
+
+COMBAT:
+From time to time you will encounter an enemy (all of which you must defeat,
+except the fellow cellmate, we dont recommend attacking him,as he has been there 
+since before anyone else, but it is up to you)
+
+The combat system is quite forward, use the command attack inside a room with an enemy,
+and combat will inmediately begin. Each time we use the command, a combat round will occur
+where we can hit, or be hit by the enemy. We can disengage by moving outside of the room,
+beware that this will reset the enemy's health back to full. Healing items can be used at any
+time can be used at any time but you would get hit by your foe if you are in the same room.
+So heal on another room if you want to recover before and not during combat
+
+Initially, the player has a 50% chance to damage the enemy,
+but same odds to be hit by them. 
+A sword will increase the chance to hit an enemy but won't 
+change the damage we deal (That is reserved for other...special swords). The variable that
+will show our chance to hit a foe in combat is power, ranging from 0 to 1.
+
+Another feature added to make combat more challenging is critical hits, which will deal 
+double the base damage. Default crit.chance for us is 0 but this can be increased by obtaining the 
+Crit Sword (inspect the object in-game for more details), but for enemies, it will depend on who 
+they are, a guard won't be dealing critical hits but for an assassin...this changes a lot.
+
+
+
+DAY-NIGHT FEATURE:
+This is the feature that makes this game different from others. 
+Day by default.
+Beds will be objects inside the bedrooms of the castle and we would be able to sleep
+on them so that it becomes day or night. 
+It is true that most dark spaces will need to be lit up with torches to see the objects that
+are hidden in them. But, many misteries are hidden in the dark, and 
+some of them can only be seen in those conditions, even in the dark, somethings only happen at night.
+We should be using torches wisely, moving them at day or night, from one room to another in order to see or pick up objects, 
+or to cross secret passages. If the myths are right, only those who are worthy will be 
+able to see light when inspecting darkness.
+
+
+
+
+
