@@ -35,6 +35,7 @@ char *cmd_to_str[N_CMD]
       {"q", "Attack"},             /*!< If a "q" or "attack" is received, it is interpreted as Attack */
       {"m", "Move"},               /*!< If a "m" or "move" received, it is interpreted as move */
       {"i", "Inspect"},            /*!< If an "i" or "inspect" received, it is interpreted as inspect */
+      {"g", "Save"}, 
       };
         
 /**It scans the cmd searching for key words introduced by the user 
@@ -60,7 +61,7 @@ T_Command command_get_user_input(char *arg)
       if (!strcasecmp(input, cmd_to_str[i][CMDS]) || !strcasecmp(input, cmd_to_str[i][CMDL]))
       {
         cmd = i + NO_CMD;                   /*!< If any differences are detected between CMDS, CMDL and the input, cmd is modified */
-        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT)
+        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE)
         {
           if (scanf("%s", arg) < 0)
           {

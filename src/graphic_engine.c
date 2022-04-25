@@ -556,7 +556,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       sprintf(str, "  Player objects:"); 
       screen_area_puts(ge->descript, str);
 
-      for (i = 0; i < set_get_nids(inventory_get_objects(player_get_inventory(game_get_player(game, 21)))); i++)
+      for (i = 0; i < set_get_nids(inventory_get_objects(player_get_inventory(game_get_player(game, 1)))); i++)
       {
         sprintf(str, "    %s", obj_get_name(game_get_object(game, set_get_ids_by_number(inventory_get_objects(player_get_inventory(game_get_player(game, 21))),i)))); 
         screen_area_puts(ge->descript, str);

@@ -46,6 +46,7 @@ STATUS game_command_left(Game *game, char *arg);
 STATUS game_command_right(Game *game, char *arg);
 STATUS game_command_move(Game *game, char *arg);
 STATUS game_command_inspect(Game *game, char *arg);
+STATUS game_command_save(Game *game, char *arg);
 
 /**
  * Game interface implementation
@@ -771,6 +772,10 @@ int game_update(Game *game, T_Command cmd, char *arg)
     st = (int)game_command_inspect(game, arg);
     break;
 
+  case SAVE:
+    st = (int)game_command_save(game, arg);
+    break;
+
   default:
     break;
   }
@@ -1296,7 +1301,7 @@ STATUS game_command_move(Game *game, char *arg)
  */
 STATUS game_command_inspect(Game *game, char *arg)
 {
-    Object *obj = game_get_object_byName(game, arg);
+  Object *obj = game_get_object_byName(game, arg);
 
   /*SPACE CASE*/
   if (strcmp(arg, "space") == 0 || strcmp(arg, "s") == 0)
@@ -1332,6 +1337,14 @@ STATUS game_command_inspect(Game *game, char *arg)
     return OK;
   }
   return ERROR;
+}
+
+STATUS game_command_save(Game* game, char *arg){
+  return game_save(arg, game);
+}
+
+STATUS game_command_load(Game* game, char *arg){
+  
 }
 
 /*Function that gets the enemy id based on the position it is located in the enemy array located in the game structure */

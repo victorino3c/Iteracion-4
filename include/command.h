@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2 /*!< It defines the number of ways each command can be call (the long and the short name). */
-#define N_CMD 12 /*!< It defines the number of arguments. */
+#define N_CMD 13 /*!< It defines the number of arguments. */
 
 /**
  * @brief It defines the two ways to call a command, by its short name (CMDS) or by its long name (CMDL).
@@ -43,7 +43,8 @@ typedef enum enum_Command
   DROP,         /*!< Command type is to drop object. Name of the objet must be included as a second argument. */
   ATTACK,       /*!< Command type is to attack an enemy. Id of the enemy must be included as a second argument. */
   MOVE,         /*!< Command type is to move player (direction specify in another argument). */
-  INSPECT       /*!< Command type is to inspect. */
+  INSPECT,      /*!< Command type is to inspect. */
+  SAVE          /*!< Command type is to move player (direction specify in another argument). */
 } T_Command;
 
 /**

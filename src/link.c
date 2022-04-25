@@ -311,7 +311,7 @@ STATUS link_print_save(char *filename, Link *link)
         return ERROR;
     }
 
-    fprintf(file, "l:%ld|%s|%ld|%ld|%d|%d|\n", link->id, link->name, link->start, link->destination, link->direction, link->status);
+    fprintf(file, "#l:%ld|%s|%ld|%ld|%d|%d|\n", link->id, link->name, link->start, link->destination, link->direction, link->status);
 
     fclose(file);
 

@@ -200,7 +200,7 @@ STATUS inventory_print_save(char *filename, Inventory* inventory, Id player) {
 
     if (id != NO_ID)
     {
-      fprintf(file, "i:%ld|%ld|\n", id, player);
+      fprintf(file, "#i:%ld|%ld|\n", id, player);
     } else {
       break;
     }

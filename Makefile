@@ -54,6 +54,10 @@ run:
 	@echo ">>>>>>Running main"
 	./juego hormiguero.dat
 	
+run_test:
+	@echo ">>>>>>Running main"
+	./juego hola.dat
+	
 vrun:
 	@echo ">>>>>>Running main"
 	valgrind --leak-check=full ./juego hormiguero.dat

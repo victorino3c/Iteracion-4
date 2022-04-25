@@ -241,7 +241,7 @@ STATUS enemy_print_save(char *filename, Enemy *enemy)
       return ERROR;
   }
 
-  fprintf(file, "e:%ld|%s|%ld|%d|\n", enemy->id, enemy->name, enemy->location, enemy->health);
+  fprintf(file, "#e:%ld|%s|%ld|%d|\n", enemy->id, enemy->name, enemy->location, enemy->health);
 
   fclose(file);
 
