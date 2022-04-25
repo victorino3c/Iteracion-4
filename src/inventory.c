@@ -195,7 +195,7 @@ STATUS inventory_print_save(char *filename, Inventory* inventory, Id player) {
     return ERROR;
   }
 
-  for (i = 0; id != NO_ID; i++) {
+  for (i = 0; i < set_get_nids(inventory->objects); i++) {
     id = set_get_ids_by_number(inventory->objects, i);
 
     if (id != NO_ID)
