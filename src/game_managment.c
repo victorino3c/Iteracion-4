@@ -78,11 +78,12 @@ STATUS game_create_from_file(Game *game, char *filename)
     return ERROR;
   }
 
+  
   if (game_load_inventory(game, filename) == ERROR)
   {
     return ERROR;
   }
-
+  
   /* The player and the object are located in the first space */
 
   return OK;
@@ -195,6 +196,8 @@ STATUS game_load_objs(Game *game, char *filename)
   char *toks = NULL;
   Id id = NO_ID, pos = NO_ID;
   Object *obj = NULL;
+  BOOL movable, illuminate, turnedon;
+  Id dependency, open;
   STATUS status = OK;
 
   if (!filename)
@@ -221,6 +224,16 @@ STATUS game_load_objs(Game *game, char *filename)
       strcpy(description, toks);
       toks = strtok(NULL, "|");
       pos = atol(toks);
+      toks = strtok(NULL, "|");
+      movable = atoi(toks);
+      toks = strtok(NULL, "|");
+      dependency = atol(toks);
+      toks = strtok(NULL, "|");
+      open = atol(toks);
+      toks = strtok(NULL, "|");
+      illuminate = atoi(toks);
+      toks = strtok(NULL, "|");
+      turnedon = atoi(toks);
 
 #ifdef DEBUG
       // printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
@@ -231,6 +244,11 @@ STATUS game_load_objs(Game *game, char *filename)
         obj_set_name(obj, name);
         obj_set_description(obj, description);
         obj_set_location(obj, pos);
+        object_set_movable(obj, movable);
+        object_set_dependency(obj, dependency);
+        object_set_open(obj, open);
+        object_set_illuminate(obj, illuminate);
+        object_set_turnedon(obj, turnedon);
         /*Error control*/
         if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
         {
@@ -690,3 +708,4 @@ STATUS game_managment_load(char *filename, Game *game)
   st = game_create_from_file(game, filename);
   return st;
 }
+
