@@ -17,22 +17,41 @@
 #include "../include/types.h"
 
 /*Private functions*/
-BOOL random(int num);
+int random();
 
+/*Generates a random event by 
+    percentages and returns it*/
+R_Event game_rules_get_event(){
+    int magic;
 
+    magic = random();
+
+    if(magic > EVENT_FIVE){
+        return SPAWN;
+    }
+    if(magic > EVENT_FOUR){
+        return DAYNIGHT;
+    }
+    if(magic > EVENT_THREE){
+        return SLIME;
+    }
+    if(magic > EVENT_TWO){
+        return TRAP;
+    }
+    if(magic > EVENT_ONE){
+        return MOVE_OBJ;
+    }
+
+    return NOTHING;
+}
 
 /*Returns TRUE in porcentage of num*/
-BOOL random(int num){
+int random(){
 
     int rand_num;
 
     srand(time(NULL));
     rand_num = rand() % 100;
 
-    if(rand_num > num){
-        return FALSE;
-    }
-
-    return TRUE;
+    return rand_num;
 }
-
