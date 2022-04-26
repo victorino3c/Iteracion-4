@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2 /*!< It defines the number of ways each command can be call (the long and the short name). */
-#define N_CMD 10 /*!< It defines the number of arguments. */
+#define N_CMD 12 /*!< It defines the number of arguments. */
 
 /**
  * @brief It defines the two ways to call a command, by its short name (CMDS) or by its long name (CMDL).
@@ -41,7 +41,9 @@ typedef enum enum_Command
   MOVE,         /*!< Command type is to move player (direction specify in another argument). */
   INSPECT,      /*!< Command type is to inspect. */
   SAVE,         /*!< Command type is to save (name of the file as a second argument). */
-  LOAD          /*!< Command type is to load (name of the file as a second argument). */
+  LOAD,         /*!< Command type is to load (name of the file as a second argument). */
+  TURNON,       /*!< Command type is to turn on an object to iluminate space. */
+  TURNOFF       /*!< Command type is to turn off an object so it stops lighting a space. */
 } T_Command;
 
 /**
