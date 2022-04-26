@@ -248,5 +248,5 @@ Time object_get_time_visible(Object *obj);
  * @param obj_id id of the object @param time Day time @param ls Light status of the space
  * @return True if visible
 */
-STATUS obj_is_visible(Object *obj, Time time, Light ls);
+BOOL obj_is_visible(Object *obj, Time time, Light ls);
 #endif
