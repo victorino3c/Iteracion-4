@@ -224,22 +224,22 @@ BOOL object_get_turnedon(Object *obj);
 STATUS obj_print_save(char *filename, Object *obj);
 
 /**
- * @brief Sets the time_visible condition of an object
+ * @brief Sets the light_visible condition of an object
  * @author Nicolas Victorino
  *  
- * @param obj is a pointer to the target object @param time new value of the condition
+ * @param obj is a pointer to the target object @param light new value of the condition
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
  */
-STATUS object_set_time_visible(Object *obj, Time time);
+STATUS object_set_time_visible(Object *obj, Light light);
 
 /**
- * @brief Gets the time_visible condition of an object
+ * @brief Gets the light_visible condition of an object
  * @author Nicolas Victorino
  *  
  * @param obj is a pointer to the target object
- * @return Time when the object is visible, -1 if error
+ * @return Light when the object is visible, -1 if error
  */
-Time object_get_time_visible(Object *obj);
+Light object_get_time_visible(Object *obj);
 
 /** 
  * @brief Return true if the object is visible
@@ -249,4 +249,6 @@ Time object_get_time_visible(Object *obj);
  * @return True if visible
 */
 BOOL obj_is_visible(Object *obj, Light ls);
+
 #endif
+
