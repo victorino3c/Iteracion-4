@@ -41,14 +41,11 @@ struct _Game
 int game_command_unknown(Game *game, char *arg);
 void game_get_new_event(Game *game);
 STATUS game_command_exit(Game *game, char *arg);
-STATUS game_command_down(Game *game, char *arg);
-STATUS game_command_up(Game *game, char *arg);
 STATUS game_command_take(Game *game, char *arg);
 STATUS game_command_drop(Game *game, char *arg);
 STATUS game_command_attack(Game *game, char *arg);
-STATUS game_command_left(Game *game, char *arg);
-STATUS game_command_right(Game *game, char *arg);
 STATUS game_command_move(Game *game, char *arg);
+STATUS game_command_movement(Game *game, DIRECTION dir);
 STATUS game_command_inspect(Game *game, char *arg);
 STATUS game_command_save(Game *game, char *arg);
 STATUS game_command_load(Game *game, char *arg);
@@ -773,19 +770,19 @@ int game_update(Game *game, T_Command cmd, char *arg)
     break;
 
   case DOWN:
-    st = (int)game_command_down(game, arg);
+    st = (int)game_command_movement(game, S);
     break;
 
   case RIGHT:
-    st = (int)game_command_right(game, arg);
+    st = (int)game_command_movement(game, E);
     break;
 
   case LEFT:
-    st = (int)game_command_left(game, arg);
+    st = (int)game_command_movement(game, W);
     break;
 
   case UP:
-    st = (int)game_command_up(game, arg);
+    st = (int)game_command_movement(game, N);
     break;
 
   case TAKE:
@@ -1102,100 +1099,6 @@ STATUS game_command_drop(Game *game, char *arg)
 }
 
 /**
- * @brief It executes DOWN command in game.
- * 
- * When the last command is interpreted as down, move
- * the player to the space South to its current position,
- * updating it afterwards
- * 
- * @param game pointer to game struct
- * @param arg string with command argument
- * @return OK if everything goes well or ERROR if there was any mistake
- */
-STATUS game_command_down(Game *game, char *arg)
-{
-  Id player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
-  Id player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
-
-  Space *s = game_get_space(game, player_location);
-  /* S is south */
-  Link *l = game_get_link(game, space_get_link(s, S));
-
-  /* Error control */
-  if (player_id == NO_ID || player_location == NO_ID)
-  {
-    return ERROR;
-  }
-
-  if (!s)
-  {
-    return ERROR;
-  }
-
-  if (!l)
-  {
-    return ERROR;
-  }
-
-  if (link_get_status(l) == OPEN)
-  {
-    game_set_player_location(game, player_id, link_get_destination(l));
-    return OK;
-  }
-  else
-  {
-    return ERROR;
-  }
-}
-
-/**
- * @brief It executes UP command in game.
- * 
- * When the last command is interpreted as up, move
- * the player to the space North to its current position,
- * updating it afterwards
- * 
- * @param game pointer to game struct
- * @param arg string with command argument
- * @return OK if everything goes well or ERROR if there was any mistake
- */
-STATUS game_command_up(Game *game, char *arg)
-{
-  Id player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
-  Id player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
-
-  Space *s = game_get_space(game, player_location);
-  /* N is north */
-  Link *l = game_get_link(game, space_get_link(s, N));
-
-  /* Error control */
-  if (player_id == NO_ID || player_location == NO_ID)
-  {
-    return ERROR;
-  }
-
-  if (!s)
-  {
-    return ERROR;
-  }
-
-  if (!l)
-  {
-    return ERROR;
-  }
-
-  if (link_get_status(l) == OPEN)
-  {
-    game_set_player_location(game, player_id, link_get_destination(l));
-    return OK;
-  }
-  else
-  {
-    return ERROR;
-  }
-}
-
-/**
  * @brief It executes ATTACK command in game.
  * 
  * This command allows the player to engage in combat with an enemy.
@@ -1253,104 +1156,10 @@ STATUS game_command_attack(Game *game, char *arg)
 }
 
 /**
- * @brief It executes LEFT command in game.
- * 
- * When the last command is interpreted as left, move
- * the player to the space West to its current position,
- * updating it afterwards
- * 
- * @param game pointer to game struct
- * @param arg string with command argument
- * @return OK if everything goes well or ERROR if there was any mistake
- */
-STATUS game_command_left(Game *game, char *arg)
-{
-  Id player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
-  Id player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
-
-  Space *s = game_get_space(game, player_location);
-  /* W is west */
-  Link *l = game_get_link(game, space_get_link(s, W));
-
-  /* Error control */
-  if (player_id == NO_ID || player_location == NO_ID)
-  {
-    return ERROR;
-  }
-
-  if (!s)
-  {
-    return ERROR;
-  }
-
-  if (!l)
-  {
-    return ERROR;
-  }
-
-  if (link_get_status(l) == OPEN)
-  {
-    game_set_player_location(game, player_id, link_get_destination(l));
-    return OK;
-  }
-  else
-  {
-    return ERROR;
-  }
-}
-
-/**
- * @brief It executes RIGHT command in game.
- * 
- * When the last command is interpreted as right, move
- * the player to the space East to its current position,
- * updating it afterwards
- * 
- * @param game pointer to game struct
- * @param arg string with command argument
- * @return OK if everything goes well or ERROR if there was any mistake
- */
-STATUS game_command_right(Game *game, char *arg)
-{
-  Id player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
-  Id player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
-
-  Space *s = game_get_space(game, player_location);
-  /* E is east */
-  Link *l = game_get_link(game, space_get_link(s, E));
-
-  /* Error control */
-  if (player_id == NO_ID)
-  {
-    return ERROR;
-  }
-
-  if (!s)
-  {
-    return ERROR;
-  }
-
-  if (!l)
-  {
-    return ERROR;
-  }
-
-  if (link_get_status(l) == OPEN)
-  {
-    game_set_player_location(game, player_id, link_get_destination(l));
-    return OK;
-  }
-  else
-  {
-    return ERROR;
-  }
-}
-
-/**
  * @brief It executes MOVE command in game.
  * 
- * Another way to move, commands move n,s,e,w
- * to north, south, east or west respectively
+ * Another way to move, commands move n,s,e,w,u,d
+ * to north, south, east, west, up or down respectively
  * 
  * @param game pointer to game struct
  * @param arg string with command argument
@@ -1362,23 +1171,39 @@ STATUS game_command_move(Game *game, char *arg)
   char *north[2] = {"n", "North"};
   char *south[2] = {"s", "South"};
   char *east[2] = {"e", "East"};
+  char *up[2] = {"u", "Up"};
+  char *down[2] = {"d", "Down"};
   STATUS st = ERROR;
 
   if (strcasecmp(arg, west[0]) == 0 || strcasecmp(arg, west[1]) == 0)
   {
-    st = game_command_left(game, NULL);
+    /* Moving west */
+    st = game_command_movement(game, W);
   }
   else if (strcasecmp(arg, north[0]) == 0 || strcasecmp(arg, north[1]) == 0)
   {
-    st = game_command_up(game, NULL);
+    /* Moving north */
+    st = game_command_movement(game, N);
   }
   else if (strcasecmp(arg, south[0]) == 0 || strcasecmp(arg, south[1]) == 0)
   {
-    st = game_command_down(game, NULL);
+    /* Moving south */
+    st = game_command_movement(game, S);
   }
   else if (strcasecmp(arg, east[0]) == 0 || strcasecmp(arg, east[1]) == 0)
   {
-    st = game_command_right(game, NULL);
+    /* Moving east */
+    st = game_command_movement(game, E);
+  }
+  else if (strcasecmp(arg, up[0]) == 0 || strcasecmp(arg, up[1]) == 0)
+  {
+    /* Moving up */
+    st = game_command_movement(game, U);
+  }
+  else if (strcasecmp(arg, down[0]) == 0 || strcasecmp(arg, down[1]) == 0)
+  {
+    /* Moving down */
+    st = game_command_movement(game, D);
   }
   else
   {
@@ -1387,6 +1212,57 @@ STATUS game_command_move(Game *game, char *arg)
 
   return st;
 }
+
+/**
+ * @brief It executes the movement from a move command in game.
+ * @author Miguel Soto
+ * 
+ * @param game pointer to game struct
+ * @param dir movement direction
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
+STATUS game_command_movement(Game *game, DIRECTION dir)
+{
+  Id player_location = NO_ID, player_id = NO_ID;
+  Space *s = NULL;
+  Link *l = NULL;
+
+  if (!game || dir == ND)
+  {
+    return ERROR;
+  }
+
+  player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
+  player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
+  if (player_location == NO_ID || player_id == NO_ID)
+  {
+    return ERROR;
+  }
+  
+  Space *s = game_get_space(game, player_location);
+  if (!s)
+  {
+    return ERROR;
+  }
+  
+  Link *l = game_get_link(game, space_get_link(s, dir));
+  if (!l)
+  {
+    return ERROR;
+  }
+  
+  if (link_get_status(l) == OPEN)
+  {
+    game_set_player_location(game, player_id, link_get_destination(l));
+    return OK;
+  }
+  else
+  {
+    /* Link is closed */
+    return ERROR;
+  }
+}
+
 
 /**
  * @brief It executes INSPECT command in game.
