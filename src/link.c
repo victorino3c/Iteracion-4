@@ -24,7 +24,7 @@ struct _Link
     char name[LINK_NAME_LEN]; /*!< Link's name */
     Id start;   /*!< Id from the space where link starts*/
     Id destination;      /*!< Id to space destination */
-    DIRECTION direction; /*!< Defines direction (N, S, E, W or ND (Not defined)) */
+    DIRECTION direction; /*!< Defines link's direction */
     LINK_STATUS status;  /*!< Wether link is OPEN or CLOSE */
 };
 
@@ -276,6 +276,14 @@ int link_print(Link *link)
     else if (link->direction == W)
     {
         n += fprintf(stdout, "WEST (W)\n");
+    }
+    else if (link->direction == U)
+    {
+        n += fprintf(stdout, "UP (U)\n");
+    }
+    else if (link->direction == D)
+    {
+        n += fprintf(stdout, "DOWN (D)\n");
     }
     else
     {
