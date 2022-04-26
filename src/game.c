@@ -1603,6 +1603,7 @@ Game *game_alloc2()
     return NULL;
   }
   game->inspection = "\0";
+  game->day_time = DAY;
   game->last_event = NOTHING;
 
   return game;
