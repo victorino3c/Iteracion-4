@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2 /*!< It defines the number of ways each command can be call (the long and the short name). */
-#define N_CMD 13 /*!< It defines the number of arguments. */
+#define N_CMD 14 /*!< It defines the number of arguments. */
 
 /**
  * @brief It defines the two ways to call a command, by its short name (CMDS) or by its long name (CMDL).
