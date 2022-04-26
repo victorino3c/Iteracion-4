@@ -122,7 +122,7 @@ Id link_get_destination(Link *link);
  * @author Antonio Van-Oers
  * 
  * @param link a pointer to target link.
- * @param dir 
+ * @param dir new link's direction
  * @return STATUS OK, if everything goes well or ERROR if there was some mistake.
  */
 STATUS link_set_direction(Link *link, DIRECTION dir);
@@ -132,7 +132,7 @@ STATUS link_set_direction(Link *link, DIRECTION dir);
  * @author Antonio Van-Oers
  * 
  * @param link a pointer to target link.
- * @return DIRECTION 
+ * @return link's direction 
  */
 DIRECTION link_get_direction(Link *link);
 
@@ -141,7 +141,7 @@ DIRECTION link_get_direction(Link *link);
  * @author Antonio Van-Oers
  * 
  * @param link a pointer to target link.
- * @param st 
+ * @param st new link's status
  * @return STATUS OK, if everything goes well or ERROR if there was some mistake. 
  */
 STATUS link_set_status(Link *link, LINK_STATUS st);
