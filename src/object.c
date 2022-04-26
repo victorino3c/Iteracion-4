@@ -30,6 +30,7 @@ struct _Object
   Id open; /*!< Open condition of an object (If an object can open a certain space it saves the id here, if not NO_ID)*/
   BOOL illuminate; /*!< Illuminate condition of an object (Por defecto FALSE)*/
   BOOL turnedon; /*!< Turned on condition of an object (Por defecto FALSE)*/
+  Time time_visible;
 } ;
 
 /** obj_create reserva memoria para un nuevo objeto e inicializa sus miembros.
@@ -375,6 +376,31 @@ BOOL object_get_turnedon(Object *obj)
   return obj->turnedon;
 }
 
+/** Set the time when an object is visible
+*/
+STATUS object_set_time_visible(Object *obj, Time time)
+{
+  if (!obj || (time != DAY && time != NIGHT))
+  {
+    return ERROR;
+  }
+
+  obj->time_visible = time;
+  return OK;
+}
+
+/** Gets the time when an object is visible 
+*/
+Time object_get_time_visible(Object *obj)
+{
+  if (!obj)
+  {
+    return -1;
+  }
+
+  return obj->time_visible;
+}
+
 /** obj_print_save prints the information of an object in the save file
  */
 STATUS obj_print_save(char *filename, Object *obj)
@@ -394,5 +420,24 @@ STATUS obj_print_save(char *filename, Object *obj)
   fclose(file);
 
   return OK;
+}
+
+/** Return true if the object is visible
+*/
+STATUS obj_is_visible(Object *obj, Time time, Light ls)
+{
+  if (obj == NULL || ls == UNKNOWN_LIGHT)
+  {
+    return ERROR;
+  }
+
+  if (object_get_time_visible(obj) == DAY && ls == BRIGHT)
+  {
+    return TRUE;
+  } else if (object_get_time_visible(obj) == NIGHT && ls == DARK) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
 }
 
