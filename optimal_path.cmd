@@ -46,6 +46,7 @@ use Bread_Crumbs
 inspect space
 use candle1
 move south
+move south
 take sword2
 move east
 use apple1
@@ -69,8 +70,7 @@ inspect space
 take Crit_sword
 take armor1
 use armor1
-take bed1
-use bed1
+use bed2
 move west
 move west
 inspect space
@@ -102,23 +102,23 @@ move south
 move up
 move west
 move west
+move west
 use hook
-take Dawn_key --No se si cuando usas el hook te la da directamente o la dropea al espacio
 move west
 move north
 use Dawn_key
 move west
 inspect space
-take Sun_armor --Despues de cogerla hay que utilizarla no?
+take Sun_armor 
 move east
 move south
 use dusk_key
 move south
 take armor3
 move north
+use armor3 
 use elixir1
 use elixir2
-use armor3 --Mejor armor antes de elixir para que puedas recuperar mas vida no?
 move south
 a
 a

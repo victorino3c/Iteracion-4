@@ -29,8 +29,8 @@
 #o:324|Elixir|Recovers 3 health|124|1|-1|-1|0|0|1|
 #o:325|Apple|Recovers 1 health|12|1|-1|-1|0|0|1|
 #o:326|Apple|Recovers 1 health|12|1|-1|-1|0|0|1|
-#o:327|Bed| Makes it night or day time |17|0|-1|-1|0|0|1|
-#o:328|Bed| Makes it night or day time |14|0|-1|-1|0|0|1|
+#o:327|Bed1| Makes it night or day time |17|0|-1|-1|0|0|1|
+#o:328|Bed2| Makes it night or day time |14|0|-1|-1|0|0|1|
 #o:322|Armor|+1 Max_health|123|1|-1|-1|0|0|0|
 #o:31|Ladder|Ladder to access the attic from the cell |122|1|-1|11|0|0|1| 
 #o:32|Dawn_Key|Only the worthy can enter the Secret_Chamber|125|1|-1|121|0|0|1|

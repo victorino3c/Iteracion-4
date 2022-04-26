@@ -82,7 +82,7 @@ key in the Dining_Room will open the hidden door (Corridor1).
 
 Lit up the candle
 
-Move south
+Move south twice
 
 Take sword
 
@@ -144,7 +144,7 @@ Move South
 
 Move up (bedroom)
 
-Move West twice (Dining_Room)
+Move West thrice (Dining_Room)
 
 Now remember that you have a hook now, so 
 use it to get the Dawn_Key, previously unreacheable 
@@ -175,9 +175,9 @@ Sneak in (it is nightime) take the last piece of Armor from the floor
 
 Move north to get out
 
-Use all remaining healing items(Use the two elixirs that you should have)
-
 Use Armor to use it and increase your Max_health
+
+Use all remaining healing items(Use the two elixirs that you should have)
 
 Move south again
 
