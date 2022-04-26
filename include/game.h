@@ -19,6 +19,7 @@
 #include "object.h"
 #include "enemy.h"
 #include "inventory.h"
+#include "game_rules.h"
 
 #define MAX_LINKS 200  /*!< It established the maximun of links that can be in a game */
 #define MAX_SPACES 100  /*!< It established the maximun of spaces that can be in a game */
