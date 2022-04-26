@@ -52,7 +52,9 @@ typedef enum
   N,       /* !< Short for North */
   S,       /* !< Short for South */
   E,       /* !< Short for East */
-  W        /* !< Short for West */
+  W,       /* !< Short for West */
+  U,       /* !< Short for Up */
+  D        /* !< Short for Down */
 } DIRECTION;
 
 /**
@@ -72,4 +74,3 @@ typedef enum
 } Time;
 
 #endif
-
