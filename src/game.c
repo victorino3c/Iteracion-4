@@ -32,12 +32,14 @@ struct _Game
   char *inspection;            /*!< Long description for inspect space */
   Time day_time;               /*!< Time cycle of the game */
   T_Command last_cmd;          /*!< Last command input */
+  R_Event last_event;          /*!< Last event */
 } ;
 
 /**
    Private functions
 */
 int game_command_unknown(Game *game, char *arg);
+void game_get_new_event(Game *game);
 STATUS game_command_exit(Game *game, char *arg);
 STATUS game_command_down(Game *game, char *arg);
 STATUS game_command_up(Game *game, char *arg);
@@ -49,6 +51,12 @@ STATUS game_command_right(Game *game, char *arg);
 STATUS game_command_move(Game *game, char *arg);
 STATUS game_command_inspect(Game *game, char *arg);
 STATUS game_command_save(Game *game, char *arg);
+STATUS game_command_load(Game *game, char *arg);
+STATUS game_event_move(Game *game);
+STATUS game_event_trap(Game *game);
+STATUS game_event_slime(Game *game);
+STATUS game_event_daynight(Game *game);
+STATUS game_event_spawn(Game *game);
 
 /**
  * Game interface implementation
@@ -129,7 +137,7 @@ STATUS game_create(Game *game)
 
   game->day_time = DAY;
   game->last_cmd = NO_CMD;
-
+  
   return OK;
 }
 
@@ -804,11 +812,66 @@ int game_update(Game *game, T_Command cmd, char *arg)
     st = (int)game_command_save(game, arg);
     break;
 
+  case LOAD:
+    st = (int)game_command_load(game, arg);
+    break;
+
   default:
     break;
   }
 
+  game_get_new_event(game);
+
   return st;
+}
+
+/*Functions for the new event
+(just a continuation of game_update)*/
+void game_get_new_event(Game *game){
+
+  R_Event new_event;
+  STATUS st;
+
+  new_event = game_rules_get_event();
+  game->last_event = new_event;
+
+  switch(new_event)
+  {
+    case MOVE_OBJ:
+      st = game_event_move(game);
+      break;
+
+    case TRAP:
+      st = game_event_trap(game);
+      break;
+
+    case SLIME:
+      st = game_event_slime(game);
+      break;
+
+    case DAYNIGHT:
+      st = game_event_daynight(game);
+      break;
+
+    case SPAWN:
+      st = game_event_spawn(game);
+      break;
+
+    default:
+      break;
+  }
+
+  if(st == ERROR){
+    game->last_event = NOTHING;
+  }
+
+  return;
+}
+
+/* Gets the last event in the input
+*/
+R_Event game_get_last_event(Game *game){
+  return game->last_event;
 }
 
 /** Gets the last command in the input
@@ -1374,10 +1437,28 @@ STATUS game_command_inspect(Game *game, char *arg)
   return ERROR;
 }
 
+/**
+ * @brief It executes SAVE command in game.
+ * 
+ * Creates a file with the info of the game
+ * 
+ * @param game pointer to game struct
+ * @param arg string with command argument
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
 STATUS game_command_save(Game* game, char *arg){
   return game_managment_save(arg, game);
 }
 
+/**
+ * @brief It executes LOAD command in game.
+ * 
+ * Generates a new game throught a file 
+ * 
+ * @param game pointer to game struct
+ * @param arg string with command argument
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
 STATUS game_command_load(Game* game, char *arg){
 
   if(strcasecmp(arg, "savedata.dat") != 0 && strcasecmp(arg, "hormiguero.dat") != 0){
@@ -1385,6 +1466,86 @@ STATUS game_command_load(Game* game, char *arg){
   }
 
   return game_managment_load(arg, game);
+}
+
+/**
+ * @brief It executes MOVE event
+ * 
+ * Apple or Elixir will appear on the player's room 
+ * 
+ * @param game pointer to game struct
+ * @return OK if event happens, ERROR if not
+ */
+STATUS game_event_move(Game *game){
+  if(game->day_time == DAY){
+    return ERROR;
+  }
+
+  return OK;
+}
+
+/**
+ * @brief It executes TRAP event
+ * 
+ * Player losses 1 HP
+ * 
+ * @param game pointer to game struct
+ * @return OK if event happens, ERROR if not
+ */
+STATUS game_event_trap(Game *game){
+  if(game->day_time == DAY){
+    return ERROR;
+  }
+
+  return OK;
+}
+
+/**
+ * @brief It executes SLIME event
+ * 
+ * An slime appear on the players location 
+ * 
+ * @param game pointer to game struct
+ * @return OK if event happens, ERROR if not
+ */
+STATUS game_event_slime(Game *game){
+  if(game->day_time == DAY){
+    return ERROR;
+  }
+
+  return OK;
+}
+
+/**
+ * @brief It executes DAYNIGHT event
+ * 
+ * Changes day to night and night to day 
+ * 
+ * @param game pointer to game struct
+ * @return OK if event happens, ERROR if not
+ */
+STATUS game_event_daynight(Game *game){
+  if(game->day_time == DAY){
+    return ERROR;
+  }
+
+  return OK;
+}
+
+/**
+ * @brief It executes SPAWN event
+ * 
+ * Player tps to entrance
+ * 
+ * @param game pointer to game struct
+ * @return OK if event happens, ERROR if not
+ */
+STATUS game_event_spawn(Game *game){
+  if(game->day_time == DAY){
+    return ERROR;
+  }
+
+  return OK;
 }
 
 /*Function that gets the enemy id based on the position it is located in the enemy array located in the game structure */
@@ -1442,6 +1603,7 @@ Game *game_alloc2()
     return NULL;
   }
   game->inspection = "\0";
+  game->last_event = NOTHING;
 
   return game;
 }
