@@ -424,7 +424,7 @@ STATUS obj_print_save(char *filename, Object *obj)
 
 /** Return true if the object is visible
 */
-STATUS obj_is_visible(Object *obj, Time time, Light ls)
+BOOL obj_is_visible(Object *obj, Time time, Light ls)
 {
   if (obj == NULL || ls == UNKNOWN_LIGHT)
   {
