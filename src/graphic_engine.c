@@ -92,7 +92,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 {
   /* Variables declaration */
   Id id_act = NO_ID, id_up = NO_ID, id_down = NO_ID, id_left= NO_ID, id_right= NO_ID, aux_obj_id = NO_ID;
-  Id obj_loc[MAX_OBJS] = {NO_ID}, player_loc = NO_ID, en_loc[MAX_ENEMYS] = {NO_ID}, obj_id[MAX_OBJS]= {NO_ID};
+  Id obj_loc[MAX_OBJS] = {NO_ID}, player_loc = NO_ID, en_loc[MAX_ENEMYS] = {NO_ID};
   Inventory *player_inventory = NULL;
   int en_health[MAX_ENEMYS] = {0}, player_health = 0;
   Space *space_act = NULL;
@@ -105,7 +105,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char *description;
   char *inspection;
   char *obj_name[MAX_OBJS];
-  char link_up = '\0', link_down = '\0';
+  char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
   Set *object_set = NULL;
 
   /* setting all proper values for each variable */
@@ -134,7 +134,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     {
       break;
     }
-    obj_id[i] = game_get_object_id(game, i);
     obj_loc[i] = obj_get_location(game_get_object(game, game_get_object_id(game, i)));
     obj_name[i] = (char *) obj_get_name(game_get_object(game, game_get_object_id(game, i)));
   }
@@ -157,16 +156,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     if (id_up != NO_ID)
     {
       for(i = 0; i < set_get_nids(object_set); i++)
-      { 
-        /* Checks whether there is an object or not in that space */
-        if (space_has_object(game_get_space(game, id_up), obj_id[i]) == FALSE)
-        {         
-          obj = ' ';
-        }
-        else
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj = '*';
-          break;
+          obj = ' ';
+        } else {
+          obj = '*';              
+          i = set_get_nids(object_set) + 1;
         }
       }
 
@@ -198,28 +196,47 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_up = ' ';
       }
 
+      if (game_get_connection_status(game, id_act, E) == OPEN)
+      {
+        link_right = '>';
+      }
+      else
+      {
+        link_right = ' ';
+      }
+
+      if (game_get_connection_status(game, id_act, W) == OPEN)
+      {
+        link_left = '<';
+      }
+      else
+      {
+        link_left = ' ';
+      }
+
       sprintf(str, "          %c", link_up);
       screen_area_puts(ge->map, str);
     }
 
     /* Current space */
   
-        if (id_act != NO_ID)
+    if (id_act != NO_ID)
     {
       
       for(i = 0; i < set_get_nids(object_set); i++)
       {
         aux_obj_id = set_get_ids_by_number(object_set, i);
 
-        if (obj_is_visible(game_get_object(game, aux_obj_id), game_get_time(game), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
           obj = ' ';
         } else {
           obj = '*';              
-          break;
+          i = set_get_nids(object_set) + 1;
         }
       }
-          
+      
+
        /* Checks that there are no other spaces to the left or right */    
       if(id_left==NO_ID && id_right==NO_ID)  
       {
@@ -264,18 +281,35 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       if (id_right != NO_ID && id_left == NO_ID)
       {  
 
-      for(i=0;i<MAX_OBJS;i++)
-      { 
-        /* Checks whether there is an object or not in that space */
-        if (space_has_object(game_get_space(game, id_right), obj_id[i]) == FALSE)
-        {         
-          obj_r = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj_r = '*';
-          break;
+          obj = ' ';
+        } else {
+          obj = '*';              
+          i = set_get_nids(object_set) + 1;
         }
+      }
+
+      if (game_get_connection_status(game, id_act, E) == OPEN)
+      {
+        link_right = '>';
+      }
+      else
+      {
+        link_right = ' ';
+      }
+
+      if (game_get_connection_status(game, id_act, W) == OPEN)
+      {
+        link_left = '<';
+      }
+      else
+      {
+        link_left = ' ';
       }
 
         sprintf(str, "  +------------------+   ------------------|");
@@ -296,7 +330,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
             sprintf(str, "  |     %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
             screen_area_puts(ge->map, str);
           } else {
-            sprintf(str, "  |     %s    | > |    %s    |", gdesc[i], gdesc_right[i]);
+            sprintf(str, "  |     %s    | %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
             screen_area_puts(ge->map, str);
           }
         }
@@ -320,32 +354,35 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
         }
 
-      for(i=0;i<MAX_OBJS;i++)
-      { 
-        /* Checks whether there is an object or not in that space */
-        if (space_has_object(game_get_space(game, id_right), obj_id[i]) == FALSE)
-        {         
-          obj_r = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj_r = '*';
-          break;
+          obj = ' ';
+        } else {
+          obj = '*';              
+          i = set_get_nids(object_set) + 1;
         }
       }
 
-      for(i=0;i<MAX_OBJS;i++)
-      { 
-        /* Checks whether there is an object or not in that space */
-        if (space_has_object(game_get_space(game, id_left), obj_id[i]) == FALSE)
-        {         
-          obj_l = ' ';
-        }
-        else
-        {
-          obj_l = '*';
-          break;
-        }
+      if (game_get_connection_status(game, id_act, E) == OPEN)
+      {
+        link_right = '>';
+      }
+      else
+      {
+        link_right = ' ';
+      }
+
+      if (game_get_connection_status(game, id_act, W) == OPEN)
+      {
+        link_left = '<';
+      }
+      else
+      {
+        link_left = ' ';
       }
         
         sprintf(str, "  |-----------------    +-----------------+   ------------------|");
@@ -372,7 +409,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
             sprintf(str, "  |    %s    |   |    %s    |   |    %s    |", gdesc_left[i], gdesc[i], gdesc_right[i]);
             screen_area_puts(ge->map, str);
           } else {
-            sprintf(str, "  |    %s    | < |    %s    | > |    %s    |", gdesc_left[i], gdesc[i], gdesc_right[i]);
+            sprintf(str, "  |    %s    | %c |    %s    | %c |    %s    |", gdesc_left[i], link_left, gdesc[i], link_right, gdesc_right[i]);
             screen_area_puts(ge->map, str);
           }
         }
@@ -398,18 +435,35 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
         }
 
-      for(i=0;i<MAX_OBJS;i++)
-      { 
-        /* Checks whether there is an object or not in that space */
-        if (space_has_object(game_get_space(game, id_left), obj_id[i]) == FALSE)
-        {         
-          obj_l = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj_l = '*';
+          obj = ' ';
+        } else {
+          obj = '*';              
           break;
         }
+      }
+  
+      if (game_get_connection_status(game, id_act, E) == OPEN)
+      {
+        link_right = '>';
+      }
+      else
+      {
+        link_right = ' ';
+      }
+
+      if (game_get_connection_status(game, id_act, W) == OPEN)
+      {
+        link_left = '<';
+      }
+      else
+      {
+        link_left = ' ';
       }
 
         sprintf(str, "  |------------------   +-----------------+");
@@ -430,7 +484,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
             sprintf(str, "  |     %s   |   |     %s   |", gdesc_left[i], gdesc[i]);
             screen_area_puts(ge->map, str);
           }else {
-            sprintf(str, "  |     %s   | > |     %s   |", gdesc_left[i], gdesc[i]);
+            sprintf(str, "  |     %s   | %c |     %s   |", gdesc_left[i], link_left, gdesc[i]);
             screen_area_puts(ge->map, str);
           }
         }
@@ -450,16 +504,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     /* Space to the south of the current space */
     if (id_down != NO_ID && id_act != 14)
     {
-      for(i=0;i<MAX_OBJS;i++)
-      {   
-        /* Checks whether there is an object or not in that space */    
-        if (space_has_object(game_get_space(game, id_down), obj_id[i]) == FALSE)
-        {         
-          obj = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj = '*';
+          obj = ' ';
+        } else {
+          obj = '*';              
           break;
         }
       }
@@ -497,16 +550,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       /* Space to the south of the current space CASE 14 */
     if (id_down != NO_ID && id_act == 14)
     {
-      for(i=0;i<MAX_OBJS;i++)
-      {   
-        /* Checks whether there is an object or not in that space */    
-        if (space_has_object(game_get_space(game, id_down), obj_id[i]) == FALSE)
-        {         
-          obj = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj = '*';
+          obj = ' ';
+        } else {
+          obj = '*';              
           break;
         }
       }
@@ -629,5 +681,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_paint();
   printf("prompt:> ");
 }
+
+
 
 
