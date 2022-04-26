@@ -215,6 +215,7 @@ STATUS game_load_objs(Game *game, char *filename)
   BOOL movable, illuminate, turnedon;
   Id dependency, open;
   STATUS status = OK;
+  Light light_visible = -1;
 
   if (!filename)
   {
@@ -250,6 +251,8 @@ STATUS game_load_objs(Game *game, char *filename)
       illuminate = atoi(toks);
       toks = strtok(NULL, "|");
       turnedon = atoi(toks);
+      toks = strtok(NULL, "|");
+      light_visible = atoi(toks);
 
 #ifdef DEBUG
       // printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
@@ -265,6 +268,7 @@ STATUS game_load_objs(Game *game, char *filename)
         object_set_open(obj, open);
         object_set_illuminate(obj, illuminate);
         object_set_turnedon(obj, turnedon);
+        object_set_time_visible(obj,light_visible);
         /*Error control*/
         if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
         {
