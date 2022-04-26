@@ -127,6 +127,7 @@ STATUS game_create(Game *game)
     game->links[i] = NULL;
   }
 
+  game->day_time = DAY;
   game->last_cmd = NO_CMD;
 
   return OK;
@@ -913,49 +914,52 @@ STATUS game_command_take(Game *game, char *arg)
 
   obj_taken = game_get_object_byName(game, arg);
   id_obj_taken = obj_get_id(obj_taken);
-
+  
   /* Error control*/
-  if (space_has_object(game_get_space(game, player_location), id_obj_taken) && set_get_nids(inventory_get_objects(player_get_inventory(game->player[0]))) < inventory_get_maxObjs(player_get_inventory(game->player[0])))
-  {
-    s = game_get_space(game, player_location);
-    o = game_get_object(game, id_obj_taken);
-    obj_loc = game_get_object_location(game, id_obj_taken);
-
+  if(object_get_movable(obj_taken)==TRUE && obj_is_visible(obj_taken, space_get_light_status(game_get_space(game, player_location)))){  
     /* Error control*/
-    if (player_location != obj_loc)
+    if (space_has_object(game_get_space(game, player_location), id_obj_taken) && set_get_nids(inventory_get_objects(player_get_inventory(game->player[0]))) < inventory_get_maxObjs(player_get_inventory(game->player[0])))
     {
-      return ERROR;
-    }
+      s = game_get_space(game, player_location);
+      o = game_get_object(game, id_obj_taken);
+      obj_loc = game_get_object_location(game, id_obj_taken);
 
-    /* Error control*/
-    if (s == NULL)
-    {
-      return ERROR;
-    }
+      /* Error control*/
+      if (player_location != obj_loc)
+      {
+        return ERROR;
+      }
 
-    /* Error control*/
-    if (o == NULL)
-    {
-      return ERROR;
-    }
+      /* Error control*/
+      if (s == NULL)
+      {
+        return ERROR;
+      }
 
-    if (game_set_object_location(game, obj_get_id(o), NO_ID) == ERROR)
-    /* Error control */
-    {
-      return ERROR;
-    }
+      /* Error control*/
+      if (o == NULL)
+      {
+        return ERROR;
+      }
 
-    /* Error control */
-    if (player_add_object(game->player[MAX_PLAYERS - 1], o) == ERROR)
-    {
-      return ERROR;
+      if (game_set_object_location(game, obj_get_id(o), NO_ID) == ERROR)
+      /* Error control */
+      {
+        return ERROR;
+      }
+
+      /* Error control */
+      if (player_add_object(game->player[MAX_PLAYERS - 1], o) == ERROR)
+      {
+        return ERROR;
+      }
+      /* Error control */
+      if (space_del_objectid(s, id_obj_taken) == ERROR)
+      {
+        return ERROR;
+      }
+      return OK;
     }
-    /* Error control */
-    if (space_del_objectid(s, id_obj_taken) == ERROR)
-    {
-      return ERROR;
-    }
-    return OK;
   }
 
   return ERROR;
@@ -1027,6 +1031,10 @@ STATUS game_command_drop(Game *game, char *arg)
     return ERROR;
   }
 
+  /* If the object is the ladder or Candle_1(Turnedon==TRUE and are dropped in the correct space, make them not movable) */
+  if((obj_id==31 && space_get_id(s)==11) || (obj_id==315 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
+    object_set_movable(obj, FALSE);
+  }
   return OK;
 }
 
