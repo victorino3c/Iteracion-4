@@ -91,7 +91,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 {
   /* Variables declaration */
-  Id id_act = NO_ID, id_up = NO_ID, id_down = NO_ID, id_left= NO_ID, id_right= NO_ID;
+  Id id_act = NO_ID, id_up = NO_ID, id_down = NO_ID, id_left= NO_ID, id_right= NO_ID, aux_obj_id = NO_ID;
   Id obj_loc[MAX_OBJS] = {NO_ID}, player_loc = NO_ID, en_loc[MAX_ENEMYS] = {NO_ID}, obj_id[MAX_OBJS]= {NO_ID};
   Inventory *player_inventory = NULL;
   int en_health[MAX_ENEMYS] = {0}, player_health = 0;
@@ -106,6 +106,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char *inspection;
   char *obj_name[MAX_OBJS];
   char link_up = '\0', link_down = '\0';
+  Set *object_set = NULL;
 
   /* setting all proper values for each variable */
   player_loc = game_get_player_location(game, 21);
@@ -149,12 +150,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     id_left = space_get_id_dest_by_link(game_get_link(game, space_get_link(space_act, W)));
     id_right = space_get_id_dest_by_link(game_get_link(game, space_get_link(space_act, E)));
 
+    object_set = space_get_objects(game_get_space(game, id_act));
     space_print(space_act);
 
     /* Space to the north of the current space */
     if (id_up != NO_ID)
     {
-      for(i=0;i<MAX_OBJS;i++)
+      for(i = 0; i < set_get_nids(object_set); i++)
       { 
         /* Checks whether there is an object or not in that space */
         if (space_has_object(game_get_space(game, id_up), obj_id[i]) == FALSE)
@@ -202,23 +204,22 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
     /* Current space */
   
-    if (id_act != NO_ID)
+        if (id_act != NO_ID)
     {
       
-      for(i=0;i<MAX_OBJS;i++)
-      {   
-        /* Checks whether there is an object or not in that space */    
-        if (space_has_object(game_get_space(game, id_act), obj_id[i]) == FALSE)
-        {         
-          obj = ' ';
-        }
-        else
+      for(i = 0; i < set_get_nids(object_set); i++)
+      {
+        aux_obj_id = set_get_ids_by_number(object_set, i);
+
+        if (obj_is_visible(game_get_object(game, aux_obj_id), game_get_time(game), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
-          obj = '*';
+          obj = ' ';
+        } else {
+          obj = '*';              
           break;
         }
       }
-
+          
        /* Checks that there are no other spaces to the left or right */    
       if(id_left==NO_ID && id_right==NO_ID)  
       {
@@ -628,4 +629,5 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_paint();
   printf("prompt:> ");
 }
+
 
