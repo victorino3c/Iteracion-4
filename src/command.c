@@ -26,10 +26,6 @@ char *cmd_to_str[N_CMD]
 [N_CMDT] = {{"", "No command"},    /*!< At the beginning, there is no commands */
       {"", "Unknown"},             /*!< If an empty or unknown string is received, it is interpreted as Unknown */
       {"e", "Exit"},               /*!< If an "e" or "exit" is received, it is interpreted as Exit */
-      {"s", "Down"},               /*!< If a "s" or "down" is received, it is interpreted as Down/Next */
-      {"a", "Left"},               /*!< If an "a" or "left" is received, it is interpreted as Left */
-      {"w", "Up"},                 /*!< If a "w" or "up" is received, it is interpreted as Up/Back */
-      {"d", "Right"},              /*!< If a "d" or "right" is received, it is interpreted as Right */
       {"c", "Take"},               /*!< If a "c" or "take" is received, it is interpreted as Take */
       {"v", "Drop"},               /*!< If a "v" or "drop" is received, it is interpreted as Drop */
       {"q", "Attack"},             /*!< If a "q" or "attack" is received, it is interpreted as Attack */
