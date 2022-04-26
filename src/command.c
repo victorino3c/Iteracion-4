@@ -29,10 +29,12 @@ char *cmd_to_str[N_CMD]
       {"c", "Take"},               /*!< If a "c" or "take" is received, it is interpreted as Take */
       {"v", "Drop"},               /*!< If a "v" or "drop" is received, it is interpreted as Drop */
       {"q", "Attack"},             /*!< If a "q" or "attack" is received, it is interpreted as Attack */
-      {"m", "Move"},               /*!< If a "m" or "move" received, it is interpreted as move */
-      {"i", "Inspect"},            /*!< If an "i" or "inspect" received, it is interpreted as inspect */
-      {"g", "Save"},               /*!< If an "g" or "save" received, it is interpreted as Save */
-      {"l", "Load"},               /*!< If an "l" or "load" received, it is interpreted as Load */
+      {"m", "Move"},               /*!< If a "m" or "move" is received, it is interpreted as move */
+      {"i", "Inspect"},            /*!< If an "i" or "inspect" is received, it is interpreted as inspect */
+      {"g", "Save"},               /*!< If a "g" or "save" is received, it is interpreted as Save */
+      {"l", "Load"},               /*!< If a "l" or "load" is received, it is interpreted as Load */
+      {"ton", "Turnon"},           /*!< If a "ton" or "Turnon" is received, it is interpreted as Turnon */
+      {"toff", "Turnoff"}          /*!< If a "toff" or "Turnoff" is received, it is interpreted as Turnoff */
       };
         
 /**It scans the cmd searching for key words introduced by the user 
