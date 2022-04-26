@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2 /*!< It defines the number of ways each command can be call (the long and the short name). */
-#define N_CMD 14 /*!< It defines the number of arguments. */
+#define N_CMD 10 /*!< It defines the number of arguments. */
 
 /**
  * @brief It defines the two ways to call a command, by its short name (CMDS) or by its long name (CMDL).
@@ -35,10 +35,6 @@ typedef enum enum_Command
   NO_CMD = -1,  /*!< There is no command or command type is ineffective. */
   UNKNOWN,      /*!< Command type is unknown. */
   EXIT,         /*!< Command type is to exit game. */
-  DOWN,         /*!< Command type is to move player down. */
-  LEFT,         /*!< Command type is to move player left. */
-  UP,           /*!< Command type is to move player up. */
-  RIGHT,        /*!< Command type is to move player right. */
   TAKE,         /*!< Command type is to take object. Name of the objet must be included as a second argument. */
   DROP,         /*!< Command type is to drop object. Name of the objet must be included as a second argument. */
   ATTACK,       /*!< Command type is to attack an enemy. Id of the enemy must be included as a second argument. */
