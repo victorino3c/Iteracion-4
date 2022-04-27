@@ -56,7 +56,7 @@ Graphic_engine *graphic_engine_create()
 
   ge->map = screen_area_init(1, 1, 80, 25);
   ge->descript = screen_area_init(82, 1, 35, 25);
-  ge->banner = screen_area_init(53, 29, 14, 1);
+  ge->banner = screen_area_init(50, 29, 19, 1);
   ge->help = screen_area_init(1, 30, 115, 3);
   ge->feedback = screen_area_init(1, 34, 115, 3);
 
@@ -102,6 +102,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   int i;
   char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL;
   char *description;
+  char *en_name[MAX_ENEMYS];
   char *inspection;
   char *obj_name[MAX_OBJS];
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
@@ -123,6 +124,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       break;
     }
     en_health[i] = enemy_get_health(game_get_enemy(game, game_get_enemy_id(game, i)));
+    en_name[i] = (char *)enemy_get_name(game_get_enemy(game, game_get_enemy_id(game, i)));
     en_loc[i] = game_get_enemy_location(game, game_get_enemy_id(game, i));
   }
 
@@ -581,17 +583,20 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   
   if ((player_loc != NO_ID) && (en_loc[0] != NO_ID))
   {
-    sprintf(str, "  Objects location:");
+    sprintf(str, "  Objects in space:");
     screen_area_puts(ge->descript, str);
     
-    for(i=0;i<MAX_OBJS;i++)
+    for(i=0;i< set_get_nids(space_get_objects(game_get_space(game, id_act)));i++)
     { 
-      if (game_get_object(game, game_get_object_id(game, i))==NULL)
+      if (game_get_object(game,set_get_ids_by_number(space_get_objects(game_get_space(game, id_act)), i)) == NULL)
       {
         break;                     
       }
-     sprintf(str, "  %s:%d, ", obj_name[i], (int)obj_loc[i]);
-     screen_area_puts(ge->descript, str);
+
+      if (obj_is_visible(game_get_object(game,set_get_ids_by_number(space_get_objects(game_get_space(game, id_act)), i)), space_get_light_status(game_get_space(game, id_act)))== TRUE) {
+        sprintf(str, "  %s:%d ", obj_name[i], (int)obj_loc[i]);
+        screen_area_puts(ge->descript, str);
+      }
     }
 
     sprintf(str, "   ") ;
@@ -623,10 +628,25 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     
     sprintf(str, "   ") ;
     screen_area_puts(ge->descript, str);
-    sprintf(str, "  Enemy location:%d", (int)en_loc[0]);
+
+    sprintf(str, "  Enemies in space;") ;
     screen_area_puts(ge->descript, str);
-    sprintf(str, "  Enemy health:%d", (int)en_health[0]);
-    screen_area_puts(ge->descript, str);
+    for (i = 0; i < MAX_ENEMYS; i++) {
+      if (en_loc[i] == id_act) {
+        sprintf(str, "   ") ;
+        screen_area_puts(ge->descript, str);
+        /*
+        sprintf(str, "  Enemy location:%d", (int)en_loc[i]);
+        screen_area_puts(ge->descript, str);
+        */
+        sprintf(str, "  Enemy name:%s", en_name[i]);
+        screen_area_puts(ge->descript, str);
+        sprintf(str, "  Enemy health:%d", (int)en_health[i]);
+        screen_area_puts(ge->descript, str);
+        sprintf(str, "   ") ;
+        screen_area_puts(ge->descript, str);
+      }
+    }
 
     sprintf(str, "   ");
     screen_area_puts(ge->descript, str);
@@ -646,13 +666,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   }
 
   /* Paint in the banner area */
-  screen_area_puts(ge->banner, " The Ant-Game "); 
+  screen_area_puts(ge->banner, " Day-Night Dungeon "); 
 
   /* Paint in the help area */
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, " w(UP), s(DOWN), a(LEFT), d(RIGHT), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), m(MOVE), e(EXIT)");
+  sprintf(str, " w(UP), s(DOWN), a(LEFT), d(RIGHT), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), m(MOVE), e(EXIT), s (SAVE), l (LOAD),");
+  screen_area_puts(ge->help, str);
+  sprintf(str, " o (OPEN), ton (TURNON), toff (TURNOFF)");
   screen_area_puts(ge->help, str);
   /*
   sprintf(str, " Player object will be -1 as long as it doesn't carry one");
@@ -679,7 +701,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   /* Dump to the terminal */
   screen_paint();
   printf("prompt:> ");
-}
 
 
 
