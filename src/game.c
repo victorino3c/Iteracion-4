@@ -955,6 +955,7 @@ STATUS game_command_take(Game *game, char *arg)
   Object *obj_taken;
   Space *s = NULL;
   Object *o = NULL;
+  STATUS st = OK;
 
   obj_taken = game_get_object_byName(game, arg);
   id_obj_taken = obj_get_id(obj_taken);
@@ -971,42 +972,44 @@ STATUS game_command_take(Game *game, char *arg)
       /* Error control*/
       if (player_location != obj_loc)
       {
-        return ERROR;
+        st = ERROR;
       }
 
       /* Error control*/
       if (s == NULL)
       {
-        return ERROR;
+        st = ERROR;
       }
 
       /* Error control*/
       if (o == NULL)
       {
-        return ERROR;
+        st = ERROR;
       }
 
       if (game_set_object_location(game, obj_get_id(o), NO_ID) == ERROR)
       /* Error control */
       {
-        return ERROR;
+        st = ERROR;
       }
 
       /* Error control */
       if (player_add_object(game->player[MAX_PLAYERS - 1], o) == ERROR)
       {
-        return ERROR;
+        st = ERROR;
       }
       /* Error control */
       if (space_del_objectid(s, id_obj_taken) == ERROR)
       {
-        return ERROR;
+        st = ERROR;
       }
-      return OK;
+     
+      return st;
     }
   }
 
-  return ERROR;
+  st=ERROR;
+  return st;
 }
 
 /**
@@ -1025,7 +1028,7 @@ STATUS game_command_drop(Game *game, char *arg)
   Id player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
   Id obj_id = NO_ID;
   Object *obj;
-
+  STATUS st = OK;
   Space *s = NULL;
   Object *o = NULL;
 
@@ -1035,51 +1038,51 @@ STATUS game_command_drop(Game *game, char *arg)
   /* Error control */
   if (obj_id != obj_get_id(obj) || inventory_has_id(player_get_inventory(game->player[MAX_PLAYERS - 1]), obj_id) == FALSE)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* Error control*/
   if (player_get_inventory(game->player[MAX_PLAYERS - 1]) == NULL)
   {
-    return ERROR;
+   st = ERROR;
   }
 
   s = game_get_space(game, player_location);
   /* Error control*/
   if (s == NULL)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   o = game_get_object(game, obj_id);
   /* Error control*/
   if (o == NULL)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* Error control */
   if (space_add_objectid(s, obj_get_id(o)) == ERROR)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* Error control */
   if (game_set_object_location(game, obj_get_id(o), space_get_id(s)) == ERROR)
   {
-    return ERROR;
+    st = ERROR;
   }
   /* Error control */
   if (player_del_object(game->player[MAX_PLAYERS - 1], obj_id) == ERROR)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* If the object is the ladder or Candle_1(Turnedon==TRUE and are dropped in the correct space, make them not movable) */
   if((obj_id==31 && space_get_id(s)==11) || (obj_id==315 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
     object_set_movable(obj, FALSE);
   }
-  return OK;
+  return st;
 }
 
 /**
@@ -1097,7 +1100,7 @@ STATUS game_command_drop(Game *game, char *arg)
 STATUS game_command_attack(Game *game, char *arg)
 {
   int rand_num = 0;
-
+  STATUS st = OK;
   Id player_loc = player_get_location(game->player[MAX_PLAYERS - 1]);
   Id enemy_loc = enemy_get_location(game->enemy[MAX_PLAYERS - 1]);
 
@@ -1108,19 +1111,19 @@ STATUS game_command_attack(Game *game, char *arg)
   /* Error control */
   if (enemy_get_health(game->enemy[MAX_PLAYERS - 1]) == 0)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* Error control */
   if (player_loc == NO_ID || enemy_loc == NO_ID)
   {
-    return ERROR;
+    st = ERROR;
   }
 
   /* Error control */
   if (player_loc != enemy_loc)
   {
-    return ERROR;
+    st = ERROR;
   }
   /*Player wins if rand_num es > 5, else, they lose a life as the enemy won that round*/
   if (rand_num > 5)
@@ -1136,7 +1139,7 @@ STATUS game_command_attack(Game *game, char *arg)
     }
   }
 
-  return OK;
+  return st;
 }
 
 /**
@@ -1210,40 +1213,41 @@ STATUS game_command_movement(Game *game, DIRECTION dir)
   Id player_location = NO_ID, player_id = NO_ID;
   Space *s = NULL;
   Link *l = NULL;
-
+  STATUS st = OK;
   if (!game || dir == ND)
   {
-    return ERROR;
+   st = ERROR;
   }
 
   player_location = player_get_location(game->player[MAX_PLAYERS - 1]);
   player_id = player_get_id(game->player[MAX_PLAYERS - 1]);
   if (player_location == NO_ID || player_id == NO_ID)
   {
-    return ERROR;
+    st = ERROR;
   }
   
   s = game_get_space(game, player_location);
   if (!s)
   {
-    return ERROR;
+    st = ERROR;
   }
   
   l = game_get_link(game, space_get_link(s, dir));
   if (!l)
   {
-    return ERROR;
+    st = ERROR;
   }
   
-  if (link_get_status(l) == OPEN_L)
+  if (link_get_status(l) == OPEN)
   {
     game_set_player_location(game, player_id, link_get_destination(l));
-    return OK;
+    return st;
   }
   else
   {
     /* Link is closed */
-    return ERROR;
+    st = ERROR;
+    return st;
   }
 }
 
@@ -1260,6 +1264,7 @@ STATUS game_command_movement(Game *game, DIRECTION dir)
 STATUS game_command_inspect(Game *game, char *arg)
 {
   Object *obj = game_get_object_byName(game, arg);
+  STATUS st = OK;
 
   /*SPACE CASE*/
   if (strcmp(arg, "space") == 0 || strcmp(arg, "s") == 0)
@@ -1270,7 +1275,7 @@ STATUS game_command_inspect(Game *game, char *arg)
     else{
       game->inspection = "El lugar está muy oscuro, no puedes ver nada";
     }
-    return OK;
+    return st;
   }
 
   /*OBJECT CASE*/
@@ -1279,22 +1284,22 @@ STATUS game_command_inspect(Game *game, char *arg)
     if (arg == NULL)
     {
       game->inspection = " ";
-      return ERROR;
+      st = ERROR;
     }
 
     if (obj == NULL)
     {
       game->inspection = " ";
-      return ERROR;
+      st = ERROR;
     }
     if (player_has_object(game->player[0], obj_get_id(obj)) == FALSE && player_get_location(game->player[0]) != obj_get_location(obj))
     {
-      return ERROR;
+      st = ERROR;
     }
     game->inspection = (char *)obj_get_description(obj);
-    return OK;
+    return st;
   }
-  return ERROR;
+  return st;
 }
 
 /**
@@ -1320,12 +1325,13 @@ STATUS game_command_save(Game* game, char *arg){
  * @return OK if everything goes well or ERROR if there was any mistake
  */
 STATUS game_command_load(Game* game, char *arg){
-
+  STATUS st = OK;
   if(strcasecmp(arg, "savedata.dat") != 0 && strcasecmp(arg, "hormiguero.dat") != 0){
-    return ERROR;
+    st = ERROR;
   }
 
-  return game_managment_load(arg, game);
+ st = game_managment_load(arg, game);
+ return st;
 }
 
 /**
