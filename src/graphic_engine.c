@@ -187,7 +187,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       sprintf(str, "  +-----------------+");
       screen_area_puts(ge->map, str);
       
-      if (game_get_connection_status(game, id_act, N) == OPEN)
+      if (game_get_connection_status(game, id_act, N) == OPEN_L)
       {
         link_up = '^';
       }
@@ -196,7 +196,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_up = ' ';
       }
 
-      if (game_get_connection_status(game, id_act, E) == OPEN)
+      if (game_get_connection_status(game, id_act, E) == OPEN_L)
       {
         link_right = '>';
       }
@@ -205,7 +205,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_right = ' ';
       }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN)
+      if (game_get_connection_status(game, id_act, W) == OPEN_L)
       {
         link_left = '<';
       }
@@ -294,7 +294,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
 
-      if (game_get_connection_status(game, id_act, E) == OPEN)
+      if (game_get_connection_status(game, id_act, E) == OPEN_L)
       {
         link_right = '>';
       }
@@ -303,7 +303,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_right = ' ';
       }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN)
+      if (game_get_connection_status(game, id_act, W) == OPEN_L)
       {
         link_left = '<';
       }
@@ -367,7 +367,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
 
-      if (game_get_connection_status(game, id_act, E) == OPEN)
+      if (game_get_connection_status(game, id_act, E) == OPEN_L)
       {
         link_right = '>';
       }
@@ -376,7 +376,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_right = ' ';
       }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN)
+      if (game_get_connection_status(game, id_act, W) == OPEN_L)
       {
         link_left = '<';
       }
@@ -448,7 +448,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
   
-      if (game_get_connection_status(game, id_act, E) == OPEN)
+      if (game_get_connection_status(game, id_act, E) == OPEN_L)
       {
         link_right = '>';
       }
@@ -457,7 +457,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_right = ' ';
       }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN)
+      if (game_get_connection_status(game, id_act, W) == OPEN_L)
       {
         link_left = '<';
       }
@@ -517,7 +517,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
 
-      if (game_get_connection_status(game, id_act, S) == OPEN)
+      if (game_get_connection_status(game, id_act, S) == OPEN_L)
       {
         link_down = 'v';
       }
