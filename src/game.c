@@ -769,22 +769,6 @@ int game_update(Game *game, T_Command cmd, char *arg)
     st = (int)game_command_exit(game, arg);
     break;
 
-  case DOWN:
-    st = (int)game_command_movement(game, S);
-    break;
-
-  case RIGHT:
-    st = (int)game_command_movement(game, E);
-    break;
-
-  case LEFT:
-    st = (int)game_command_movement(game, W);
-    break;
-
-  case UP:
-    st = (int)game_command_movement(game, N);
-    break;
-
   case TAKE:
     st = (int)game_command_take(game, arg);
     break;
