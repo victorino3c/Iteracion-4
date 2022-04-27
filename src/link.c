@@ -218,7 +218,7 @@ DIRECTION link_get_direction(Link *link)
  */
 STATUS link_set_status(Link *link, LINK_STATUS st)
 {
-    if (!link || (st != CLOSE && st != OPEN))
+    if (!link || (st != CLOSE && st != OPEN_L))
     {
         return ERROR;
     }
@@ -292,7 +292,7 @@ int link_print(Link *link)
 
     /* Printing in terminal link's status */
     n += fprintf(stdout, "- Link_status: ");
-    if (link->status == OPEN)
+    if (link->status == OPEN_L)
     {
         n += fprintf(stdout, "OPEN\n");
     }
@@ -325,3 +325,4 @@ STATUS link_print_save(char *filename, Link *link)
 
     return OK;
 }
+
