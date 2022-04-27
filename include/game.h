@@ -139,6 +139,15 @@ STATUS game_set_time(Game *game, Time time);
 Time game_get_time(Game *game);
 
 /**
+ * @brief Gets the last event
+ * @author Ignacio Nunnez
+ * 
+ * @param game Given game
+ * @return the event (most times NOTHING) 
+ */
+R_Event game_get_last_event(Game *game);
+
+/**
  * @brief Gets an object via target id
  * @author Miguel Soto
  * 
