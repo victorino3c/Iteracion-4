@@ -1235,7 +1235,7 @@ STATUS game_command_movement(Game *game, DIRECTION dir)
     return ERROR;
   }
   
-  if (link_get_status(l) == OPEN)
+  if (link_get_status(l) == OPEN_L)
   {
     game_set_player_location(game, player_id, link_get_destination(l));
     return OK;
