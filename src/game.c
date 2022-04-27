@@ -445,6 +445,30 @@ Object *game_get_object_byName(Game *game, char *name)
 }
 
 /**
+ * Finds an enemy with the same name. Case is ignore.
+ */
+Enemy *game_get_enemy_byName(Game *game, char *name)
+{
+  int i;
+
+  /* Error control*/
+  if (!game || name == NULL)
+  {
+    return NULL;
+  }
+
+  for (i = 0; i < MAX_ENEMYS && game->enemy[i] != NULL; i++)
+  {
+    if (strcasecmp(name, enemy_get_name(game->enemy[i])) == 0)
+    {
+      return game->enemy[i];
+    }
+  }
+
+  return NULL;
+}
+
+/**
  * Gets a game's palyer with target id
  */
 Player *game_get_player(Game *game, Id id)
@@ -1238,7 +1262,7 @@ STATUS game_command_movement(Game *game, DIRECTION dir)
     st = ERROR;
   }
   
-  if (link_get_status(l) == OPEN)
+  if (link_get_status(l) == OPEN_L)
   {
     game_set_player_location(game, player_id, link_get_destination(l));
     return st;
@@ -1343,11 +1367,39 @@ STATUS game_command_load(Game* game, char *arg){
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_move(Game *game){
+  
+  int rand_num;
+  Object *apple = game_get_object_byName(game, "Apple");
+  Object *elixir = game_get_object_byName(game, "Elixir");
+  Id apple_loc = game_get_object_location(game, obj_get_id(apple));
+  Id elixir_loc = game_get_object_location(game, obj_get_id(elixir));
+
+  /*Events only Occurs at Night*/
   if(game->day_time == DAY){
     return ERROR;
   }
 
-  return OK;
+  /*Generates a random number between 0-1
+  This is for moving Elixir or Apple*/
+  srand(time(NULL));
+  rand_num = rand() % 2;
+
+  /*If elixir is not in the map, cant be moved*/
+  if(apple_loc == -1 && elixir_loc == -1){
+    return ERROR;
+  }
+
+  if(apple_loc != -1 || rand_num == 0){
+    game_set_object_location(game, obj_get_id(apple), game_get_player_location(game, 1));
+    return OK;
+  }
+
+  if(elixir_loc != -1 || rand_num == 1){
+    game_set_object_location(game, obj_get_id(elixir), game_get_player_location(game, 1));
+    return OK;
+  }
+
+  return game_event_move(game);
 }
 
 /**
@@ -1359,9 +1411,14 @@ STATUS game_event_move(Game *game){
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_trap(Game *game){
+
+  /*Events only Occurs at Night*/
   if(game->day_time == DAY){
     return ERROR;
   }
+
+  /*Player losses one of HP*/
+  player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - 1));
 
   return OK;
 }
@@ -1375,9 +1432,22 @@ STATUS game_event_trap(Game *game){
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_slime(Game *game){
+  
+  Enemy *slime = game_get_enemy_byName(game, "slime");
+  Id slime_loc = enemy_get_location(slime);
+
+  /*Events only Occurs at Night*/
   if(game->day_time == DAY){
     return ERROR;
   }
+
+  /*In case slime is already dead*/
+  if(slime_loc == -1){
+    return ERROR;
+  }
+
+  /*Sets the enemy on players location*/
+  enemy_set_location(slime, player_get_location(game->player[MAX_PLAYERS - 1]));
 
   return OK;
 }
@@ -1391,8 +1461,12 @@ STATUS game_event_slime(Game *game){
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_daynight(Game *game){
-  if(game->day_time == DAY){
-    return ERROR;
+
+  if(game_get_time(game) == DAY){
+    game_set_time(game, NIGHT);
+  }
+  else if(game_get_time(game) == NIGHT){
+    game_set_time(game, DAY);
   }
 
   return OK;
@@ -1407,9 +1481,14 @@ STATUS game_event_daynight(Game *game){
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_spawn(Game *game){
+
+  /*Events only Occurs at Night*/
   if(game->day_time == DAY){
     return ERROR;
   }
+
+  /*Sets player to the initial room*/
+  player_set_location(game->player[0], SPACE_INITIAL);
 
   return OK;
 }
@@ -1518,4 +1597,3 @@ STATUS game_save(char *filename, Game* game)
 
   return OK;
 }
-
