@@ -22,7 +22,7 @@
 typedef enum
 {
     CLOSE = 0,  /*!< Link status is close */
-    OPEN = 1    /*!< Link status is open */
+    OPEN_L = 1    /*!< Link status is open */
 } LINK_STATUS;
 
 typedef struct _Link Link; /*!< It defines the link structure that determines whether you can go from an space to another or not */
