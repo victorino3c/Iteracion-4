@@ -26,21 +26,24 @@ char *cmd_to_str[N_CMD]
 [N_CMDT] = {{"", "No command"},    /*!< At the beginning, there is no commands */
       {"", "Unknown"},             /*!< If an empty or unknown string is received, it is interpreted as Unknown */
       {"e", "Exit"},               /*!< If an "e" or "exit" is received, it is interpreted as Exit */
-      {"c", "Take"},               /*!< If a "c" or "take" is received, it is interpreted as Take */
-      {"v", "Drop"},               /*!< If a "v" or "drop" is received, it is interpreted as Drop */
-      {"q", "Attack"},             /*!< If a "q" or "attack" is received, it is interpreted as Attack */
+      {"t", "Take"},               /*!< If a "t" or "take" is received, it is interpreted as Take */
+      {"d", "Drop"},               /*!< If a "d" or "drop" is received, it is interpreted as Drop */
+      {"a", "Attack"},             /*!< If a "a" or "attack" is received, it is interpreted as Attack */
       {"m", "Move"},               /*!< If a "m" or "move" is received, it is interpreted as move */
       {"i", "Inspect"},            /*!< If an "i" or "inspect" is received, it is interpreted as inspect */
-      {"g", "Save"},               /*!< If a "g" or "save" is received, it is interpreted as Save */
+      {"s", "Save"},               /*!< If a "s" or "save" is received, it is interpreted as Save */
       {"l", "Load"},               /*!< If a "l" or "load" is received, it is interpreted as Load */
       {"ton", "Turnon"},           /*!< If a "ton" or "Turnon" is received, it is interpreted as Turnon */
-      {"toff", "Turnoff"}          /*!< If a "toff" or "Turnoff" is received, it is interpreted as Turnoff */
+      {"toff", "Turnoff"},         /*!< If a "toff" or "Turnoff" is received, it is interpreted as Turnoff */
+      {"o", "Open"}                /*!< If an "o" or "Open" is received, it is interpreted as Open */
       };
-        
+
+void print_syntax_command(T_Command cmd);
+
 /**It scans the cmd searching for key words introduced by the user 
   *in order to interpret and clasify the info
   */
-T_Command command_get_user_input(char *arg)
+T_Command command_get_user_input(char **arg)
 {
   T_Command cmd = NO_CMD; 
   char input[CMD_LENGHT] = "";
@@ -64,10 +67,21 @@ T_Command command_get_user_input(char *arg)
         {
           if (scanf("%s", arg) < 0)
           {
-            fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE LOAD necesitan un argumento mas como el nombre del objeto .\n");
+            print_syntax_command(cmd);
           }
         }
-        
+        else if (cmd == OPEN)
+        {
+          if (scanf("%s %s %s", arg[0], arg[1], arg[2]) != 3)
+          {
+            print_syntax_command(cmd);
+          }
+          if (strcasecmp("with\0", arg[1]) != 0)
+          {
+            print_syntax_command(cmd);
+            return UNKNOWN;
+          }
+        }
       }
       else                                  /*!< In any other case, continue reading >! */
       {
@@ -114,14 +128,73 @@ T_Command command_get_file_input(char *command, char *arg)
             fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE necesitan un argumento mas como el nombre del objeto .\n");
           }
         }
-        
+        else if (cmd == OPEN)
+        {
+          if (scanf("%s %s %s", arg[0], arg[1], arg[2]) != 3)
+          {
+            print_syntax_command(cmd);
+          }
+          if (strcasecmp("with\0", arg[1]) != 0)
+          {
+            print_syntax_command(cmd);
+            return UNKNOWN;
+          }
+        }
       }
       else                                  /*!< In any other case, continue reading >! */
       {
-        i++;                                 
+        i++;
       }
     }
   }
   
   return cmd;
+}
+
+void print_syntax_command(T_Command cmd)
+{
+  char cmd_name[5];
+
+  switch (cmd)
+  {
+  case TAKE:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command take needs an argument with the object name the player will take.\n");
+    fprintf(stdout, "Command TAKE syntax: t <obj_name> or take <obj_name>\n");
+    break;
+  case DROP:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command drop needs an argument with the object name the player will drop.\n");
+    fprintf(stdout, "Command DROP syntax: d <obj_name> or drop <obj_name>\n");
+    break;
+  case MOVE:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command move needs an argument with the direction you want to travel through.\n");
+    fprintf(stdout, "Command MOVE syntax: m <direction> or move <direction>.\n");
+    fprintf(stdout, "<direction> can be N (North), S (South), E (East), W (West), U (Up) or D (Down).\n");
+    break;
+  case INSPECT:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command inspect needs an argument with an space or object name you want to read larger description.\n");
+    fprintf(stdout, "Command INSPECT syntax: i <arg> or inspect <arg>\n");
+    break;
+  case SAVE:
+    fprintf(stdout, "ERROR: Incorrect command syntax.\n");
+    fprintf(stdout, "Command SAVE syntax: s <obj_name> or save <obj_name>\n");
+    break;
+  case LOAD:
+    fprintf(stdout, "ERROR: Incorrect command syntax.\n");
+    fprintf(stdout, "Command LOAD syntax: l <obj_name> or load <obj_name>\n");
+    break;
+  case TURNON:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command turnon needs an argument with the object name you want to iluminate.\n");
+    fprintf(stdout, "Command TURNON syntax: ton <obj_name> or turnon <obj_name>\n");
+    break;
+  case TURNOFF:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command turnoff needs an argument with the object name you want to stop lighting.\n");
+    fprintf(stdout, "Command TURNOFF syntax: ton <obj_name> or turnoff <obj_name>\n");
+    break;
+  case OPEN:
+    fprintf(stdout, "ERROR: Incorrect command syntax. Command open needs 2 arguments: one with the link name you want to open and one with the object name with which player opens link.\n");
+    fprintf(stdout, "Command OPEN syntax: o <link_name> with <obj> or open <link_name> with <obj>\n");
+    break;
+  default:
+    break;
+  }
 }
