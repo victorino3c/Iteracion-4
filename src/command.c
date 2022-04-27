@@ -38,6 +38,9 @@ char *cmd_to_str[N_CMD]
       {"o", "Open"}                /*!< If an "o" or "Open" is received, it is interpreted as Open */
       };
 
+/**
+ * Funciones privadas
+ */
 void print_syntax_command(T_Command cmd);
 
 /**It scans the cmd searching for key words introduced by the user 
@@ -151,6 +154,12 @@ T_Command command_get_file_input(char *command, char *arg)
   return cmd;
 }
 
+/**
+ * @brief Print syntax information of a given command
+ * @author Miguel Soto
+ * 
+ * @param cmd command type you need to print syntax information
+ */
 void print_syntax_command(T_Command cmd)
 {
   char cmd_name[5];
