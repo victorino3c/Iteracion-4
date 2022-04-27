@@ -22,7 +22,6 @@
 #include "../include/inventory.h"
 #include "../include/set.h"
 
-
 #define ROWS 39       /*!< Establish screen size in y dimension */
 #define COLUMNS 120   /*!< Establish screen size in x dimension */
 
