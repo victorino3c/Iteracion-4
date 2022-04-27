@@ -546,7 +546,7 @@ STATUS game_load_link(Game *game, char *filename)
       switch (atoi(toks))
       {
       case 1:
-        status = OPEN;
+        status = OPEN_L;
         break;
 
       default:
