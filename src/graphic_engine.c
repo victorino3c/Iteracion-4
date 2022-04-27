@@ -91,7 +91,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 {
   /* Variables declaration */
   Id id_act = NO_ID, id_up = NO_ID, id_down = NO_ID, id_left= NO_ID, id_right= NO_ID, aux_obj_id = NO_ID;
-  Id obj_loc[MAX_OBJS] = {NO_ID}, player_loc = NO_ID, en_loc[MAX_ENEMYS] = {NO_ID};
+  Id player_loc = NO_ID, en_loc[MAX_ENEMYS] = {NO_ID};
   Inventory *player_inventory = NULL;
   int en_health[MAX_ENEMYS] = {0}, player_health = 0;
   Space *space_act = NULL;
@@ -135,7 +135,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     {
       break;
     }
-    obj_loc[i] = obj_get_location(game_get_object(game, game_get_object_id(game, i)));
     obj_name[i] = (char *) obj_get_name(game_get_object(game, game_get_object_id(game, i)));
   }
 
@@ -594,7 +593,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       }
 
       if (obj_is_visible(game_get_object(game,set_get_ids_by_number(space_get_objects(game_get_space(game, id_act)), i)), space_get_light_status(game_get_space(game, id_act)))== TRUE) {
-        sprintf(str, "  %s:%d ", obj_name[i], (int)obj_loc[i]);
+        sprintf(str, "  %s ", obj_name[i]);
         screen_area_puts(ge->descript, str);
       }
     }
@@ -629,7 +628,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     sprintf(str, "   ") ;
     screen_area_puts(ge->descript, str);
 
-    sprintf(str, "  Enemies in space;") ;
+    sprintf(str, "  Enemies in space:") ;
     screen_area_puts(ge->descript, str);
     for (i = 0; i < MAX_ENEMYS; i++) {
       if (en_loc[i] == id_act) {
@@ -701,6 +700,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   /* Dump to the terminal */
   screen_paint();
   printf("prompt:> ");
+}
 
 
 
