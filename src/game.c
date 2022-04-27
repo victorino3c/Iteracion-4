@@ -1223,13 +1223,13 @@ STATUS game_command_movement(Game *game, DIRECTION dir)
     return ERROR;
   }
   
-  Space *s = game_get_space(game, player_location);
+  s = game_get_space(game, player_location);
   if (!s)
   {
     return ERROR;
   }
   
-  Link *l = game_get_link(game, space_get_link(s, dir));
+  l = game_get_link(game, space_get_link(s, dir));
   if (!l)
   {
     return ERROR;
