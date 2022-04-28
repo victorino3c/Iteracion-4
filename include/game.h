@@ -72,10 +72,10 @@ STATUS game_create(Game *game);
   * @param game a pointer to game, que contiene los datos de localización de objeto y jugador 
   * junto con los espacios del juego y el ultimo comando
   * @param cmd la variable tipo T_Command del interprete de comandos, varia segun el comando introducido por el usuario
-  * @param arg string which is the argument of an input command.
+  * @param arg array of strings which is the argument of an input command.
   * @return 0 if ERROR, 1 if OK, and 5 if OK but dont print condition
   */
-int game_update(Game *game, T_Command cmd, char *arg);
+int game_update(Game *game, T_Command cmd, char **arg);
 
 /**
   * @brief frees/destroys the game
