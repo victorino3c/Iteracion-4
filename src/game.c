@@ -772,7 +772,7 @@ Id game_get_connection(Game *game, Id act_spaceid, DIRECTION dir)
  * every known case gets interpreted as the various actions on the game,
  * any other input would be considered unknown
  */
-int game_update(Game *game, T_Command cmd, char *arg)
+int game_update(Game *game, T_Command cmd, char **arg)
 {
   int st = 0;
   
