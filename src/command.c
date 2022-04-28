@@ -68,7 +68,7 @@ T_Command command_get_user_input(char **arg)
         cmd = i + NO_CMD;                   /*!< If any differences are detected between CMDS, CMDL and the input, cmd is modified */
         if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE || cmd == LOAD)
         {
-          if (scanf("%s", arg) < 0)
+          if (scanf("%s", arg[0]) < 0)
           {
             print_syntax_command(cmd);
           }
