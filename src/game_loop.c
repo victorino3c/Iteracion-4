@@ -146,7 +146,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
 void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *fcmd_name)
 {
   T_Command command = NO_CMD;
-  char arg[MAX_ARG], input[MAX_ARG];
+  char arg[4][MAX_ARG] = {"\0", "\0" , "\0", "\0"}, input[MAX_ARG];
   int st = 5, wlog = 0, rcmd = 0;
   FILE *flog = NULL, *fcmd = NULL;
   T_Command last_cmd;
