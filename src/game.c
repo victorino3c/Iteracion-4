@@ -786,45 +786,44 @@ int game_update(Game *game, T_Command cmd, char *arg)
   switch (cmd)
   {
   case UNKNOWN:
-    st = game_command_unknown(game, arg);
+    st = game_command_unknown(game, arg[0]);
     break;
 
   case EXIT:
-    st = (int)game_command_exit(game, arg);
+    st = (int)game_command_exit(game, arg[0]);
     break;
 
   case TAKE:
-    st = (int)game_command_take(game, arg);
+    st = (int)game_command_take(game, arg[0]);
     break;
 
   case DROP:
-    st = (int)game_command_drop(game, arg);
+    st = (int)game_command_drop(game, arg[0]);
     break;
 
   case ATTACK:
-    st = (int)game_command_attack(game, arg);
+    st = (int)game_command_attack(game, arg[0]);
     break;
 
   case MOVE:
-    st = (int)game_command_move(game, arg);
+    st = (int)game_command_move(game, arg[0]);
     break;
 
   case INSPECT:
-    st = (int)game_command_inspect(game, arg);
+    st = (int)game_command_inspect(game, arg[0]);
     break;
 
   case SAVE:
-    st = (int)game_command_save(game, arg);
+    st = (int)game_command_save(game, arg[0]);
     break;
 
   case LOAD:
-    st = (int)game_command_load(game, arg);
+    st = (int)game_command_load(game, arg[0]);
     break;
 
   default:
     break;
-  }
-
+  
   game_get_new_event(game);
 
   return st;
