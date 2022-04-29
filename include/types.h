@@ -14,6 +14,7 @@
 #define WORD_SIZE 1000    /*!< Establish the length for some strings */
 #define NO_ID -1          /*!< Establish a non-defined id and its value is -1*/
 #define MAX_ARG 20        /*!< Establish a length of command input arguments */
+#define NUM_ARG 2         /*!< Establish the number or arguments in an input command */
 
 #define FD_ID_SPACE 1  /*!< First digit of a space. */
 #define FD_ID_PLAYER 2 /*!< First digit of a player. */
