@@ -768,6 +768,49 @@ Id game_get_connection(Game *game, Id act_spaceid, DIRECTION dir)
   return dest_id;
 }
 
+/*Functions for the new event
+(just a continuation of game_update)*/
+void game_get_new_event(Game *game){
+
+  R_Event new_event;
+  STATUS st;
+
+  new_event = game_rules_get_event();
+  game->last_event = new_event;
+
+  switch(new_event)
+  {
+    case MOVE_OBJ:
+      st = game_event_move(game);
+      break;
+
+    case TRAP:
+      st = game_event_trap(game);
+      break;
+
+    case SLIME:
+      st = game_event_slime(game);
+      break;
+
+    case DAYNIGHT:
+      st = game_event_daynight(game);
+      break;
+
+    case SPAWN:
+      st = game_event_spawn(game);
+      break;
+
+    default:
+      break;
+  }
+
+  if(st == ERROR){
+    game->last_event = NOTHING;
+  }
+
+  return;
+}
+
 /** game_update updates cmd whenever something is typed in, this is where
  * every known case gets interpreted as the various actions on the game,
  * any other input would be considered unknown
@@ -823,53 +866,11 @@ int game_update(Game *game, T_Command cmd, char **arg)
 
   default:
     break;
+  }
   
   game_get_new_event(game);
 
   return st;
-}
-
-/*Functions for the new event
-(just a continuation of game_update)*/
-void game_get_new_event(Game *game){
-
-  R_Event new_event;
-  STATUS st;
-
-  new_event = game_rules_get_event();
-  game->last_event = new_event;
-
-  switch(new_event)
-  {
-    case MOVE_OBJ:
-      st = game_event_move(game);
-      break;
-
-    case TRAP:
-      st = game_event_trap(game);
-      break;
-
-    case SLIME:
-      st = game_event_slime(game);
-      break;
-
-    case DAYNIGHT:
-      st = game_event_daynight(game);
-      break;
-
-    case SPAWN:
-      st = game_event_spawn(game);
-      break;
-
-    default:
-      break;
-  }
-
-  if(st == ERROR){
-    game->last_event = NOTHING;
-  }
-
-  return;
 }
 
 /* Gets the last event in the input
