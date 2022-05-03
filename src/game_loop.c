@@ -204,7 +204,6 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
     /*Cheks if the game is working in "log-mode" and if true it prints the commands in the output file*/
     if (wlog == 1)
     {
-      // FALTA EL OPEN
       last_cmd = game_get_last_command(game);
       if (st == 0)
       {
