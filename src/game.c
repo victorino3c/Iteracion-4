@@ -867,6 +867,7 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
 
   default:
     break;
+  }
   
   game_get_new_event(game);
 
