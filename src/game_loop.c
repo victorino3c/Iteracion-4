@@ -146,7 +146,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
 void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *fcmd_name)
 {
   T_Command command = NO_CMD;
-  char arg[4][MAX_ARG] = {"\0", "\0" , "\0", "\0"}, input[MAX_ARG];
+  char arg1[MAX_ARG], arg2[MAX_ARG], input[MAX_ARG];
   int st = 5, wlog = 0, rcmd = 0;
   FILE *flog = NULL, *fcmd = NULL;
   T_Command last_cmd;
@@ -186,7 +186,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
     {
       if (fgets(input, MAX_ARG, fcmd))
       {
-        command = command_get_file_input(input, arg);
+        command = command_get_file_input(input, arg1);
       }
       else
       {
@@ -196,21 +196,22 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
     }
     else
     {
-      command = command_get_user_input(arg);
+      command = command_get_user_input(arg1, arg2);
     }
 
-    st = game_update(game, command, arg);
+    st = game_update(game, command, arg1, arg2);
 
     /*Cheks if the game is working in "log-mode" and if true it prints the commands in the output file*/
     if (wlog == 1)
     {
+      // FALTA EL OPEN
       last_cmd = game_get_last_command(game);
       if (st == 0)
       {
         if ( last_cmd == 1 || last_cmd == 2 || last_cmd == 3 || last_cmd == 4 || last_cmd == 5 ) {
           fprintf(flog, " %s (%s): ERROR\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
         } else {
-          fprintf(flog, " %s (%s) %s: ERROR\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], arg);
+          fprintf(flog, " %s (%s) %s: ERROR\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], arg1);
         }
       }
       else if (st == 1)
@@ -218,7 +219,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
         if ( last_cmd == 1 || last_cmd == 2 || last_cmd == 3 || last_cmd == 4 || last_cmd == 5 ) {
           fprintf(flog, " %s (%s): OK\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
         } else {
-          fprintf(flog, " %s (%s) %s: OK\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], arg);
+          fprintf(flog, " %s (%s) %s: OK\n", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], arg1);
         }
       }
       else
@@ -276,4 +277,3 @@ void print_syntaxinfo(char *argv[])
   fprintf(stderr, "\tGlobal syntax: %s <game_data_file> [-l <log_file>] [< <command_file>]\n", argv[0]);
   fprintf(stderr, "\tArguments between [ ] are optional.\n \n");
 }
-
