@@ -46,14 +46,14 @@ void print_syntax_command(T_Command cmd);
 /**It scans the cmd searching for key words introduced by the user 
   *in order to interpret and clasify the info
   */
-T_Command command_get_user_input(char **arg)
+T_Command command_get_user_input(char *arg1, char *arg2)
 {
   T_Command cmd = NO_CMD; 
-  char input[CMD_LENGHT] = "";
+  char input[CMD_LENGHT] = "", aux[CMD_LENGHT] = "\0";
   int i = UNKNOWN - NO_CMD + 1;
   
   /* Error control*/
-  if (!arg)
+  if (!arg1 || !arg2)
   {
     return NO_CMD;
   }
@@ -68,18 +68,20 @@ T_Command command_get_user_input(char **arg)
         cmd = i + NO_CMD;                   /*!< If any differences are detected between CMDS, CMDL and the input, cmd is modified */
         if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE || cmd == LOAD)
         {
-          if (scanf("%s", arg[0]) < 0)
+          if (scanf("%s", arg1) < 0)
           {
             print_syntax_command(cmd);
           }
         }
         else if (cmd == OPEN)
         {
-          if (scanf("%s %s %s", arg[0], arg[1], arg[2]) != 3)
+          if (scanf("%s %s %s", arg1, aux, arg2) != 3)
           {
             print_syntax_command(cmd);
           }
-          if (strcasecmp("with\0", arg[1]) != 0)
+
+          strncat(aux, "\0", 1);
+          if (strcasecmp("with\0", aux) != 0)
           {
             print_syntax_command(cmd);
             return UNKNOWN;
@@ -131,6 +133,7 @@ T_Command command_get_file_input(char *command, char *arg)
             fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE necesitan un argumento mas como el nombre del objeto .\n");
           }
         }
+        /*
         else if (cmd == OPEN)
         {
           if (scanf("%s %s %s", arg[0], arg[1], arg[2]) != 3)
@@ -143,6 +146,7 @@ T_Command command_get_file_input(char *command, char *arg)
             return UNKNOWN;
           }
         }
+        */
       }
       else                                  /*!< In any other case, continue reading >! */
       {
@@ -162,8 +166,6 @@ T_Command command_get_file_input(char *command, char *arg)
  */
 void print_syntax_command(T_Command cmd)
 {
-  char cmd_name[5];
-
   switch (cmd)
   {
   case TAKE:
