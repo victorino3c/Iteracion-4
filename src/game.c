@@ -811,11 +811,12 @@ void game_get_new_event(Game *game){
   return;
 }
 
+
 /** game_update updates cmd whenever something is typed in, this is where
  * every known case gets interpreted as the various actions on the game,
  * any other input would be considered unknown
  */
-int game_update(Game *game, T_Command cmd, char **arg)
+int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
 {
   int st = 0;
   
@@ -829,49 +830,49 @@ int game_update(Game *game, T_Command cmd, char **arg)
   switch (cmd)
   {
   case UNKNOWN:
-    st = game_command_unknown(game, arg[0]);
+    st = game_command_unknown(game, arg1);
     break;
 
   case EXIT:
-    st = (int)game_command_exit(game, arg[0]);
+    st = (int)game_command_exit(game, arg1);
     break;
 
   case TAKE:
-    st = (int)game_command_take(game, arg[0]);
+    st = (int)game_command_take(game, arg1);
     break;
 
   case DROP:
-    st = (int)game_command_drop(game, arg[0]);
+    st = (int)game_command_drop(game, arg1);
     break;
 
   case ATTACK:
-    st = (int)game_command_attack(game, arg[0]);
+    st = (int)game_command_attack(game, arg1);
     break;
 
   case MOVE:
-    st = (int)game_command_move(game, arg[0]);
+    st = (int)game_command_move(game, arg1);
     break;
 
   case INSPECT:
-    st = (int)game_command_inspect(game, arg[0]);
+    st = (int)game_command_inspect(game, arg1);
     break;
 
   case SAVE:
-    st = (int)game_command_save(game, arg[0]);
+    st = (int)game_command_save(game, arg1);
     break;
 
   case LOAD:
-    st = (int)game_command_load(game, arg[0]);
+    st = (int)game_command_load(game, arg1);
     break;
 
   default:
     break;
-  }
   
   game_get_new_event(game);
 
   return st;
 }
+
 
 /* Gets the last event in the input
 */
