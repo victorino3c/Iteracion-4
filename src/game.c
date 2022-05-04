@@ -447,6 +447,30 @@ Object *game_get_object_byName(Game *game, char *name)
 }
 
 /**
+ * Finds an object with the same name. Case is ignore.
+ */
+Object *game_get_link_byName(Game *game, char *name)
+{
+  int i;
+
+  /* Error control*/
+  if (!game || name == NULL)
+  {
+    return NULL;
+  }
+
+  for (i = 0; i < MAX_LINKS && game->links[i] != NULL; i++)
+  {
+    if (strcasecmp(name, link_get_name(game->links[i])) == 0)
+    {
+      return game->links[i];
+    }
+  }
+
+  return NULL;
+}
+
+/**
  * Finds an enemy with the same name. Case is ignore.
  */
 Enemy *game_get_enemy_byName(Game *game, char *name)
@@ -1360,6 +1384,119 @@ STATUS game_command_load(Game* game, char *arg){
 
  st = game_managment_load(arg, game);
  return st;
+}
+
+/**
+ * @brief It executes TURNON command in game
+ * @author Miguel Soto
+ * 
+ * It turn on an object so it iluminates.
+ * 
+ * @param game pointer to game struct.
+ * @param arg string with command argument.
+ * @return OK if everything goes well or ERROR if there was any mistake 
+ */
+STATUS game_command_turnon(Game *game, char *arg)
+{
+  Object *obj = NULL;
+
+  if (!game || !arg)
+  {
+    return ERROR;
+  }
+  
+  obj = game_get_object_byName(game, arg);
+  if (!obj)
+  {
+    return ERROR;
+  }
+  
+  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == TRUE)
+  {
+    /* Object has not iluminate attribute or object is already iluminated*/
+    return ERROR;
+  }
+
+  return object_set_turnedon(obj, TRUE);
+}
+
+/**
+ * @brief It executes TURN OFF command in game
+ * @author Miguel Soto
+ * 
+ * It turn off an object so it stop to iluminate.
+ * 
+ * @param game pointer to game struct.
+ * @param arg string with command argument.
+ * @return OK if everything goes well or ERROR if there was any mistake .
+ */
+STATUS game_command_turnoff(Game *game, char *arg)
+{
+  Object *obj = NULL;
+
+  if (!game || !arg)
+  {
+    return ERROR;
+  }
+  
+  obj = game_get_object_byName(game, arg);
+  if (!obj)
+  {
+    return ERROR;
+  }
+  
+  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == FALSE)
+  {
+    /* Object has not iluminate attribute or object is already not iluminated*/
+    return ERROR;
+  }
+
+  return object_set_turnedon(obj, FALSE);
+}
+
+/**
+ * @brief It executes OPEN command in game
+ * @author Miguel Soto
+ * 
+ * It opens a link with an object.
+ * 
+ * @param game pointer to game struct.
+ * @param link_name string with link name that is about to be open.
+ * @param obj_name string with object name that opens link.
+ * @return OK if everything goes well or ERROR if there was any mistake .
+ */
+STATUS game_command_open(Game *game, char *link_name, char *obj_name)
+{
+  Link *l = NULL;
+  Object *obj = NULL;
+  Id *obj_open_link = NO_ID;
+
+  if (!game || !link_name || !obj_name)
+  {
+    return ERROR;
+  }
+  
+  l = game_get_link_byName(game, link_name);
+  obj = game_get_object_byName(game, obj_name);
+  if (!l || !obj)
+  {
+    return ERROR;
+  }
+  
+  if (link_get_status(l) == OPEN)
+  {
+    /* Link is already open */
+    return ERROR;
+  }
+  
+  obj_open_link = object_get_open(obj);
+
+  if (link_get_id(l) == obj_open_link)
+  {
+    return link_set_status(l, OPEN_L);
+  }
+  
+  return ERROR;
 }
 
 /**
