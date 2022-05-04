@@ -439,3 +439,39 @@ BOOL obj_is_visible(Object *obj, Light ls)
   }
 }
 
+Obj_type obj_get_type(Id id)
+{
+    int first_digit, digits;
+
+  /*Error control*/
+  if (id < 0)
+  {
+    return '\0';
+  }
+
+  digits = (int)log10(id);
+
+  first_digit = (int)(id / pow(10, digits));
+
+  if (first_digit == APPLE) 
+  {
+    return APPLE;
+  } else if (first_digit == ELIXIR)
+  {
+    return ELIXIR;
+  } else if (first_digit == ARMOUR)
+  {
+    return ARMOUR;
+  } else if (first_digit == HOOK)
+  {
+    return HOOK;
+  } else if (first_digit == BED)
+  {
+    return BED;
+  } else 
+  {
+    return UNKNOWN_TYPE;
+  }
+
+
+}
