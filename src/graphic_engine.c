@@ -22,7 +22,7 @@
 #include "../include/inventory.h"
 #include "../include/set.h"
 
-#define ROWS 39       /*!< Establish screen size in y dimension */
+#define ROWS 44       /*!< Establish screen size in y dimension */
 #define COLUMNS 120   /*!< Establish screen size in x dimension */
 
 /**
@@ -37,6 +37,8 @@ struct _Graphic_engine
   Area *banner;   /*!< graphic engine area of the banner */
   Area *help;     /*!< graphic engine area of help */
   Area *feedback;   /*!< graphic engine area of feedback */
+  Area *dialoge; /*!< graphic engine area of dialoge */
+  Area *events; /*!< graphic engine area of events */
 };
 
 /**
@@ -58,7 +60,9 @@ Graphic_engine *graphic_engine_create()
   ge->descript = screen_area_init(82, 1, 35, 25);
   ge->banner = screen_area_init(50, 29, 19, 1);
   ge->help = screen_area_init(1, 30, 115, 3);
-  ge->feedback = screen_area_init(1, 34, 115, 3);
+  ge->feedback = screen_area_init(1, 34, 80, 3);
+  ge->dialoge = screen_area_init(1, 38, 80, 5);
+  ge->events = screen_area_init(82, 34, 35, 9);
 
   return ge;
 }
@@ -78,6 +82,8 @@ void graphic_engine_destroy(Graphic_engine *ge)
   screen_area_destroy(ge->banner);
   screen_area_destroy(ge->help);
   screen_area_destroy(ge->feedback);
+  screen_area_destroy(ge->dialoge);
+  screen_area_destroy(ge->events);
 
   screen_destroy();
   free(ge);
@@ -697,11 +703,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   
   screen_area_puts(ge->feedback, str);
 
+/* prints the dialoge area */
+screen_area_clear(ge->dialoge);
+
+screen_area_puts(ge->dialoge, " Dialoge:");
+
+/* prints the events area */
+screen_area_clear(ge->events);
+
+screen_area_puts(ge->events, " Events:");
+
+
   /* Dump to the terminal */
   screen_paint();
   printf("prompt:> ");
+
 }
-
-
-
-
