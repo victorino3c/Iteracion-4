@@ -74,4 +74,14 @@ typedef enum
   NIGHT   /*!< Night time*/
 } Time;
 
+typedef enum
+{
+  UNKNOWN_TYPE = -1,
+  APPLE,
+  ELIXIR,
+  ARMOUR,
+  HOOK,
+  BED
+} Obj_type;
+
 #endif
