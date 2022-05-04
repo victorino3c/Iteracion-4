@@ -1502,6 +1502,12 @@ STATUS game_event_spawn(Game *game){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
+  
+  /*You cannot get lost while attacking*/
+  if(game->last_cmd == ATTACK){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
+    return ERROR;
+  }
 
   /*Sets player to the initial room*/
   player_set_location(game->player[0], SPACE_INITIAL);
