@@ -48,6 +48,8 @@ typedef struct _Dialogue Dialogue;
 
 Dialogue *dialogue_create();
 
+STATUS dialogue_reset(Dialogue *dialogue);
+
 char *dialogue_get_command(Dialogue *dialogue);
 
 STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition);
