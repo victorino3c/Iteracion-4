@@ -49,7 +49,10 @@ $(O)game_loop.o: $(S)game_loop.c $(I)game.h $(I)command.h $(I)graphic_engine.h
 $(O)game_rules.o: $(S)game_rules.c $(I)game_rules.h
 	$(CC) -o $@ $(FLAGS) $<
 
-juego: $(O)command.o $(O)game.o $(O)game_managment.o $(O)graphic_engine.o $(O)object.o $(O)link.o $(O)player.o $(O)space.o $(O)game_loop.o $(L)libscreen.a $(O)enemy.o $(O)set.o $(O)inventory.o $(O)game_rules.o
+$(O)dialogue.o: $(S)dialogue.c $(I)dialogue.h
+	$(CC) -o $@ $(FLAGS) $<
+
+juego: $(O)command.o $(O)game.o $(O)game_managment.o $(O)graphic_engine.o $(O)object.o $(O)link.o $(O)player.o $(O)space.o $(O)game_loop.o $(L)libscreen.a $(O)enemy.o $(O)set.o $(O)inventory.o $(O)game_rules.o $(O)dialogue.o
 	$(CC) -o $@ -Wall $^ $(LIBRARY)
 
 #GAME
