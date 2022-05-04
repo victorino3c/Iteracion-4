@@ -423,7 +423,12 @@ Object *game_get_object(Game *game, Id id)
 }
 
 /**
- * Finds an object with the same name. Case is ignore.
+ * @brief Finds an object with the same name. Case is ignore.
+ * @author Nicolas Victorino
+ * 
+ * @param game pointer to game struct
+ * @param name string with obj_name
+ * @return pointer to object with name name.
  */
 Object *game_get_object_byName(Game *game, char *name)
 {
@@ -447,7 +452,12 @@ Object *game_get_object_byName(Game *game, char *name)
 }
 
 /**
- * Finds an object with the same name. Case is ignore.
+ * @brief Finds a link with the same name. Case is ignore.
+ * @author Miguel Soto
+ * 
+ * @param game pointer to game struct.
+ * @param name string with link's name.
+ * @return pointer to link with name name.
  */
 Object *game_get_link_byName(Game *game, char *name)
 {
