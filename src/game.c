@@ -33,6 +33,7 @@ struct _Game
   Time day_time;               /*!< Time cycle of the game */
   T_Command last_cmd;          /*!< Last command input */
   R_Event last_event;          /*!< Last event */
+  Dialogue *dialogue;          /*!< Text to print*/
 } ;
 
 /**
@@ -1378,6 +1379,7 @@ STATUS game_event_move(Game *game){
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
@@ -1388,16 +1390,19 @@ STATUS game_event_move(Game *game){
 
   /*If elixir is not in the map, cant be moved*/
   if(apple_loc == -1 && elixir_loc == -1){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
   if(apple_loc != -1 || rand_num == 0){
     game_set_object_location(game, obj_get_id(apple), game_get_player_location(game, 1));
+    dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
 
   if(elixir_loc != -1 || rand_num == 1){
     game_set_object_location(game, obj_get_id(elixir), game_get_player_location(game, 1));
+    dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
 
@@ -1416,12 +1421,14 @@ STATUS game_event_trap(Game *game){
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
   /*Player losses one of HP*/
   player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - 1));
 
+  dialogue_set_event(game->dialogue, DE_TRAP);
   return OK;
 }
 
@@ -1440,17 +1447,21 @@ STATUS game_event_slime(Game *game){
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
   /*In case slime is already dead*/
   if(slime_loc == -1){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
   /*Sets the enemy on players location*/
   enemy_set_location(slime, player_get_location(game->player[MAX_PLAYERS - 1]));
 
+  dialogue_set_event(game->dialogue, DE_SLIME);
   return OK;
 }
 
@@ -1465,9 +1476,11 @@ STATUS game_event_slime(Game *game){
 STATUS game_event_daynight(Game *game){
 
   if(game_get_time(game) == DAY){
+    dialogue_set_event(game->dialogue, DE_NIGHT);
     game_set_time(game, NIGHT);
   }
   else if(game_get_time(game) == NIGHT){
+    dialogue_set_event(game->dialogue, DE_DAY);
     game_set_time(game, DAY);
   }
 
@@ -1486,12 +1499,14 @@ STATUS game_event_spawn(Game *game){
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
   /*Sets player to the initial room*/
   player_set_location(game->player[0], SPACE_INITIAL);
 
+  dialogue_set_event(game->dialogue, DE_SPAWN);
   return OK;
 }
 
