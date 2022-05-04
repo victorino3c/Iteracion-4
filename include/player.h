@@ -186,5 +186,24 @@ STATUS player_print(Player *player);
  */
 STATUS player_print_save(char *filename, Player *player);
 
+/**
+ * @brief 
+ * 
+ * @author Nicolas Victorino
+ * @param player Given player
+ * @param health New max health
+ * @return ERROR if something went wrong 
+ */
+STATUS player_set_max_health(Player *player, int health);
+
+/**
+ * @brief Gets players max health
+ * 
+ * @author Nicolas Victorino
+ * @param player Given player
+ * @return -1 if error
+ */
+int player_get_max_health(Player *player);
+
 #endif
 
