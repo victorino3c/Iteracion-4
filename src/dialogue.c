@@ -59,11 +59,24 @@ Dialogue *dialogue_create()
         return NULL;
     }
 
-    new_dialogue->command = NULL;
-    new_dialogue->event = NULL;
+    new_dialogue->command = matrix_command[DC_ERROR];
+    new_dialogue->event = matrix_event[DE_NOTHING];
     
     return new_dialogue;
 
+}
+
+STATUS dialogue_reset(Dialogue *dialogue){
+    
+    /*Error Control*/
+    if(dialogue == NULL){
+        return ERROR;
+    }
+
+    dialogue->command = matrix_command[DC_ERROR];
+    dialogue->event = matrix_event[DE_NOTHING];
+
+    return OK;
 }
 
 char *dialogue_get_command(Dialogue *dialogue)
@@ -84,6 +97,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition)
     }
 
     dialogue->command = matrix_command[condition];
+
 
     return OK;
 }
