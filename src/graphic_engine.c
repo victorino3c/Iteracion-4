@@ -37,7 +37,7 @@ struct _Graphic_engine
   Area *banner;   /*!< graphic engine area of the banner */
   Area *help;     /*!< graphic engine area of help */
   Area *feedback;   /*!< graphic engine area of feedback */
-  Area *dialoge; /*!< graphic engine area of dialoge */
+  Area *dialogue; /*!< graphic engine area of dialoge */
   Area *events; /*!< graphic engine area of events */
 };
 
@@ -61,7 +61,7 @@ Graphic_engine *graphic_engine_create()
   ge->banner = screen_area_init(50, 29, 19, 1);
   ge->help = screen_area_init(1, 30, 115, 3);
   ge->feedback = screen_area_init(1, 34, 80, 3);
-  ge->dialoge = screen_area_init(1, 38, 80, 5);
+  ge->dialogue = screen_area_init(1, 38, 80, 5);
   ge->events = screen_area_init(82, 34, 35, 9);
 
   return ge;
@@ -82,7 +82,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
   screen_area_destroy(ge->banner);
   screen_area_destroy(ge->help);
   screen_area_destroy(ge->feedback);
-  screen_area_destroy(ge->dialoge);
+  screen_area_destroy(ge->dialogue);
   screen_area_destroy(ge->events);
 
   screen_destroy();
@@ -109,7 +109,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL;
   char *description;
   char *en_name[MAX_ENEMYS];
-  char *inspection;
+  char *inspection, *dialogue, *events;
   char *obj_name[MAX_OBJS];
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
   Set *object_set = NULL;
@@ -704,14 +704,27 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_area_puts(ge->feedback, str);
 
 /* prints the dialoge area */
-screen_area_clear(ge->dialoge);
+screen_area_clear(ge->dialogue);
 
-screen_area_puts(ge->dialoge, " Dialoge:");
+screen_area_puts(ge->dialogue, " Dialogue:");
+dialogue = dialogue_get_command(game_get_dialogue(game));
+
+if (dialogue)
+{
+  sprintf(str, "  %s", dialogue);
+  screen_area_puts(ge->dialogue, str);
+}
 
 /* prints the events area */
 screen_area_clear(ge->events);
 
 screen_area_puts(ge->events, " Events:");
+events = dialogue_get_event(game_get_dialogue(game));
+if (events)
+{
+  sprintf(str, "  %s", events);
+  screen_area_puts(ge->events, str);
+}
 
 
   /* Dump to the terminal */
