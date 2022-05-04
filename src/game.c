@@ -50,6 +50,7 @@ STATUS game_command_movement(Game *game, DIRECTION dir);
 STATUS game_command_inspect(Game *game, char *arg);
 STATUS game_command_save(Game *game, char *arg);
 STATUS game_command_load(Game *game, char *arg);
+STATUS game_command_use(Game *game, char *arg);
 STATUS game_event_move(Game *game);
 STATUS game_event_trap(Game *game);
 STATUS game_event_slime(Game *game);
