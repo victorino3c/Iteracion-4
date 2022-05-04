@@ -401,5 +401,11 @@ STATUS game_set_enemy_location(Game *game, Id enemy_id, Id space_id);
  */
 STATUS game_save(char *filename, Game* game);
 
-
+/**
+ * @brief Returns a pointer to the structure dialogue
+ * 
+ * @param game Pointer to game
+ * @return NULL in case of error
+ */
+Dialogue *game_get_dialogue(Game *game);
 #endif
