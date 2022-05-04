@@ -32,7 +32,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
 };
 
 char matrix_event[EVENT_SIZE][WORD_SIZE] =
-{ "",                                                   /*!< DE_NOTHING*/
+{ "All seems ok",                                                   /*!< DE_NOTHING*/
   "This object was not here, someone moved it...",      /*!< DE_MOVEOBJ*/
   "Be carefull! You stepped on spikes and losses 1 HP", /*!< DE_TRAP*/
   "An enemy appeared suddenly!",                        /*!< DE_SLIME*/
@@ -48,9 +48,10 @@ struct _Dialogue
 };
 
 char *strfmt(char *str, char *arg) {
-    char *res = (char *) malloc(strnen(str)+strlen(arg)+1);
+    char *res = (char *) malloc(strlen(str)+strlen(arg)+1);
     int k = 0;
-    for (int i=0; i<strlen(str); i++) {
+    int i;
+    for (i=0; i<strlen(str); i++) {
         if (str[i] != '*') 
             res[k++] = str[i];
         else {
