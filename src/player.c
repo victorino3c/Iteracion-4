@@ -27,6 +27,7 @@ struct _Player
   Inventory *inventory;		/*!< Player's inventory */
   Id location;		/*!< Id to player's space location */
   int health;		/*!< Player's health */
+  int max_health; /*!< Max player´s health */
 } ;
 
 /** player_create allocates memory for a new player
@@ -54,6 +55,7 @@ Player *player_create(Id id)
   new_player->health = 3;
   new_player->name[0] = '\0';
   new_player->location = NO_ID;
+  new_player->max_health = 10;
   new_player->inventory = inventory_create();
 
   return new_player;
@@ -166,7 +168,7 @@ int player_get_health(Player *player)
 STATUS player_set_health(Player *player, int health)
 { 
 	/*Error control */
-  if (!player)
+  if (!player || health > player->max_health)
   {
     return ERROR; 
   }
@@ -297,6 +299,24 @@ STATUS player_set_max_inventory(Player* player, int num)
 
   inventory_set_maxObjs(player->inventory, num);
   return OK;
+}
+
+STATUS player_set_max_health(Player *player, int health)
+{
+  if (!player || health < 0)
+  return ERROR;
+
+  player->max_health = health;
+
+  return OK;
+}
+
+int player_get_max_health(Player *player)
+{
+  if (!player)
+  return -1;
+
+  return player->max_health;
 }
 
 STATUS player_print_save(char *filename, Player *player)
