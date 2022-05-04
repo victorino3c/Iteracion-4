@@ -92,6 +92,7 @@ STATUS game_alloc(Game *game)
   }
 
   game->inspection = " ";
+  game->dialogue = dialogue_create();
   return OK;
 }
 
@@ -1573,6 +1574,7 @@ Game *game_alloc2()
   game->inspection = "\0";
   game->day_time = DAY;
   game->last_event = NOTHING;
+  game->dialogue = dialogue_create();
 
   return game;
 }
