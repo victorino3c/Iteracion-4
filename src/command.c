@@ -35,7 +35,8 @@ char *cmd_to_str[N_CMD]
       {"l", "Load"},               /*!< If a "l" or "load" is received, it is interpreted as Load */
       {"ton", "Turnon"},           /*!< If a "ton" or "Turnon" is received, it is interpreted as Turnon */
       {"toff", "Turnoff"},         /*!< If a "toff" or "Turnoff" is received, it is interpreted as Turnoff */
-      {"o", "Open"}                /*!< If an "o" or "Open" is received, it is interpreted as Open */
+      {"o", "Open"},               /*!< If an "o" or "Open" is received, it is interpreted as Open */
+      {"u", "Use"}                 /*!< If an "u" or "Use" is received, it is interpreted as Use */
       };
 
 /**
@@ -130,7 +131,7 @@ T_Command command_get_file_input(char *command, char *arg)
           arg[z] = '\0';
           if (arg == NULL)
           {
-            fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE necesitan un argumento mas como el nombre del objeto .\n");
+            fprintf(stdout, "Comando incorrecto. Los comandos TAKE DROP INSPECT MOVE USE OPEN necesitan un argumento mas como el nombre del objeto .\n");
           }
         }
         /*
