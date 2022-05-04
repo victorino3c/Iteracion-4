@@ -22,7 +22,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "You missed the attack and recieved damage", /*!< DC_ATTACK_MISSED*/
   "You hit the opponent",                      /*!< DC_ATTACK_HIT*/
   "You hit the opponent with a critical",      /*!< DC_ATTACK_CRITICAL*/
-  "You moved to the North",                    /*!< DC_MOVE_N*/
+  "You moved to the *",                    /*!< DC_MOVE_N*/
   "You moved to the East",                     /*!< DC_MOVE_E*/
   "You moved to the South",                    /*!< DC_MOVE_S*/
   "You moved to the West",                     /*!< DC_MOVE_W*/
@@ -46,6 +46,23 @@ struct _Dialogue
     char *command;
     char *event;
 };
+
+char *strfmt(char *str, char *arg) {
+    char *res = (char *) malloc(strnen(str)+strlen(arg)+1);
+    int k = 0;
+    for (int i=0; i<strlen(str); i++) {
+        if (str[i] != '*') 
+            res[k++] = str[i];
+        else {
+            strcpy(res+k, arg);
+            k += strlen(arg);
+        }
+    }
+    res[k] = 0;
+    return res;
+}
+
+
 
 Dialogue *dialogue_create()
 {
