@@ -18,8 +18,8 @@
 #o:313|Sword|+0,2 power|121|1|-1|-1|0|0|1|
 #o:314|Sword|+0,2 power|122|1|-1|-1|0|0|1|
 #o:315|Candle1|Can be lit up|125|1|-1|13|0|0|1|
-#o:316|Small_key1|This opens something|127|1|-1|127|0|0|1|                 
-#o:317|Small_key2|This opens something|126|1|-1|126|0|0|1|                     
+#o:316|Small_key1|This opens something|127|1|-1|505|0|0|1|                 
+#o:317|Small_key2|This opens something|126|1|-1|524|0|0|1|                     
 #o:318|Armor|+1 Max_health|126|1|-1|-1|0|0|0|                      
 #o:319|Candle2|Cannot be moved|13|0|-1|-1|0|0|1|
 #o:320|Candle3|Cannot be moved|13|0|-1|-1|0|0|1|
@@ -32,13 +32,13 @@
 #o:327|Bed1| Makes it night or day time |17|0|-1|-1|0|0|1|
 #o:328|Bed2| Makes it night or day time |14|0|-1|-1|0|0|1|
 #o:322|Armor|+1 Max_health|123|1|-1|-1|0|0|0|
-#o:31|Ladder|Ladder to access the attic from the cell |122|1|-1|11|0|0|1| 
-#o:32|Dawn_Key|Only the worthy can enter the Secret_Chamber|125|1|-1|121|0|0|1|
+#o:31|Ladder|Ladder to access the attic from the cell |122|1|-1|509|0|0|1| 
+#o:32|Dawn_Key|Only the worthy can enter the Secret_Chamber|125|1|-1|516|0|0|1|
 #o:33|Bread_Crumbs|Someone might appreciate them|125|1|-1|-1|0|0|1|
 #o:34|Crit_Sword|+0,3 Crit chance|14|1|-1|-1|0|0|1|
-#o:35|Dusk_Key|A key to his doorstep|124|1|-1|122|0|0|1|
+#o:35|Dusk_Key|A key to his doorstep|124|1|-1|514|0|0|1|
 #o:36|Hook|To grab something unreachable|124|1|-1|-1|0|0|1|
-#o:37|Treasure_key|An old looking key|17|1|-1|15|0|0|1|
+#o:37|Treasure_key|An old looking key|17|1|-1|519|0|0|1|
 #o:38|Moon_Armor|+10 permanent health, also recovers 10 health |16|1|-1|-1|0|0|0|
 #o:39|Sun_Sword|+1 permanent attack, deals you 1 damage per attack, +1 all healing items|16|1|-1|-1|0|0|0|
 #p:21|Player|11|5|3|
@@ -54,7 +54,7 @@
 #l:506|A_Corridor_w|127|12|3|1|
 #l:507|A_Entry_e|12|127|2|1|
 #l:508|A_Entry_d|12|11|1|1|
-#l:509|Cell_u|11|12|0|1|
+#l:509|Cell_u|11|12|0|0|
 #l:510|Cell_s|11|121|1|1|
 #l:511|Corridor1_n|121|11|0|1|
 #l:512|Corridor1_s|121|122|1|1|
@@ -64,8 +64,8 @@
 #l:516|Corridor1_e|121|16|2|0|
 #l:517|Secret_Chamber_w|16|121|3|1|
 #l:518|D_Treasury_s|124|15|1|1|
-#l:519|D_Chamber_n|13|124|0|0|
-#l:529|D_Chamber_u|14|15|2|1|
+#l:519|D_Chamber_n|15|124|0|0|
+#l:529|D_Chamber_u|15|14|2|1|
 #l:520|Hall_e|122|125|2|1|
 #l:521|Dining_Room_w|125|122|3|1|
 #l:522|Dining_Room_e|125|126|2|1|
