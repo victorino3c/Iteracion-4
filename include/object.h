@@ -250,5 +250,15 @@ Light object_get_time_visible(Object *obj);
 */
 BOOL obj_is_visible(Object *obj, Light ls);
 
+/**
+ * @brief Gets the type of an object (apple, bed...)
+ * 
+ * @author Nicolas Victorino
+ * @param id 
+ * @return Object type or UNKOWN_TYPE if error
+ */
+Obj_type obj_get_type(Id id);
+
+
 #endif
 
