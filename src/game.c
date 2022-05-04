@@ -1510,6 +1510,94 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
 }
 
 /**
+ * @brief It executes USE command in game.
+ * 
+ * Uses a given object
+ * 
+ * @param game pointer to game struct
+ * @param arg string with command argument
+ * @return OK if everything goes well or ERROR if there was any mistake
+ */
+STATUS game_command_use(Game *game, char *arg) 
+{
+  Object *obj = game_get_object_byName(game, arg);
+  Id id, id_new;
+  Obj_type type;
+  Player *player;
+  STATUS st = OK;
+
+  if (obj == NULL) 
+  {
+    st = ERROR;
+    return st;
+  }
+
+  id = obj_get_id(obj); 
+
+  if (inventory_has_id(player_get_inventory(player), id) == FALSE)
+  {
+    return ERROR;
+  }
+
+  player = game_get_player(game, 21);
+
+  id_new = id - 300; /*El primer digito de todos los objetos es 3, con lo que le resto 300 para que sea mas facil de manejar*/
+
+  type = obj_get_type(id); 
+
+  if (type == APPLE) /*Case apples*/ 
+  {
+    st = inventory_remove_object(player_get_inventory(player), id);
+    st = player_set_health( player, player_get_health(player) + 1);
+
+    return st;
+
+  } else if (type == 2) /*Case elixir*/
+  {
+    st = inventory_remove_object(player_get_inventory(player), id);
+    st = player_set_health( player, player_get_health(player) + 2);
+
+    return st;
+  } else if (type == 3) /*Case armour*/
+  {
+    st = inventory_remove_object(player_get_inventory(player), id);
+    st = player_set_max_health( player, player_get_max_health(player) + 1);
+
+    return st;
+  } else if (type == 4) /*Case hook*/
+  {
+    st = inventory_remove_object(player_get_inventory(player), id);
+    if (player_get_location(player) == 125) 
+    {
+      st = obj_set_location(game_get_object(game, 32), -1);
+      st = inventory_add_object(player_get_inventory(player), 32);
+
+      return st;
+    } else {
+      return ERROR;
+    }
+  } else if (type ==5) /*Case bed*/
+  {
+    st = inventory_remove_object(player_get_inventory(player), id);
+    if (game_get_time == DAY) {
+      st = game_set_time(game, NIGHT);
+    } else 
+    {
+      st = game_set_time(game, DAY);
+    }
+
+    return st;
+  } else if (type == UNKNOWN_TYPE) /*Case unknown*/
+  {
+    return ERROR;
+  } else 
+  {
+    return ERROR;
+  }
+
+}
+
+/**
  * @brief It executes MOVE event
  * 
  * Apple or Elixir will appear on the player's room 
