@@ -459,7 +459,7 @@ Object *game_get_object_byName(Game *game, char *name)
  * @param name string with link's name.
  * @return pointer to link with name name.
  */
-Object *game_get_link_byName(Game *game, char *name)
+Link *game_get_link_byName(Game *game, char *name)
 {
   int i;
 
