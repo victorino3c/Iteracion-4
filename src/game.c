@@ -1479,7 +1479,7 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
 {
   Link *l = NULL;
   Object *obj = NULL;
-  Id *obj_open_link = NO_ID;
+  Id obj_open_link = NO_ID;
 
   if (!game || !link_name || !obj_name)
   {
@@ -1493,7 +1493,7 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
     return ERROR;
   }
   
-  if (link_get_status(l) == OPEN)
+  if (link_get_status(l) == OPEN_L)
   {
     /* Link is already open */
     return ERROR;
