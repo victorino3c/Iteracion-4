@@ -1622,3 +1622,13 @@ STATUS game_save(char *filename, Game* game)
 
   return OK;
 }
+
+Dialogue *game_get_dialogue(Game *game)
+{
+  if (!game)
+  {
+    return NULL;
+  }
+
+  return game->dialogue;
+}
