@@ -76,12 +76,13 @@ typedef enum
 
 typedef enum
 {
-  UNKNOWN_TYPE = -1,
-  APPLE,
-  ELIXIR,
-  ARMOUR,
-  HOOK,
-  BED
+  UNKNOWN_TYPE = -1,  /*!< Unknown object type*/
+  APPLE,              /*!< Apple object type*/
+  ELIXIR,             /*!< Elixir object type*/
+  ARMOR,              /*!< Armor object type*/
+  HOOK,               /*!< Hook object type*/
+  BED,                /*!< Bed object type*/
+  KEY  /*No se si hace falta*/
 } Obj_type;
 
 #endif
