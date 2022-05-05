@@ -441,34 +441,32 @@ BOOL obj_is_visible(Object *obj, Light ls)
 
 Obj_type obj_get_type(Id id)
 {
-    int first_digit, digits;
 
   /*Error control*/
-  if (id < 0)
+  if (id < 300 || id > 400)
   {
-    return '\0';
+    return UNKNOWN_TYPE;
   }
 
-  digits = (int)log10(id);
-
-  first_digit = (int)(id / pow(10, digits));
-
-  if (first_digit == APPLE) 
+  if (id - 310 < 0 && id - 310 >= -10) /*Por que siempre entra a aqui? No entiendo*/
   {
     return APPLE;
-  } else if (first_digit == ELIXIR)
+  } else if (id - 320 < 0 && id - 320 >= -10)
   {
     return ELIXIR;
-  } else if (first_digit == ARMOUR)
+  } else if (id - 330 < 0 && id - 330 >= -10)
   {
-    return ARMOUR;
-  } else if (first_digit == HOOK)
+    return ARMOR;
+  } else if (id - 340 < 0 && id - 340 >= -10)
   {
     return HOOK;
-  } else if (first_digit == BED)
+  } else if (id - 350 < 0 && id - 350 >= -10)
   {
     return BED;
-  } else 
+  } else if (id - 360 < 0 && id - 360 >= -10) /*No se si hace falta, llamar directamente desde open?*/
+  {
+    return KEY;
+  } else
   {
     return UNKNOWN_TYPE;
   }
