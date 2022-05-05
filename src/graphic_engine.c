@@ -110,7 +110,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char *description;
   char *en_name[MAX_ENEMYS];
   char *inspection, *dialogue, *events;
-  char *obj_name[MAX_OBJS];
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
   Set *object_set = NULL;
 
@@ -132,16 +131,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     en_health[i] = enemy_get_health(game_get_enemy(game, game_get_enemy_id(game, i)));
     en_name[i] = (char *)enemy_get_name(game_get_enemy(game, game_get_enemy_id(game, i)));
     en_loc[i] = game_get_enemy_location(game, game_get_enemy_id(game, i));
-  }
-
-  for(i=0;i<MAX_OBJS;i++)
-  { 
-    /* Error Control */
-    if (game_get_object(game, game_get_object_id(game, i))==NULL)
-    {
-      break;
-    }
-    obj_name[i] = (char *) obj_get_name(game_get_object(game, game_get_object_id(game, i)));
   }
 
   /* Paint the in the map area */
@@ -599,7 +588,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       }
 
       if (obj_is_visible(game_get_object(game,set_get_ids_by_number(space_get_objects(game_get_space(game, id_act)), i)), space_get_light_status(game_get_space(game, id_act)))== TRUE) {
-        sprintf(str, "  %s ", obj_name[i]);
+        sprintf(str, "  %s ", obj_get_name(game_get_object(game,set_get_ids_by_number(space_get_objects(game_get_space(game, id_act)), i))));
         screen_area_puts(ge->descript, str);
       }
     }
@@ -679,7 +668,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_area_puts(ge->help, str);
   sprintf(str, " w(UP), s(DOWN), a(LEFT), d(RIGHT), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), m(MOVE), e(EXIT), s (SAVE), l (LOAD),");
   screen_area_puts(ge->help, str);
-  sprintf(str, " o (OPEN), ton (TURNON), toff (TURNOFF)");
+  sprintf(str, " o (OPEN), ton (TURNON), toff (TURNOFF), u(USE)");
   screen_area_puts(ge->help, str);
   /*
   sprintf(str, " Player object will be -1 as long as it doesn't carry one");
