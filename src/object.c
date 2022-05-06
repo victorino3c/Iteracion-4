@@ -473,3 +473,19 @@ Obj_type obj_get_type(Id id)
 
 
 }
+
+int object_get_crit(Object *obj){
+  if (!obj){
+    return 0;
+  }
+  return obj->Crit_dmg;
+}
+
+STATUS object_set_crit(Object *obj, int crit){
+  if (!obj){
+    return ERROR;
+  }
+ obj->Crit_dmg = crit;
+ 
+ return OK;
+}
