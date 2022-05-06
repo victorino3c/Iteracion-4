@@ -338,3 +338,35 @@ STATUS player_print_save(char *filename, Player *player)
 
   return OK;
 }
+
+int player_get_crit(Player *player){
+  if (!player){
+    return 0;
+  }
+  return player->Crit_dmg;
+}
+
+STATUS player_set_crit(Player *player, int crit){
+  if (!player){
+    return ERROR;
+  }
+ player->Crit_dmg = crit;
+
+ return OK;
+}
+
+int player_get_baseDmg(Player *player){
+  if (!player){
+    return 0;
+  }
+  return player->base_dmg;
+}
+
+STATUS player_set_baseDmg(Player *player, int base_dmg){
+  if (!player){
+    return ERROR;
+  }
+ player->base_dmg = base_dmg;
+
+ return OK;
+}
