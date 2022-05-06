@@ -1466,43 +1466,53 @@ STATUS game_command_load(Game* game, char *arg){
 /**
  * @brief It executes TURNON command in game
  * @author Miguel Soto
- * 
+ *
  * It turn on an object so it iluminates.
- * 
+ *
  * @param game pointer to game struct.
  * @param arg string with command argument.
- * @return OK if everything goes well or ERROR if there was any mistake 
+ * @return OK if everything goes well or ERROR if there was any mistake
  */
 STATUS game_command_turnon(Game *game, char *arg)
 {
   Object *obj = NULL;
 
+  printf("**\nEntrando en turnon\n");
   if (!game || !arg)
   {
     return ERROR;
   }
-  
+
+  printf("Getting obj\n");
   obj = game_get_object_byName(game, arg);
   if (!obj)
   {
-    return ERROR;
-  }
-  
-  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == TRUE)
-  {
-    /* Object has not iluminate attribute or object is already iluminated*/
+    printf("ERROR Obj is NULL\n**\n");
     return ERROR;
   }
 
+  if (player_has_object(game->player[MAX_PLAYERS-1], obj_get_id(obj)) == FALSE)
+  {
+    return ERROR;
+  }
+  printf("Checking obj properties\n");
+  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == TRUE)
+  {
+    /* Object has not iluminate attribute or object is already iluminated*/
+    printf("ERROR object properties\n**\n");
+    return ERROR;
+  }
+
+  printf("Calling object_set_turnon");
   return object_set_turnedon(obj, TRUE);
 }
 
 /**
  * @brief It executes TURN OFF command in game
  * @author Miguel Soto
- * 
+ *
  * It turn off an object so it stop to iluminate.
- * 
+ *
  * @param game pointer to game struct.
  * @param arg string with command argument.
  * @return OK if everything goes well or ERROR if there was any mistake .
@@ -1511,23 +1521,33 @@ STATUS game_command_turnoff(Game *game, char *arg)
 {
   Object *obj = NULL;
 
+  printf("**\nEntrando en turnon\n");
   if (!game || !arg)
   {
     return ERROR;
   }
-  
+
+  printf("Getting obj\n");
   obj = game_get_object_byName(game, arg);
   if (!obj)
   {
-    return ERROR;
-  }
-  
-  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == FALSE)
-  {
-    /* Object has not iluminate attribute or object is already not iluminated*/
+    printf("ERROR Obj es NULL\n**\n");
     return ERROR;
   }
 
+  if (player_has_object(game->player[MAX_PLAYERS-1], obj_get_id(obj)) == FALSE)
+  {
+    return ERROR;
+  }
+  printf("Checking obj properties\n");
+  if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == FALSE)
+  {
+    /* Object has not iluminate attribute or object is already not iluminated*/
+    printf("ERROR object properties\n**\n");
+    return ERROR;
+  }
+
+  printf("Calling object_set_turnon FALSE object properties\n**\n");
   return object_set_turnedon(obj, FALSE);
 }
 
