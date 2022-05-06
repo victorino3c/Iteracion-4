@@ -216,6 +216,7 @@ STATUS game_load_objs(Game *game, char *filename)
   Id dependency, open;
   STATUS status = OK;
   Light light_visible = -1;
+  int crit = 0;
 
   if (!filename)
   {
@@ -253,6 +254,9 @@ STATUS game_load_objs(Game *game, char *filename)
       turnedon = atoi(toks);
       toks = strtok(NULL, "|");
       light_visible = atoi(toks);
+      toks = strtok(NULL, "|");
+      crit = atoi(toks);
+
 
 #ifdef DEBUG
       // printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
@@ -269,6 +273,8 @@ STATUS game_load_objs(Game *game, char *filename)
         object_set_illuminate(obj, illuminate);
         object_set_turnedon(obj, turnedon);
         object_set_time_visible(obj,light_visible);
+        object_set_crit(obj, crit);
+        
         /*Error control*/
         if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
         {
@@ -276,7 +282,7 @@ STATUS game_load_objs(Game *game, char *filename)
         }
         game_add_object(game, obj);
       }
-    }
+    } 
   }
 
   if (ferror(file))
@@ -307,6 +313,7 @@ STATUS game_load_players(Game *game, char *filename)
   int objects, health;
   Player *player = NULL;
   STATUS status = OK;
+  int crit = 0, base_dmg = 0;
 
   /*Error control*/
   if (!filename)
@@ -342,6 +349,10 @@ STATUS game_load_players(Game *game, char *filename)
       health = atol(toks);
       toks = strtok(NULL, "|");
       objects = atol(toks);
+      toks = strtok(NULL, "|");
+      crit = atol(toks);
+      toks = strtok(NULL, "|");
+      base_dmg = atol(toks);
 
       /*If debug is being used, it will print all the information from
         the current player that is being loaded*/
@@ -360,6 +371,8 @@ STATUS game_load_players(Game *game, char *filename)
         player_set_max_inventory(player, objects);
         player_set_location(player, location);
         player_set_health(player, health);
+        player_set_crit(player, crit);
+        player_set_baseDmg(player, base_dmg);
         game_add_player(game, player);
       }
     }
@@ -397,6 +410,7 @@ STATUS game_load_enemy(Game *game, char *filename)
   int health;
   Enemy *enemy = NULL;
   STATUS status = OK;
+  int crit = 0, base_dmg = 0;
 
   /*Error control*/
   if (!filename)
@@ -429,6 +443,10 @@ STATUS game_load_enemy(Game *game, char *filename)
       location = atol(toks);
       toks = strtok(NULL, "|");
       health = atol(toks);
+      toks = strtok(NULL, "|");
+      crit = atol(toks);
+      toks = strtok(NULL, "|");
+      base_dmg = atol(toks);
 
       /*If debug is being used, it will print all the information
       from the current enemy that is being loaded*/
@@ -447,6 +465,8 @@ STATUS game_load_enemy(Game *game, char *filename)
         enemy_set_name(enemy, name);
         enemy_set_location(enemy, location);
         enemy_set_health(enemy, health);
+        enemy_set_crit(enemy, crit);
+        enemy_set_baseDmg(enemy, base_dmg);
         game_add_enemy(game, enemy);
       }
     }
