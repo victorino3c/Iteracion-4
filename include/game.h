@@ -408,4 +408,13 @@ STATUS game_save(char *filename, Game* game);
  * @return NULL in case of error
  */
 Dialogue *game_get_dialogue(Game *game);
+
+/** @brief Function that gets the enemy based on whether it is in the same player's location
+ * @author Antonio Van-Oers 
+ * 
+ * @param game  pointer to game 
+ * @param player_loc id of the player's location 
+ * @return The enemy, or in case there is no enemy with the player, NULL
+ */
+Enemy *game_get_enemyWithPlayer(Game *game, Id player_loc); 
 #endif
