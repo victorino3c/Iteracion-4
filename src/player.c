@@ -334,7 +334,7 @@ STATUS player_print_save(char *filename, Player *player)
     return ERROR;
   }
 
-  fprintf(file, "#p:%ld|%s|%ld|%d|%d|\n", player->id, player->name, player->location, player->health, inventory_get_maxObjs(player->inventory));
+  fprintf(file, "#p:%ld|%s|%ld|%d|%d|%d|%d|\n", player->id, player->name, player->location, player->health, inventory_get_maxObjs(player->inventory), player->Crit_dmg, player->base_dmg);
 
   fclose(file);
 
