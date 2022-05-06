@@ -277,6 +277,26 @@ int object_get_crit(Object *obj);
  */
 STATUS object_set_crit(Object *obj, int crit);
 
+/**
+ * @brief Gets the durability of an object
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param obj is a pointer to the target object
+ * @return the durability that an object gives
+ */
+int object_get_durability(Object *obj);
+
+/**
+ * @brief Sets the durability of an object
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param obj is a pointer to the target object
+ * @param dur durability points
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_durability(Object *obj, int dur);
+
+
 
 #endif
 
