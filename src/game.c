@@ -1184,6 +1184,11 @@ STATUS game_command_drop(Game *game, char *arg)
   /* If the object is the ladder or Candle_1(Turnedon==TRUE and are dropped in the correct space, make them not movable) */
   if((obj_id==31 && space_get_id(s)==11) || (obj_id==315 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
     object_set_movable(obj, FALSE);
+
+    if (obj_id == 31)
+    {
+      link_set_status(game_get_link(game, space_get_link(s, U)), OPEN_L);
+    }
   }
   return st;
 }
