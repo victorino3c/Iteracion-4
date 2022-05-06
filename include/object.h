@@ -273,6 +273,7 @@ int object_get_crit(Object *obj);
  * @author Antonio Van-Oers Luis
  *  
  * @param obj is a pointer to the target object
+ * @param crit crit chance
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
  */
 STATUS object_set_crit(Object *obj, int crit);
@@ -296,7 +297,14 @@ int object_get_durability(Object *obj);
  */
 STATUS object_set_durability(Object *obj, int dur);
 
-
+/**
+ * @brief Tells if an item is broken (0 durability)
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param obj is a pointer to the target object
+ * @return True if it is indeed broken and FALSE in case it isn't
+ */
+BOOL object_isBroken(Object *obj);
 
 #endif
 
