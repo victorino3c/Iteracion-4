@@ -270,12 +270,18 @@ STATUS obj_print(Object *obj)
 
 STATUS object_set_movable(Object *obj, BOOL cond)
 {
-  if (!obj)
+  if (!obj || (cond != TRUE && cond != FALSE))
   {
     return ERROR;
   }
 
-  obj->movable = cond;
+  if (cond == FALSE)
+  {
+    obj->movable = FALSE;
+  } else if (cond == TRUE)
+  {
+    obj->movable = TRUE;
+  }
 
   return OK;
 }
@@ -467,7 +473,7 @@ Obj_type obj_get_type(Id id)
     return BED;
   } else if (id - 360 < 0 && id - 360 >= -10) 
   {
-    return KEY;
+    return BREAD_CRUMBS;
   } else
   {
     return UNKNOWN_TYPE;
