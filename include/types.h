@@ -68,12 +68,18 @@ typedef enum
   BRIGHT         /* !< Bright status of a space */
 } Light;
 
+/**
+ * @brief Day-Night status
+ */
 typedef enum 
 {
   DAY,    /*!< Day time*/
   NIGHT   /*!< Night time*/
 } Time;
 
+/**
+ * @brief Type of an object
+ */
 typedef enum
 {
   UNKNOWN_TYPE = -1,  /*!< Unknown object type*/
@@ -84,5 +90,15 @@ typedef enum
   BED,                /*!< Bed object type*/
   KEY  /*No se si hace falta*/
 } Obj_type;
+
+/**
+ * @brief Floor on which a space is
+ */
+typedef enum {
+  UNKNOWN_FLOOR = -2,
+  DUNGEON,       /*!< Dungeon floor*/
+  FLOOR_0,            /*!< Initial floor*/
+  ALCOVE              /*!< Alcove floor*/
+} Floor;
 
 #endif
