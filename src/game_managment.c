@@ -531,7 +531,7 @@ STATUS game_load_link(Game *game, char *filename)
 
   /*
   * While the loop reads information in the current line from the file:
-  "hormiguero.dat", it divides that line in smaller tokens.
+  "map.dat", it divides that line in smaller tokens.
   * Each token has a piece of information, in the following order:
   * ID of the link, name, and location.
   */
@@ -566,6 +566,14 @@ STATUS game_load_link(Game *game, char *filename)
       case 3:
         dir = W;
         break;
+
+      case 4:
+        dir = U;
+        break;
+
+      case 5:
+        dir = D;
+        break; 
 
       default:
         dir = ND;
