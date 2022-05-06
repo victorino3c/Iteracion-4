@@ -139,4 +139,43 @@ STATUS enemy_print(Enemy *enemy);
  */
 STATUS enemy_print_save(char *filename, Enemy *enemy);
 
+/**
+ * @brief Gets the crit_damage of a Enemy
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param enemy a pointer to target Enemy
+ * @return the crit chance that an object gives
+ */
+int enemy_get_crit(Enemy *enemy);
+
+/**
+ * @brief Sets the crit_damage of a Enemy
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param enemy a pointer to target Enemy
+ * @param crit chance in a scale from 0 to 10 
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS enemy_set_crit(Enemy *enemy, int crit);
+
+/**
+ * @brief Gets the crit_damage of a Enemy
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param enemy a pointer to target Enemy
+ * @return the crit chance that an object gives
+ */
+int enemy_get_baseDmg(Enemy *enemy);
+
+/**
+ * @brief Sets the crit_damage of a Enemy
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param enemy a pointer to target Enemy
+ * @param crit chance in a scale from 0 to 10 
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg); 
+
+
 #endif
