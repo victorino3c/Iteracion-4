@@ -417,7 +417,7 @@ STATUS obj_print_save(char *filename, Object *obj)
   {
     return ERROR;
   }
-  fprintf(file, "#o:%ld|%s|%s|%ld|%d|%ld|%ld|%d|%d|\n", obj->id, obj->name, obj->description, obj->location, obj->movable, obj->dependency, obj->open, obj->illuminate, obj->turnedon);
+  fprintf(file, "#o:%ld|%s|%s|%ld|%d|%ld|%ld|%d|%d|%d|%d|%d|\n", obj->id, obj->name, obj->description, obj->location, obj->movable, obj->dependency, obj->open, obj->illuminate, obj->turnedon, obj->light_visible, obj->Crit_dmg, obj->Durability);
 
   fclose(file);
 
