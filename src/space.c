@@ -31,6 +31,7 @@ struct _Space
   Set *objects;                      /*!< Conjunto de ids de los objetos que se encuentran en el espacio */
   char **gdesc;                      /*!< Array de 5 strings de 9 caracteres */
   Light ls;                          /*!< Status of light (Brief for Light Status) */
+  Floor floor;                       /*!< Floor level of the space*/
 } ;
 
 /**
@@ -71,6 +72,13 @@ int _dir2i(DIRECTION dir)
   {
     n = 3;
   }
+  else if (dir == U)
+  {
+    n = 4;
+  } else if (dir == D)
+  {
+    n = 5;
+  }
   else
   {
     n = -1;
@@ -109,6 +117,7 @@ Space *space_create(Id id)
   newSpace->objects = set_create();
   newSpace->gdesc = NULL;
   newSpace->ls = UNKNOWN_LIGHT;
+  newSpace->floor = UNKNOWN_FLOOR;
 
   return newSpace;
 }
@@ -524,8 +533,18 @@ STATUS space_print(Space *space)
     return ERROR;
   }
 
-  /* 1. Print the id and the name of the space */
-  fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
+  /* 1. Print the id, the name and the floor of the space */
+  fprintf(stdout, "--> Space (Id: %ld; Name: %s)", space->id, space->name);
+  if (space->floor == DUNGEON)
+  {
+    fprintf(stdout, "; Floor: DUNGEON\n");
+  } else if (space->floor == FLOOR_0)
+  {
+    fprintf(stdout, "; Floor: FLOOR_0\n");
+  } else if (space->floor == ALCOVE)
+  {
+    fprintf(stdout, "; Floor: ALCOVE\n");
+  }
 
   /* 2. For each direction, print its link */
   idaux = space_get_link(space, N);
@@ -663,9 +682,30 @@ STATUS space_print_save(char *filename, Space *space)
     fprintf(file, "|");
   }
 
-  fprintf(file, "\n"); 
+  fprintf(file, "%d|\n", space->floor); 
 
   fclose(file);
 
+  return OK;
+}
+
+Floor space_get_floor(Space* space)
+{
+  if (!space)
+  {
+    return UNKNOWN_FLOOR;
+  }
+
+  return space->floor;
+}
+
+STATUS space_set_floor(Space* space, Floor floor)
+{
+  if (!space || (floor != DUNGEON && floor != FLOOR_0 && floor != ALCOVE))
+  {
+    return ERROR;
+  }
+
+  space->floor = floor;
   return OK;
 }
