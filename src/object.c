@@ -490,3 +490,18 @@ STATUS object_set_crit(Object *obj, int crit){
  
  return OK;
 }
+int object_get_durability(Object *obj){
+  if (!obj){
+    return 0;
+  }
+  return obj->Durability;
+}
+
+STATUS object_set_durability(Object *obj, int dur){
+  if (!obj){
+    return ERROR;
+  }
+ obj->Durability = dur;
+ 
+ return OK;
+}
