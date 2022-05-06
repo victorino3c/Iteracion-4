@@ -84,6 +84,15 @@ Dialogue *dialogue_create()
 
 }
 
+STATUS dialogue_destroy(Dialogue *d)
+{
+    if (!d)
+    return ERROR;
+
+    free(d);
+    return OK;
+}
+
 STATUS dialogue_reset(Dialogue *dialogue){
     
     /*Error Control*/
