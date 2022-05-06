@@ -101,13 +101,14 @@ STATUS game_managment_load(char *filename, Game *game)
 {
   STATUS st = OK;
 
+  st = game_destroy(game); /*Bien? O da error?*/
   st = game_create_from_file(game, filename);
   return st;
 }
 
 /**
  * @brief Loads the spaces of the game
- * @author Profesores PPROG
+ * @author Modified by Nicolas Victorino
  *
  * @param game pointer to the game
  * @param filename pointer to the file from where spaces are being loaded
@@ -123,6 +124,7 @@ STATUS game_load_spaces(Game *game, char *filename)
   char *toks = NULL, *aux;
   char **gdesc = NULL;
   Id id = NO_ID;
+  Floor floor;
   Light ls;
   Space *space = NULL;
   STATUS status = OK;
@@ -169,6 +171,9 @@ STATUS game_load_spaces(Game *game, char *filename)
         }
       }
 
+      toks = strtok(NULL, "|");
+      floor = atoi(toks);
+
 #ifdef DEBUG
       // printf("Leido: %ld|%s|%s\n", id, name, description);
 #endif
@@ -180,6 +185,7 @@ STATUS game_load_spaces(Game *game, char *filename)
         space_set_long_description(space, long_description);
         space_set_gdesc(space, gdesc);
         space_set_light_status(space, ls);
+        space_set_floor(space, floor);
         game_add_space(game, space);
       }
     }
