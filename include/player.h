@@ -205,5 +205,42 @@ STATUS player_set_max_health(Player *player, int health);
  */
 int player_get_max_health(Player *player);
 
+/**
+ * @brief Gets the crit_damage of a player
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param player a pointer to target player
+ * @return the crit chance that an object gives
+ */
+int player_get_crit(Player *player);
+
+/**
+ * @brief Sets the crit_damage of a player
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param player a pointer to target player
+ * @param crit chance in a scale from 0 to 10 
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS player_set_crit(Player *player, int crit);
+
+/**
+ * @brief Gets the crit_damage of a player
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param player a pointer to target player
+ * @return the crit chance that an object gives
+ */
+int player_get_baseDmg(Player *player);
+
+/**
+ * @brief Sets the crit_damage of a player
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param player a pointer to target player
+ * @param crit chance in a scale from 0 to 10 
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS player_set_baseDmg(Player *player, int base_dmg);
 #endif
 
