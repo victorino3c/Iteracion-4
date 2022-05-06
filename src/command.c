@@ -67,7 +67,7 @@ T_Command command_get_user_input(char *arg1, char *arg2)
       if (!strcasecmp(input, cmd_to_str[i][CMDS]) || !strcasecmp(input, cmd_to_str[i][CMDL]))
       {
         cmd = i + NO_CMD;                   /*!< If any differences are detected between CMDS, CMDL and the input, cmd is modified */
-        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == SAVE || cmd == LOAD || cmd == TURNON || cmd == TURNOFF || cmd == USE)
+        if (cmd == TAKE || cmd == DROP || cmd == MOVE || cmd == INSPECT || cmd == LOAD || cmd == TURNON || cmd == TURNOFF || cmd == USE)
         {
           if (scanf("%s", arg1) < 0)
           {
