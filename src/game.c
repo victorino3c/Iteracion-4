@@ -187,6 +187,8 @@ STATUS game_destroy(Game *game)
     game->links[i] = NULL;
   }
 
+  dialogue_destroy(game->dialogue);
+
   free(game);
   game = NULL;
 
@@ -1066,18 +1068,12 @@ STATUS game_command_take(Game *game, char *arg)
   /* Error control*/
   if(object_get_movable(obj_taken)==TRUE && obj_is_visible(obj_taken, space_get_light_status(game_get_space(game, player_location)))){  
     /* Error control*/
-    if (space_has_object(game_get_space(game, player_location), id_obj_taken) && set_get_nids(inventory_get_objects(player_get_inventory(game->player[0]))) < inventory_get_maxObjs(player_get_inventory(game->player[0])))
+    if (space_has_object(game_get_space(game, player_location), id_obj_taken) == TRUE && set_get_nids(inventory_get_objects(player_get_inventory(game->player[0]))) < inventory_get_maxObjs(player_get_inventory(game->player[0])))
     {
       s = game_get_space(game, player_location);
       o = game_get_object(game, id_obj_taken);
       obj_loc = game_get_object_location(game, id_obj_taken);
-
-      /* Error control*/
-      if (player_location != obj_loc)
-      {
-        st = ERROR;
-      }
-
+      
       /* Error control*/
       if (s == NULL)
       {
@@ -1086,6 +1082,12 @@ STATUS game_command_take(Game *game, char *arg)
 
       /* Error control*/
       if (o == NULL)
+      {
+        st = ERROR;
+      }
+
+      /* Error control*/
+      if (player_location != obj_loc)
       {
         st = ERROR;
       }
@@ -1182,12 +1184,13 @@ STATUS game_command_drop(Game *game, char *arg)
   }
 
   /* If the object is the ladder or Candle_1(Turnedon==TRUE and are dropped in the correct space, make them not movable) */
-  if((obj_id==31 && space_get_id(s)==11) || (obj_id==315 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
+  if((obj_id == 397 && space_get_id(s) == 11) || (obj_id==394 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
     object_set_movable(obj, FALSE);
 
-    if (obj_id == 31)
+    if (obj_id == 397)
     {
       link_set_status(game_get_link(game, space_get_link(s, U)), OPEN_L);
+      /*link_set_status(game_get_link(game, 509), OPEN_L);*/
     }
   }
   return st;
