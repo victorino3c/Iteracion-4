@@ -88,7 +88,7 @@ typedef enum
   ARMOR,              /*!< Armor object type*/
   HOOK,               /*!< Hook object type*/
   BED,                /*!< Bed object type*/
-  KEY  /*No se si hace falta*/
+  BREAD_CRUMBS        /*!< Bread_crumbs object type*/
 } Obj_type;
 
 /**
