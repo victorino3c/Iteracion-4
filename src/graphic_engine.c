@@ -726,6 +726,62 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       sprintf(str, "  %s", inspection);
       screen_area_puts(ge->descript, str);
     }
+
+    sprintf(str, "   ");
+    screen_area_puts(ge->descript, str);
+    for (i = 0; i < 6; i++)
+    {
+      if (link_get_status(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == CLOSE )
+      {
+        if (link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) != NULL)
+        {
+          sprintf(str, "  Closed links(for keys): ");
+          screen_area_puts(ge->descript, str);
+
+          break;
+        }
+      }
+    }
+    for (i = 0; i < 6; i++)
+    {
+      if (link_get_status(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == CLOSE )
+      {
+        if (link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) != NULL)
+        {
+          if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 0)
+          {
+            sprintf(str, "    %s: NORTH", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          } 
+          else if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 1)
+          {
+            sprintf(str, "    %s:  SOUTH ", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          }
+          else if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 2)
+          {
+            sprintf(str, "    %s: EAST", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          }
+          else if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 3)
+          {
+            sprintf(str, "    %s: WEST", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          }
+          else if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 4)
+          {
+            sprintf(str, "    %s: UP", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          }
+          else if (link_get_direction(game_get_link(game, space_get_link(game_get_space(game, id_act), i))) == 5)
+          {
+            sprintf(str, "    %s: DOWN", link_get_name(game_get_link(game, space_get_link(game_get_space(game, id_act), i))));
+            screen_area_puts(ge->descript, str);
+          }
+        }
+      }
+    }
+
   }
 
   /* Paint in the banner area */
@@ -735,9 +791,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, " w(UP), s(DOWN), a(LEFT), d(RIGHT), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), m(MOVE), e(EXIT), s (SAVE), l (LOAD),");
+  sprintf(str, "             m(MOVE), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), e(EXIT), s (SAVE), l (LOAD), o (OPEN)");
   screen_area_puts(ge->help, str);
-  sprintf(str, " o (OPEN), ton (TURNON), toff (TURNOFF), u(USE)");
+  sprintf(str, "                                   ton (TURNON), toff (TURNOFF), u(USE)");
   screen_area_puts(ge->help, str);
   /*
   sprintf(str, " Player object will be -1 as long as it doesn't carry one");
