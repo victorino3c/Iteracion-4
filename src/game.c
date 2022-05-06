@@ -886,6 +886,7 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   
   game->last_cmd = cmd;
   game->inspection = 0;
+  dialogue_reset(game->dialogue);
 
   switch (cmd)
   {
@@ -1734,13 +1735,13 @@ STATUS game_event_move(Game *game){
   }
 
   if(apple_loc != -1 || rand_num == 0){
-    game_set_object_location(game, obj_get_id(apple), game_get_player_location(game, 1));
+    game_set_object_location(game, obj_get_id(apple), game_get_player_location(game, 21));
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
 
   if(elixir_loc != -1 || rand_num == 1){
-    game_set_object_location(game, obj_get_id(elixir), game_get_player_location(game, 1));
+    game_set_object_location(game, obj_get_id(elixir), game_get_player_location(game, 21));
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
