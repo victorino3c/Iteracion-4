@@ -48,6 +48,15 @@ typedef struct _Dialogue Dialogue;
 
 Dialogue *dialogue_create();
 
+/**
+ * @brief Function to free a given dialogue
+ * 
+ * @author Nicolas Victorino
+ * @param d pointer to the dialogue
+ * @return ERROR if something went wrong
+ */
+STATUS dialogue_destroy(Dialogue *d);
+
 STATUS dialogue_reset(Dialogue *dialogue);
 
 char *dialogue_get_command(Dialogue *dialogue);
