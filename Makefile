@@ -66,7 +66,7 @@ run_test:
 	
 vrun:
 	@echo ">>>>>>Running main"
-	valgrind --leak-check=full ./juego map.dat
+	valgrind --leak-check=full --track-origins=yes ./juego map.dat
 
 runcmd1:
 	@echo ">>>>>>Running main from partida1.cmd"
