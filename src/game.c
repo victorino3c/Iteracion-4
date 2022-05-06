@@ -50,6 +50,9 @@ STATUS game_command_movement(Game *game, DIRECTION dir);
 STATUS game_command_inspect(Game *game, char *arg);
 STATUS game_command_save(Game *game, char *arg);
 STATUS game_command_load(Game *game, char *arg);
+STATUS game_command_turnon(Game *game, char *arg);
+STATUS game_command_turnoff(Game *game, char *arg);
+STATUS game_command_open(Game *game, char *link_name, char *obj_name);
 STATUS game_command_use(Game *game, char *arg);
 STATUS game_event_move(Game *game);
 STATUS game_event_trap(Game *game);
@@ -921,7 +924,23 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   case LOAD:
     st = (int)game_command_load(game, arg1);
     break;
+    
+  case TURNON:
+    st = (int)game_command_turnon(game, arg1);
+    break;
 
+  case TURNOFF:
+    st = (int)game_command_turnoff(game, arg1);
+    break;
+
+  case OPEN:
+    st = (int)game_command_open(game, arg1, arg2);
+    break;
+
+  case USE:
+    st = (int)game_command_use(game, arg1);
+    break;
+      
   default:
     break;
   }
@@ -1558,20 +1577,22 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
 
 /**
  * @brief It executes USE command in game.
- * 
+ *
  * Uses a given object
- * 
+ *
  * @param game pointer to game struct
  * @param arg string with command argument
  * @return OK if everything goes well or ERROR if there was any mistake
  */
-STATUS game_command_use(Game *game, char *arg) 
+STATUS game_command_use(Game *game, char *arg)
 {
   Object *obj = NULL;
   Id id = NO_ID;
   Obj_type type = UNKNOWN_TYPE;
   Player *player = NULL;
   STATUS st = OK;
+
+  printf("**\nEntrando use\n");
 
   if (!game || !arg)
   {
@@ -1580,94 +1601,105 @@ STATUS game_command_use(Game *game, char *arg)
   }
 
   obj = game_get_object_byName(game, arg);
+  printf("Getting obj\n");
 
-  if (obj == NULL) 
+  if (obj == NULL)
   {
+    printf("Obj es NULL\n**\n");
     st = ERROR;
     return st;
   }
 
-  id = obj_get_id(obj); 
+  printf("Gettin id & player\n");
+  id = obj_get_id(obj);
   player = game_get_player(game, 21);
-
-  if (id < 300 || id > 400)
+  
+  
+  if (id == NO_ID || !player)
   {
+    printf("Id obj es NO_ID or player == NULL\n**\n");
     st = ERROR;
     return st;
   }
 
+  printf("Viendoo si el player tiene el objeto\n");
   if (inventory_has_id(player_get_inventory(player), id) == FALSE)
   {
+    printf("No tiene el objeto\n**\n");
     st = ERROR;
     return st;
-  } 
+  }
 
-  type = obj_get_type(id); 
+  printf("Viendo tipo object\n");
+  type = obj_get_type(id);
 
-  if (type == APPLE && st == OK) /*Case apples*/ 
+  if (type == APPLE && st == OK) /*Case apples*/
   {
+    printf("Es manzana\n");
     st = inventory_remove_object(player_get_inventory(player), id);
-    st = player_set_health( player, player_get_health(player) + 1);
+    st = player_set_health(player, player_get_health(player) + 1);
 
-    st = obj_set_location(game_get_object(game, id), -1);	
+    st = obj_set_location(game_get_object(game, id), -1);
 
     return st;
-
-  } else if (type == ELIXIR && st == OK) /*Case elixir*/
+  }
+  else if (type == ELIXIR && st == OK) /*Case elixir*/
   {
+    printf("Es elixir\n");
     st = inventory_remove_object(player_get_inventory(player), id);
-    st = player_set_health( player, player_get_health(player) + 2);
+    st = player_set_health(player, player_get_health(player) + 2);
 
-    st = obj_set_location(game_get_object(game, id), -1);	
+    st = obj_set_location(game_get_object(game, id), -1);
 
     return st;
-  } else if (type == ARMOR && st == OK) /*Case armour*/
+  }
+  else if (type == ARMOR && st == OK) /*Case armour*/
   {
+    printf("Es armadura\n");
     st = inventory_remove_object(player_get_inventory(player), id);
-    st = player_set_max_health( player, player_get_max_health(player) + 1);
+    st = player_set_max_health(player, player_get_max_health(player) + 1);
 
-    st = obj_set_location(game_get_object(game, id), -1);	
+    st = obj_set_location(game_get_object(game, id), -1);
 
     return st;
-  } else if (type == HOOK && st == OK) /*Case hook*/
+  }
+  else if (type == HOOK && st == OK) /*Case hook*/
   {
+    printf("Es hook\n");
     st = inventory_remove_object(player_get_inventory(player), id);
-    if (player_get_location(player) == 125) 
+    if (player_get_location(player) == 125)
     {
       st = obj_set_location(game_get_object(game, 32), -1);
       st = inventory_add_object(player_get_inventory(player), 32);
 
-      st = obj_set_location(game_get_object(game, id), -1);	
+      st = obj_set_location(game_get_object(game, id), -1);
 
       return st;
-    } 
-  } else if (type == BED && st == OK) /*Case bed*/
+    }
+  }
+  else if (type == BED && st == OK) /*Case bed*/
   {
+    printf("Es cama\n");
     st = inventory_remove_object(player_get_inventory(player), id);
-    if (game_get_time(game) == DAY) {
+    if (game_get_time(game) == DAY)
+    {
       st = game_set_time(game, NIGHT);
-    } else 
+    }
+    else
     {
       st = game_set_time(game, DAY);
     }
 
-    st = obj_set_location(game_get_object(game, id), -1);	
+    st = obj_set_location(game_get_object(game, id), -1);
 
     return st;
-  } else if (type == KEY)  /*No se si hace falta, llamar directamente desde open?*/
-  {
-    st = ERROR;
-    return st;
-  } else if (type == UNKNOWN_TYPE) /*Case unknown*/
-  {
-    st = ERROR;
-    return st;
-  } else 
-  {
-    st = ERROR;
-    return st;
   }
+
+  printf("No es ninguno: %d", (int) type);
+  st = ERROR;
+  return st;  
 }
+
 /**
  * @brief It executes MOVE event
  * 
