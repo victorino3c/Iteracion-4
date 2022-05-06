@@ -28,6 +28,8 @@ struct _Player
   Id location;		/*!< Id to player's space location */
   int health;		/*!< Player's health */
   int max_health; /*!< Max player´s health */
+  int Crit_dmg;               /*!< Player's crit chance (scale 0 to 10) */
+  int base_dmg;               /*!< Player's base damage */
 } ;
 
 /** player_create allocates memory for a new player
