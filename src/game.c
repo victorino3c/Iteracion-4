@@ -1597,28 +1597,28 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
   if (!game || !link_name || !obj_name)
   {
     return ERROR;
-  }
-  
+  }  
+
   l = game_get_link_byName(game, link_name);
   obj = game_get_object_byName(game, obj_name);
   if (!l || !obj)
   {
     return ERROR;
   }
-  
-  if (link_get_status(l) == OPEN_L)
+
+  if (link_get_status(l) == OPEN_L || player_has_object(game->player[0], obj_get_id(obj)) == FALSE)
   {
     /* Link is already open */
     return ERROR;
   }
-  
+
   obj_open_link = object_get_open(obj);
 
-  if (link_get_id(l) == obj_open_link)
+  if (link_get_id(l) == obj_open_link && player_get_location(game->player[0]) == link_get_start(l))
   {
     return link_set_status(l, OPEN_L);
   }
-  
+
   return ERROR;
 }
 
