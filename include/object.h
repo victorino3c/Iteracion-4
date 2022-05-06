@@ -259,6 +259,24 @@ BOOL obj_is_visible(Object *obj, Light ls);
  */
 Obj_type obj_get_type(Id id);
 
+/**
+ * @brief Gets the crit_damage of an object
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param obj is a pointer to the target object
+ * @return the crit chance that an object gives
+ */
+int object_get_crit(Object *obj);
+
+/**
+ * @brief Sets the crit_damage of an object
+ * @author Antonio Van-Oers Luis
+ *  
+ * @param obj is a pointer to the target object
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
+ */
+STATUS object_set_crit(Object *obj, int crit);
+
 
 #endif
 
