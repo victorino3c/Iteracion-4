@@ -217,6 +217,7 @@ STATUS game_load_objs(Game *game, char *filename)
   STATUS status = OK;
   Light light_visible = -1;
   int crit = 0;
+  int durability = 0;
 
   if (!filename)
   {
@@ -256,6 +257,8 @@ STATUS game_load_objs(Game *game, char *filename)
       light_visible = atoi(toks);
       toks = strtok(NULL, "|");
       crit = atoi(toks);
+      toks = strtok(NULL, "|");
+      durability = atoi(toks);
 
 
 #ifdef DEBUG
@@ -274,6 +277,7 @@ STATUS game_load_objs(Game *game, char *filename)
         object_set_turnedon(obj, turnedon);
         object_set_time_visible(obj,light_visible);
         object_set_crit(obj, crit);
+        object_set_durability(obj, durability);
         
         /*Error control*/
         if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
