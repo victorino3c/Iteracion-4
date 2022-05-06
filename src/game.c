@@ -1968,42 +1968,42 @@ STATUS game_save(char *filename, Game* game)
  int i = 0;
  Inventory *player_inventory = player_get_inventory(game_get_player(game, 21));
  FILE *file = NULL;
- file = fopen(filename, "w");
+ file = fopen("savedata.dat", "w");
  fclose(file);
 
   /*Spaces*/
   for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++)
   {
-    space_print_save(filename, game->spaces[i]);
+    space_print_save("savedata.dat", game->spaces[i]);
   }
 
   /*Objects*/
   for (i = 0; i < MAX_OBJS && game->object[i] != NULL; i++)
   {
-    obj_print_save(filename, game->object[i]);
+    obj_print_save("savedata.dat", game->object[i]);
   }
 
   /*Players*/
   for (i = 0; i < MAX_PLAYERS && game->player[i] != NULL; i++)
   {
-    player_print_save(filename, game->player[i]);
+    player_print_save("savedata.dat", game->player[i]);
   }
 
   /*Enemies*/
   for (i = 0; i < MAX_ENEMYS && game->enemy[i] != NULL; i++)
   {
-    enemy_print_save(filename, game->enemy[i]);
+    enemy_print_save("savedata.dat", game->enemy[i]);
   }
 
   /*Links*/
   for (i = 0; i < MAX_LINKS && game->links[i] != NULL; i++)
   {
-    link_print_save(filename, game->links[i]);
+    link_print_save("savedata.dat", game->links[i]);
   }
 
   /*Inventory*/
 
-  inventory_print_save(filename, player_inventory, 21);
+  inventory_print_save("savedata.dat", player_inventory, 21);
 
   return OK;
 }
