@@ -247,3 +247,35 @@ STATUS enemy_print_save(char *filename, Enemy *enemy)
 
   return OK;
 }
+
+int enemy_get_crit(Enemy *enemy){
+  if (!enemy){
+    return 0;
+  }
+  return enemy->Crit_dmg;
+}
+
+STATUS enemy_set_crit(Enemy *enemy, int crit){
+  if (!enemy){
+    return ERROR;
+  }
+ enemy->Crit_dmg = crit;
+
+ return OK;
+}
+
+int enemy_get_baseDmg(Enemy *enemy){
+  if (!enemy){
+    return 0;
+  }
+  return enemy->base_dmg;
+}
+
+STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg){
+  if (!enemy){
+    return ERROR;
+  }
+ enemy->base_dmg = base_dmg;
+
+ return OK;
+} 
