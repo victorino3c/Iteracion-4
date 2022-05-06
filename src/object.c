@@ -31,6 +31,7 @@ struct _Object
   BOOL illuminate; /*!< Illuminate condition of an object (Por defecto FALSE)*/
   BOOL turnedon; /*!< Turned on condition of an object (Por defecto FALSE)*/
   Light light_visible;
+  int Crit_dmg;
 } ;
 
 /** obj_create reserva memoria para un nuevo objeto e inicializa sus miembros.
