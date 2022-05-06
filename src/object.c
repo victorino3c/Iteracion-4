@@ -25,13 +25,14 @@ struct _Object
   char name[OBJ_NAME_LEN];  /*!< Object name */
   char description[WORD_SIZE];  /*!< Object description */
   Id location;  /*!< Object space location */
-  BOOL movable; /*!< Movable condition of an object (Por defecto FALSE)*/
+  BOOL movable; /*!< Movable condition of an object (FALSE by default)*/
   Id dependency; /*!< Dependency condtion of an object (If and object is dependent of another it saves its id here, if not NO_ID) */
   Id open; /*!< Open condition of an object (If an object can open a certain space it saves the id here, if not NO_ID)*/
-  BOOL illuminate; /*!< Illuminate condition of an object (Por defecto FALSE)*/
-  BOOL turnedon; /*!< Turned on condition of an object (Por defecto FALSE)*/
-  Light light_visible;
-  int Crit_dmg;
+  BOOL illuminate; /*!< Illuminate condition of an object (FALSE by default)*/
+  BOOL turnedon; /*!< Turned on condition of an object (FALSE by default)*/
+  Light light_visible; /*!< Tells the light conditions when the object is visible*/
+  int Crit_dmg;   /*!< Critical chance that the object adds to the one who carries it*/
+  int Durability; /*!< Durability points left(-1 if it is not breakable)*/
 } ;
 
 /** obj_create reserva memoria para un nuevo objeto e inicializa sus miembros.
@@ -449,7 +450,7 @@ Obj_type obj_get_type(Id id)
     return UNKNOWN_TYPE;
   }
 
-  if (id - 310 < 0 && id - 310 >= -10) /*Por que siempre entra a aqui? No entiendo*/
+  if (id - 310 < 0 && id - 310 >= -10) 
   {
     return APPLE;
   } else if (id - 320 < 0 && id - 320 >= -10)
@@ -464,7 +465,7 @@ Obj_type obj_get_type(Id id)
   } else if (id - 350 < 0 && id - 350 >= -10)
   {
     return BED;
-  } else if (id - 360 < 0 && id - 360 >= -10) /*No se si hace falta, llamar directamente desde open?*/
+  } else if (id - 360 < 0 && id - 360 >= -10) 
   {
     return KEY;
   } else
@@ -490,6 +491,7 @@ STATUS object_set_crit(Object *obj, int crit){
  
  return OK;
 }
+
 int object_get_durability(Object *obj){
   if (!obj){
     return 0;
@@ -504,4 +506,14 @@ STATUS object_set_durability(Object *obj, int dur){
  obj->Durability = dur;
  
  return OK;
+}
+
+BOOL object_isBroken(Object *obj){
+  if (!obj){
+    return TRUE;
+  }
+  if (object_get_durability(obj)==0){
+    return TRUE;
+  }
+  return FALSE;
 }
