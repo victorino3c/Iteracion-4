@@ -481,6 +481,26 @@ Link *game_get_link_byName(Game *game, char *name)
   return NULL;
 }
 
+Enemy *game_get_enemyWithPlayer(Game *game, Id player_loc){
+
+  int i;
+
+  if (!game || player_loc == NO_ID){
+    return NULL;
+  }
+
+  for (i = 0; i < MAX_ENEMYS && game->enemy[i] != NULL; i++)
+  {
+    if (player_loc == enemy_get_location(game->enemy[i]))
+    {
+      return game->enemy[i];
+    }
+  }
+
+  return NULL;
+
+}
+
 /**
  * Finds an enemy with the same name. Case is ignore.
  */
@@ -1162,47 +1182,73 @@ STATUS game_command_drop(Game *game, char *arg)
  */
 STATUS game_command_attack(Game *game, char *arg)
 {
-  int rand_num = 0;
-  STATUS st = OK;
+  int rand_num = 0, rand_crit_player = 0, rand_crit_enemy = 0;
   Id player_loc = player_get_location(game->player[MAX_PLAYERS - 1]);
-  Id enemy_loc = enemy_get_location(game->enemy[MAX_PLAYERS - 1]);
+  Enemy *enemy = game_get_enemyWithPlayer(game, player_loc);
+  Id enemy_loc = enemy_get_location(enemy);
+  
+  int player_crit = player_get_crit(game->player[MAX_PLAYERS - 1]);
+  int player_baseDmg = player_get_baseDmg(game->player[MAX_PLAYERS - 1]);
+
+  int enemy_crit = enemy_get_crit(enemy);
+  int enemy_baseDmg = enemy_get_baseDmg(enemy);
+ 
 
   srand(time(NULL));
 
   rand_num = rand() % 10;
+  rand_crit_player = rand() % 10;
+  rand_crit_enemy = rand() % 10;
 
   /* Error control */
-  if (enemy_get_health(game->enemy[MAX_PLAYERS - 1]) == 0)
+  if(!enemy)
   {
-    st = ERROR;
+    return ERROR;
+  }
+
+  /* Error control */
+  if (enemy_get_health(enemy) == 0)
+  {
+    return ERROR;
   }
 
   /* Error control */
   if (player_loc == NO_ID || enemy_loc == NO_ID)
   {
-    st = ERROR;
+    return ERROR;
   }
 
   /* Error control */
   if (player_loc != enemy_loc)
   {
-    st = ERROR;
+    return ERROR;
   }
+
+
+  /* Changing the base dmg if it is a crit from the player*/
+  if(rand_crit_player < player_crit){
+    player_baseDmg = player_baseDmg*2;
+  }
+  if(rand_crit_enemy < enemy_crit){
+    enemy_baseDmg = enemy_baseDmg*2;
+  }
+
+
   /*Player wins if rand_num es > 5, else, they lose a life as the enemy won that round*/
   if (rand_num > 5)
   {
-    enemy_set_health(game->enemy[MAX_PLAYERS - 1], (enemy_get_health(game->enemy[MAX_PLAYERS - 1]) - 1));
+    enemy_set_health(enemy, (enemy_get_health(enemy) - player_baseDmg));
   }
   else
   {
-    player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - 1));
+    player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
     if (player_get_health(game->player[MAX_PLAYERS - 1]) == 0)
     {
       game_is_over(game);
     }
   }
 
-  return st;
+  return OK;
 }
 
 /**
