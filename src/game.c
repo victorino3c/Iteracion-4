@@ -1212,6 +1212,13 @@ STATUS game_command_attack(Game *game, char *arg)
 
   int enemy_crit = enemy_get_crit(enemy);
   int enemy_baseDmg = enemy_get_baseDmg(enemy);
+
+  Object *Sword1 = game_get_object_byName(game, "Sword1");
+  Object *Sword2 = game_get_object_byName(game, "Sword2");
+
+  Id id_Sword1 = obj_get_id(Sword1) ;
+  Id id_Sword2 = obj_get_id(Sword2) ;
+
  
 
   srand(time(NULL));
@@ -1268,8 +1275,19 @@ STATUS game_command_attack(Game *game, char *arg)
     }
   }
 
+  if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
+  {
+    object_set_durability(Sword1, (object_get_durability(Sword1)-1));
+  }
+
+  if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
+  {
+    object_set_durability(Sword2, (object_get_durability(Sword2)-1));
+  }
+
   return OK;
 }
+
 
 /**
  * @brief It executes MOVE command in game.
