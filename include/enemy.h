@@ -81,15 +81,6 @@ const char *enemy_get_name(Enemy *enemy);
 Id enemy_get_location(Enemy *enemy);
 
 /**
- * @brief Gets an object's id
- * @author Antonio Van-Oers Luis
- *  
- * @param obj is a pointer to the target object
- * @return the id
- */
-Id object_get_id(Object *obj);
-
-/**
  * @brief It gets an enemy's health
  * @author Antonio Van-Oers
  * 
