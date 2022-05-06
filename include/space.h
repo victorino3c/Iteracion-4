@@ -273,5 +273,22 @@ Light space_get_light_status (Space *space);
  */
 STATUS space_print_save(char *filename, Space *space);
 
+/**
+ * @brief Function that gets the floor of a given space
+ * 
+ * @author Nicolas Victorino
+ * @param space pointer to the given space
+ * @return Floor of the given space, UNKNOWN_FLOOR if error 
+ */
+Floor space_get_floor(Space* space);
+
+/**
+ * @brief Function that sets the floor of a given space
+ * 
+ * @author Nicolas Victorino
+ * @param space pointer to the given space @param floor new given floor
+ * @return ERROR if something went wrong
+ */
+STATUS space_set_floor(Space* space, Floor floor);
 #endif
 
