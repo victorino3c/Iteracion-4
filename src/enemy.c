@@ -26,6 +26,8 @@ struct _Enemy
   char name[ENEMY_LEN_NAME]; /*!< Enemy's name. */
   Id location;  /*!< Id to enemy's space location */
   int health;   /*!< Enemy's health */
+  int Crit_dmg;               /*!< Enemy's crit chance (scale 0 to 10) */
+  int base_dmg;               /*!< Enemy's base damage */
 } ;
 
 /**enemy_create allocates memory for a new enemy and initializes all its members .
