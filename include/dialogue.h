@@ -18,34 +18,40 @@
 #define EVENT_SIZE 7
 
 typedef enum _enum_command_dialogue{
-    DC_ERROR = 0,
-    DC_EXIT,
-    DC_TAKE,
-    DC_DROP,
-    DC_ATTACK_MISSED,
-    DC_ATTACK_HIT,
-    DC_ATTACK_CRITICAL,
-    DC_MOVE_N,
-    DC_MOVE_E,
-    DC_MOVE_S,
-    DC_MOVE_W,
-    DC_INSPECT,
-    DC_SAVE,
-    DC_LOAD
+    DC_ERROR = 0,               /*!< Error command dialogue*/
+    DC_EXIT,                    /*!< Exit command dialogue*/
+    DC_TAKE,                    /*!< Take command dialogue*/
+    DC_DROP,                    /*!< Drop command dialogue*/
+    DC_ATTACK_MISSED,           /*!< Attack missed command dialogue*/
+    DC_ATTACK_HIT,              /*!< Attack hit command dialogue*/
+    DC_ATTACK_CRITICAL,         /*!< Critical attack command dialogue*/
+    DC_MOVE_N,                  /*!< Move north command dialogue*/
+    DC_MOVE_E,                  /*!< Move east command dialogue*/
+    DC_MOVE_S,                  /*!< Move south command dialogue*/
+    DC_MOVE_W,                  /*!< Move west command dialogue*/
+    DC_INSPECT,                 /*!< Inspect command dialogue*/
+    DC_SAVE,                    /*!< Save command dialogue*/   
+    DC_LOAD                     /*!< Load command dialogue*/
 }DC_Enum;
 
 typedef enum _enum_event_dialogue{
-    DE_NOTHING = 0,
-    DE_MOVEOBJ,
-    DE_TRAP,
-    DE_SLIME,
-    DE_NIGHT,
-    DE_DAY,
-    DE_SPAWN
+    DE_NOTHING = 0,             /*!< Nothing event dialogue*/
+    DE_MOVEOBJ,                 /*!< Move objetc event dialogue*/
+    DE_TRAP,                    /*!< Trap event dialogue*/
+    DE_SLIME,                   /*!< Slime event dialogue*/
+    DE_NIGHT,                   /*!< Night event dialogue*/
+    DE_DAY,                     /*!< Day event dialogue*/
+    DE_SPAWN                    /*!< Spawn event dialogue*/
 }DE_Enum;
 
 typedef struct _Dialogue Dialogue;
 
+/**
+ * @brief Function to create a dialogue struct
+ * @author Ignacio Nunnez
+ * 
+ * @return Pointer to the new dialogue, or NULL if something went wrong
+ */
 Dialogue *dialogue_create();
 
 /**
@@ -57,14 +63,49 @@ Dialogue *dialogue_create();
  */
 STATUS dialogue_destroy(Dialogue *d);
 
+/**
+ * @brief Resets the dialogue
+ * @author Ignacio Nunnez
+ * 
+ * @param dialogue pointer to the dialogue
+ * @return ERROR if something went wrong 
+ */
 STATUS dialogue_reset(Dialogue *dialogue);
 
+/**
+ * @brief Gets the dialogue information after executing a command
+ * @author Ignacio Nunnez
+ * 
+ * @param dialogue pointer to the dialogue
+ * @return Pointer to the command dialogue char 
+ */
 char *dialogue_get_command(Dialogue *dialogue);
 
+/**
+ * @brief Sets the dialogue information after executing a command
+ * 
+ * @param dialogue pointer to the dialogue
+ * @param condition condition to set the new command dialogue
+ * @return ERROR if something went wrong 
+ */
 STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition);
 
+/**
+ * @brief Gets the dialogue information after executing an event
+ * @author Ignacio Nunnez
+ * 
+ * @param dialogue pointer to the dialogue
+ * @return Pointer to the event dialogue char 
+ */
 char *dialogue_get_event(Dialogue *dialogue);
 
+/**
+ * @brief Sets the dialogue information after executing an event
+ * 
+ * @param dialogue pointer to the dialogue
+ * @param condition condition to set the new event dialogue
+ * @return ERROR if something went wrong 
+ */
 STATUS dialogue_set_event(Dialogue *dialogue, DE_Enum condition);
 
 #endif
