@@ -31,9 +31,9 @@
 #o:391|Torch2|Torch that can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:392|Sword1|+0,2 power|121|1|-1|-1|0|0|1|0|3|
 #o:393|Sword2|+0,2 power|122|1|-1|-1|0|0|1|0|3|
-#o:394|Candle1|Can be lit up|125|1|-1|13|0|0|1|0|-1|                      
-#o:395|Candle2|Cannot be moved|13|0|-1|-1|0|0|1|0|-1|
-#o:396|Candle3|Cannot be moved|13|0|-1|-1|0|0|1|0|-1|
+#o:394|Candle1|Can be lit up|125|1|-1|13|1|0|1|0|-1|                      
+#o:395|Candle2|Cannot be moved|13|0|-1|-1|1|0|1|0|-1|
+#o:396|Candle3|Cannot be moved|13|0|-1|-1|1|0|1|0|-1|
 #o:397|Ladder|Ladder to access the attic from the cell |122|1|-1|509|0|0|1|0|-1| 
 #o:398|Dawn_Key|Only the worthy can enter the Secret_Chamber|125|1|-1|516|0|0|1|0|1|
 #o:380|Crit_Sword|+0,3 Crit chance|14|1|-1|-1|0|0|1|3|-1|
