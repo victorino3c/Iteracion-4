@@ -2,11 +2,11 @@
 #s:127|A_Corridor|Who is it guarding that door|a|1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|1|
 #s:17|A_Alcove|This looks like a key to me|a|1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|1|
 #s:11|Cell|Starting position|a|1|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|0|
-#s:121|Corridor1|First main corridor|a|1|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |0|
+#s:121|Corridor1|First main corridor|a|0|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |0|
 #s:16|Secret_Chamber|A decision for the worthy|a|1|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|0|
 #s:122|Hall|Hall leading to the throne room|a|1|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |0|
 #s:123|Throne_Room|Lair of the Dusk_King  |a|1|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |0|
-#s:125|Dining_Room|Dark at the beginning, hides many mysteries|a|1|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |0|
+#s:125|Dining_Room|Dark at the beginning, hides many mysteries|a|0|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |0|
 #s:126|Corridor2|Second main corridor|a|1|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|0|
 #s:13|Library|What about the third candle |a|1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|0|
 #s:14|Bedroom|This trapdoor may lead somewhere|a|1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|0|
@@ -22,8 +22,8 @@
 #o:322|Armor3|+1 Max_health|126|1|-1|-1|0|0|0|0|1|
 #o:323|Armor4|+1 Max_health|123|1|-1|-1|0|0|0|0|1|   
 #o:330|Hook|To grab something unreachable|124|1|-1|-1|0|0|1|0|-1|
-#o:340|Bed1| Makes it night or day time |17|0|-1|-1|0|0|1|0|-1|
-#o:341|Bed2| Makes it night or day time |14|0|-1|-1|0|0|1|0|-1|
+#o:340|Bed1| Makes it night or day time |17|1|-1|-1|0|0|1|0|-1|
+#o:341|Bed2| Makes it night or day time |14|1|-1|-1|0|0|1|0|-1|
 #o:350|Bread_Crumbs|Someone might appreciate them|125|1|-1|-1|0|0|1|0|1|
 #o:399|Small_key1|This opens the Alcove from the A_Corridor(127)|127|1|-1|505|0|0|1|0|1|               
 #o:385|Small_key2|This opens the Library from Corridor2(126)|126|1|-1|524|0|0|1|0|1| 
