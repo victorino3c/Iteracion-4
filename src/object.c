@@ -21,18 +21,18 @@
  */
 struct _Object
 {
-  Id id;    /*!< Object's id */
-  char name[OBJ_NAME_LEN];  /*!< Object name */
+  Id id;                        /*!< Object's id */
+  char name[OBJ_NAME_LEN];      /*!< Object name */
   char description[WORD_SIZE];  /*!< Object description */
-  Id location;  /*!< Object space location */
-  BOOL movable; /*!< Movable condition of an object (FALSE by default)*/
-  Id dependency; /*!< Dependency condtion of an object (If and object is dependent of another it saves its id here, if not NO_ID) */
-  Id open; /*!< Open condition of an object (If an object can open a certain space it saves the id here, if not NO_ID)*/
-  BOOL illuminate; /*!< Illuminate condition of an object (FALSE by default)*/
-  BOOL turnedon; /*!< Turned on condition of an object (FALSE by default)*/
-  Light light_visible; /*!< Tells the light conditions when the object is visible*/
-  int Crit_dmg;   /*!< Critical chance that the object adds to the one who carries it*/
-  int Durability; /*!< Durability points left(-1 if it is not breakable)*/
+  Id location;                  /*!< Object space location */
+  BOOL movable;                 /*!< Movable condition of an object (FALSE by default)*/
+  Id dependency;                /*!< Dependency condtion of an object (If and object is dependent of another it saves its id here, if not NO_ID) */
+  Id open;                      /*!< Open condition of an object (If an object can open a certain space it saves the id here, if not NO_ID)*/
+  BOOL illuminate;              /*!< Illuminate condition of an object (FALSE by default)*/
+  BOOL turnedon;                /*!< Turned on condition of an object (FALSE by default)*/
+  Light light_visible;          /*!< Tells the light conditions when the object is visible*/
+  int Crit_dmg;                 /*!< Critical chance that the object adds to the one who carries it*/
+  int Durability;               /*!< Durability points left(-1 if it is not breakable)*/
 } ;
 
 /** obj_create saves memory for a new object and initializes its parameters
