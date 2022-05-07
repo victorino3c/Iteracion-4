@@ -57,12 +57,12 @@ Graphic_engine *graphic_engine_create()
     return NULL;
 
   ge->map = screen_area_init(1, 1, 80, 25);
-  ge->descript = screen_area_init(82, 1, 35, 25);
-  ge->banner = screen_area_init(50, 29, 19, 1);
-  ge->help = screen_area_init(1, 30, 115, 3);
-  ge->feedback = screen_area_init(1, 34, 80, 3);
-  ge->dialogue = screen_area_init(1, 38, 80, 5);
-  ge->events = screen_area_init(82, 34, 35, 9);
+  ge->descript = screen_area_init(82, 1, 35, 34);
+  ge->banner = screen_area_init(30, 27, 19, 1);
+  ge->help = screen_area_init(1, 28, 80, 3);
+  ge->feedback = screen_area_init(1, 32, 80, 3);
+  ge->dialogue = screen_area_init(1, 36, 80, 7);
+  ge->events = screen_area_init(82, 36, 35, 7);
 
   return ge;
 }
@@ -696,15 +696,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     screen_area_puts(ge->descript, str);
     for (i = 0; i < MAX_ENEMYS; i++) {
       if (en_loc[i] == id_act) {
-        sprintf(str, "   ") ;
         screen_area_puts(ge->descript, str);
         /*
         sprintf(str, "  Enemy location:%d", (int)en_loc[i]);
         screen_area_puts(ge->descript, str);
         */
-        sprintf(str, "  Enemy name:%s", en_name[i]);
+        sprintf(str, "    Enemy name:%s", en_name[i]);
         screen_area_puts(ge->descript, str);
-        sprintf(str, "  Enemy health:%d", (int)en_health[i]);
+        sprintf(str, "    Enemy health:%d", (int)en_health[i]);
         screen_area_puts(ge->descript, str);
         sprintf(str, "   ") ;
         screen_area_puts(ge->descript, str);
@@ -781,7 +780,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
     }
+    
+    sprintf(str, "  ");
+    screen_area_puts(ge->descript, str);
 
+    if (game_get_time(game) == DAY)
+    {
+      sprintf(str, "  Time: DAY");
+    } 
+    else
+    {
+      sprintf(str, "  Time: NIGHT");
+    }
+    screen_area_puts(ge->descript, str);
   }
 
   /* Paint in the banner area */
@@ -789,11 +800,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
   /* Paint in the help area */
   screen_area_clear(ge->help);
-  sprintf(str, " The commands you can use are:");
+  sprintf(str, "                         The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "             m(MOVE), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), e(EXIT), s (SAVE), l (LOAD), o (OPEN)");
+  sprintf(str, " m(MOVE), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), e(EXIT), s (SAVE), l (LOAD)");
   screen_area_puts(ge->help, str);
-  sprintf(str, "                                   ton (TURNON), toff (TURNOFF), u(USE)");
+  sprintf(str, "               o (OPEN), ton (TURNON), toff (TURNOFF), u(USE)");
   screen_area_puts(ge->help, str);
   /*
   sprintf(str, " Player object will be -1 as long as it doesn't carry one");
