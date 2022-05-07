@@ -1230,7 +1230,7 @@ STATUS game_command_drop(Game *game, char *arg)
   }
 
   /* If the object is the ladder or Candle_1(Turnedon==TRUE and are dropped in the correct space, make them not movable) */
-  if((obj_id == 397 && space_get_id(s) == 11) || (obj_id==394 && space_get_id(s)==13 && object_get_turnedon(obj)==TRUE)){
+  if((obj_id == 397 && space_get_id(s) == 11) || (obj_id==394 && space_get_id(s)==13)){
     object_set_movable(obj, FALSE);
 
     if (obj_id == 397)
@@ -1318,9 +1318,11 @@ STATUS game_command_attack(Game *game, char *arg)
   /* Changing the base dmg if it is a crit from the player*/
   if(rand_crit_player < player_crit){
     player_baseDmg = player_baseDmg*2;
+    dialogue_set_command(game->dialogue, DC_ATTACK_CRITICAL, NULL, NULL, NULL);
   }
   if(rand_crit_enemy < enemy_crit){
     enemy_baseDmg = enemy_baseDmg*2;
+    dialogue_set_command(game->dialogue, DC_ATTACK_CRITICAL, NULL, NULL, NULL);
   }
 
 
@@ -1328,10 +1330,12 @@ STATUS game_command_attack(Game *game, char *arg)
   if (rand_num > 5)
   {
     enemy_set_health(enemy, (enemy_get_health(enemy) - player_baseDmg));
+    dialogue_set_command(game->dialogue, DC_ATTACK_HIT, NULL, NULL, enemy);
   }
   else
   {
     player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
+    dialogue_set_command(game->dialogue, DC_ATTACK_MISSED, NULL, NULL, enemy);
     if (player_get_health(game->player[MAX_PLAYERS - 1]) == 0)
     {
       game_is_over(game);
@@ -1341,11 +1345,19 @@ STATUS game_command_attack(Game *game, char *arg)
   if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
   {
     object_set_durability(Sword1, (object_get_durability(Sword1)-1));
+    if(object_get_durability(Sword1)==0){
+      player_del_object(game->player[MAX_PLAYERS - 1], id_Sword1);
+      obj_set_location(Sword1, -1);
+    }
   }
 
   if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
   {
     object_set_durability(Sword2, (object_get_durability(Sword2)-1));
+     if(object_get_durability(Sword1)==0){
+      player_del_object(game->player[MAX_PLAYERS - 1], id_Sword2);
+      obj_set_location(Sword2, -1);
+    }
   }
 
   return OK;
@@ -1371,36 +1383,50 @@ STATUS game_command_move(Game *game, char *arg)
   char *up[2] = {"u", "Up"};
   char *down[2] = {"d", "Down"};
   STATUS st = ERROR;
+  Space *s=NULL;
+
 
   if (strcasecmp(arg, west[0]) == 0 || strcasecmp(arg, west[1]) == 0)
   {
     /* Moving west */
     st = game_command_movement(game, W);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_W, s, NULL, NULL);
   }
   else if (strcasecmp(arg, north[0]) == 0 || strcasecmp(arg, north[1]) == 0)
   {
     /* Moving north */
     st = game_command_movement(game, N);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_N, s, NULL, NULL);
   }
   else if (strcasecmp(arg, south[0]) == 0 || strcasecmp(arg, south[1]) == 0)
   {
     /* Moving south */
     st = game_command_movement(game, S);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_S, s, NULL, NULL);
   }
   else if (strcasecmp(arg, east[0]) == 0 || strcasecmp(arg, east[1]) == 0)
   {
     /* Moving east */
     st = game_command_movement(game, E);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_E, s, NULL, NULL);
   }
   else if (strcasecmp(arg, up[0]) == 0 || strcasecmp(arg, up[1]) == 0)
   {
     /* Moving up */
     st = game_command_movement(game, U);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_U, s, NULL, NULL);
   }
   else if (strcasecmp(arg, down[0]) == 0 || strcasecmp(arg, down[1]) == 0)
   {
     /* Moving down */
     st = game_command_movement(game, D);
+    s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
+    dialogue_set_command(game->dialogue, DC_MOVE_D, s, NULL, NULL);
   }
   else
   {
