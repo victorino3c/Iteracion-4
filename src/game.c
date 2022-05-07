@@ -1758,6 +1758,19 @@ STATUS game_command_use(Game *game, char *arg)
     st = obj_set_location(game_get_object(game, id), -1);
 
     return st;
+  } else if (type == BREAD_CRUMBS)
+  {
+    if (player_get_location(player) == 11) 
+    {
+      st = inventory_remove_object(player_get_inventory(player), id);
+
+      /*Hacer lo del enemigo bueno*/
+    }
+    else 
+    {
+      st = ERROR;
+      return st;
+    }
   }
 
   printf("No es ninguno: %d", (int) type);
@@ -2034,4 +2047,79 @@ Dialogue *game_get_dialogue(Game *game)
   }
 
   return game->dialogue;
+}
+
+STATUS game_update_ls(Game *game)
+{
+  int i = 0;
+  Inventory *in = NULL;
+  Player *p = NULL;
+  Object *o = NULL;
+  Space *s = NULL;
+
+  if (!game)
+  {
+    return ERROR;
+  }
+
+  p = game_get_player(game, 21);
+  in = player_get_inventory(p);
+  s = game_get_space(game, player_get_location(p));
+
+  if (!p || !in || !s)
+  {
+    return ERROR;
+  }
+
+  if (space_get_light_status(s) == DARK)
+  {
+    for (i = 0; i < set_get_nids(inventory_get_objects(in)); i++)
+    {
+      o = game_get_object(game,set_get_ids_by_number(inventory_get_objects(in), i));
+
+      if (o != NULL)
+      {
+        if (object_get_turnedon(o) == TRUE)
+        {
+          if (space_set_light_status(s, BRIGHT) == ERROR)
+          {
+            return ERROR;
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return OK;
+}
+
+STATUS game_update_time(Game *game)
+{
+  int i = 0;
+  Space *s = NULL;
+  Id id = NO_ID;
+  Time time;
+
+  if (!game)
+  {
+    return ERROR;
+  }
+
+  time = game_get_time(game);
+
+  for (i = 0; i < MAX_SPACES; i++)
+  {
+    if ((s = game->spaces[i]) != NULL || (id = space_get_id(s)) != NO_ID)
+    {
+      if (id != 121 && id != 125)
+      {
+        if (space_set_light_status(s, time) == ERROR)
+        {
+          return ERROR;
+        }
+      } 
+    }
+  }   
+  return OK;
 }
