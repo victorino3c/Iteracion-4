@@ -394,20 +394,45 @@ STATUS game_set_time(Game *game, Time time)
 
   game->day_time = time;
 
-  for (i = 0; i < MAX_SPACES; i++)
+  if (time == NIGHT)
   {
-    if ((s = game->spaces[i]) != NULL || (id = space_get_id(s)) != NO_ID)
+    for (i = 0; i < MAX_SPACES; i++)
     {
-      if (id != 121 && id != 125)
+      s = game->spaces[i];
+      id = space_get_id(s);
+
+      if (s != NULL)
       {
-        if (space_set_light_status(s, time) == ERROR)
+        if (id != 121 && id != 125)
         {
-          return ERROR;
-        }
-      } 
+          if (space_set_light_status(s, DARK) == ERROR)
+          {
+            return ERROR;
+          }
+        } 
+      }
+    } 
+  } else 
+  {
+    for (i = 0; i < MAX_SPACES; i++)
+    {
+      s = game->spaces[i];
+      id = space_get_id(s);
+
+      if (s != NULL)
+      {
+        if (id != 121 && id != 125)
+        {
+          if (space_set_light_status(s, BRIGHT) == ERROR)
+          {
+            return ERROR;
+          }
+        } 
+      }
     }
-  }   
+  }  
   return OK;
+
 }
 
 /** Gets if it is day or night
@@ -421,6 +446,7 @@ Time game_get_time(Game *game)
 
   return game->day_time;
 }
+
 
 /**
  * Gets a game's object with target id
@@ -2110,14 +2136,24 @@ STATUS game_update_time(Game *game)
 
   for (i = 0; i < MAX_SPACES; i++)
   {
-    if ((s = game->spaces[i]) != NULL || (id = space_get_id(s)) != NO_ID)
+    if ((s = game->spaces[i]) != NULL && (id = space_get_id(s)) != NO_ID)
     {
       if (id != 121 && id != 125)
       {
-        if (space_set_light_status(s, time) == ERROR)
+        if (time == NIGHT)
         {
-          return ERROR;
+          if (space_set_light_status(s, DARK) == ERROR)
+          {
+            return ERROR;
+          }
+        } else 
+        {
+          if (space_set_light_status(s, BRIGHT) == ERROR)
+          {
+            return ERROR;
+          }          
         }
+
       } 
     }
   }   
