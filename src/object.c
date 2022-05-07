@@ -17,7 +17,7 @@
 /**
  * @brief Object
  *
- * Esta estructura almacena la informacion de un objeto.
+ * This structure saves the information of an object
  */
 struct _Object
 {
@@ -35,7 +35,7 @@ struct _Object
   int Durability; /*!< Durability points left(-1 if it is not breakable)*/
 } ;
 
-/** obj_create reserva memoria para un nuevo objeto e inicializa sus miembros.
+/** obj_create saves memory for a new object and initializes its parameters
  */
 Object *obj_create(Id id)
 {
@@ -53,7 +53,7 @@ Object *obj_create(Id id)
     return NULL;
   }
 
-  /* Inicializacion del objeto nuevo */
+  /* Initialization of the object*/
   new_obj->id = id;
   new_obj->name[0] = '\0';
   new_obj->description[0] = '\0';
@@ -66,11 +66,11 @@ Object *obj_create(Id id)
   return new_obj;
 }
 
-/** obj_destroy libera la memoria previamente reservada de un objeto.
+/** obj_destroy free the memory previously saved of an object
  */
 STATUS obj_destroy(Object *obj)
 {
-  /* Control de errores */
+  /* Error control */
   if (!obj)
   {
     return ERROR;
@@ -82,22 +82,22 @@ STATUS obj_destroy(Object *obj)
 }
 
 /**
- * Comprueba si el id recibido es el de un objeto
+ * Checks if the received id corresponds to an object
  */
 STATUS obj_test_id(Id id)
 {
   int first_digit, digits;
 
-  /* Control de errores */
+  /* Error control*/
   if (id < 0)
   {
     return ERROR;
   }
 
-  /* Calcular numbero total de digitos - 1 */
+  /* Calculates the total number of digits -1 */
   digits = (int)log10(id);
 
-  /* Obtener primer digito */
+  /* Obtaines the first digit */
   first_digit = (int)(id / pow(10, digits));
 
   if (first_digit == FD_ID_OBJ)
@@ -110,11 +110,11 @@ STATUS obj_test_id(Id id)
   }
 }
 
-/** obj_get_id devuelve el id de un Object (obj).
+/** obj_get_id returns the id of an object (obj).
  */
 Id obj_get_id(Object *obj)
 {
-  /* Control de errores */
+  /*Error control*/
   if (!obj)
   {
     return NO_ID;
@@ -123,11 +123,11 @@ Id obj_get_id(Object *obj)
   return obj->id;
 }
 
-/** obj_get_name devuelve el nombre (name) de un Object (obj).
+/** obj_get_name returns the name of an object
  */
 const char *obj_get_name(Object *obj)
 {
-  /* Control de errores */
+  /* Error control */
   if (!obj)
   {
     return NULL;
@@ -136,11 +136,11 @@ const char *obj_get_name(Object *obj)
   return obj->name;
 }
 
-/** obj_set_name establece el nombre (name) de un Object (obj).
+/** obj_set_name sets the name of an object(obj).
  */
 STATUS obj_set_name(Object *obj, char *name)
 {
-  /* Control de errores */
+  /* Error control */
   if (!obj || !name)
   {
     return ERROR;
@@ -213,11 +213,11 @@ STATUS obj_set_location(Object *obj, Id id)
   return OK;
 }
 
-/** obj_print muestra el id y el nombre de un Object (obj).
+/** obj_print prints the information of an object (obj).
  */
 STATUS obj_print(Object *obj)
 {
-  /* Control de errores */
+  /* Error control */
   if (!obj)
   {
     return ERROR;
@@ -268,6 +268,8 @@ STATUS obj_print(Object *obj)
   return OK;
 }
 
+/** Sets the movable condition of an object
+ */
 STATUS object_set_movable(Object *obj, BOOL cond)
 {
   if (!obj || (cond != TRUE && cond != FALSE))
@@ -286,6 +288,8 @@ STATUS object_set_movable(Object *obj, BOOL cond)
   return OK;
 }
 
+/** Sets the dependency condition of an object
+ */
 STATUS object_set_dependency(Object *obj, Id id)
 {
   if (!obj)
@@ -298,6 +302,8 @@ STATUS object_set_dependency(Object *obj, Id id)
   return OK;
 }
 
+/** Sets the open condition of an object
+ */
 STATUS object_set_open(Object *obj, Id id)
 {
   if (!obj)
@@ -310,6 +316,8 @@ STATUS object_set_open(Object *obj, Id id)
   return OK;
 }
 
+/** Sets the illuminate condition of an object
+ */
 STATUS object_set_illuminate(Object *obj, BOOL cond)
 {
   if (!obj)
@@ -322,6 +330,8 @@ STATUS object_set_illuminate(Object *obj, BOOL cond)
   return OK;
 }
 
+/** Sets the turnedon condition of an object
+ */
 STATUS object_set_turnedon(Object *obj, BOOL cond)
 {
   if (!obj)
@@ -334,6 +344,8 @@ STATUS object_set_turnedon(Object *obj, BOOL cond)
   return OK;
 }
 
+/** Gets the movable condition of an object
+ */
 BOOL object_get_movable(Object *obj)
 {
   if (!obj)
@@ -344,6 +356,8 @@ BOOL object_get_movable(Object *obj)
   return obj->movable;
 }
 
+/** Gets the dependency condition of an object
+ */
 Id object_get_dependency(Object *obj)
 {
   if (!obj)
@@ -354,6 +368,8 @@ Id object_get_dependency(Object *obj)
   return obj->dependency;
 }
 
+/** Gets the open condition of an object
+ */
 Id object_get_open(Object *obj)
 {
   if (!obj)
@@ -364,6 +380,8 @@ Id object_get_open(Object *obj)
   return obj->open;
 }
 
+/** Gets the illuminate condition of an object
+ */
 BOOL object_get_illuminate(Object *obj)
 {
   if (!obj)
@@ -374,6 +392,8 @@ BOOL object_get_illuminate(Object *obj)
   return obj->illuminate;
 }
 
+/** Gets the turnedon condition of an object
+ */
 BOOL object_get_turnedon(Object *obj)
 {
   if (!obj)
@@ -447,6 +467,8 @@ BOOL obj_is_visible(Object *obj, Light ls)
   }
 }
 
+/** Gets the type (apple, elixir, bed, armour...) of an object
+ */
 Obj_type obj_get_type(Id id)
 {
 
@@ -482,6 +504,8 @@ Obj_type obj_get_type(Id id)
 
 }
 
+/** Gets the critical damage of an object
+ */
 int object_get_crit(Object *obj){
   if (!obj){
     return 0;
@@ -489,6 +513,8 @@ int object_get_crit(Object *obj){
   return obj->Crit_dmg;
 }
 
+/** Sets the critical damage of an object
+ */
 STATUS object_set_crit(Object *obj, int crit){
   if (!obj){
     return ERROR;
@@ -498,6 +524,8 @@ STATUS object_set_crit(Object *obj, int crit){
  return OK;
 }
 
+/** Sets the durability of an object
+ */
 int object_get_durability(Object *obj){
   if (!obj){
     return 0;
@@ -505,6 +533,8 @@ int object_get_durability(Object *obj){
   return obj->Durability;
 }
 
+/** Gets the durability of an object
+ */
 STATUS object_set_durability(Object *obj, int dur){
   if (!obj){
     return ERROR;
@@ -514,6 +544,8 @@ STATUS object_set_durability(Object *obj, int dur){
  return OK;
 }
 
+/** Checks if an object is broken
+ */
 BOOL object_isBroken(Object *obj){
   if (!obj){
     return TRUE;
