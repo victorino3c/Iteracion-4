@@ -15,7 +15,7 @@
 #include "../include/dialogue.h"
 
 char matrix_command[COMMAND_SIZE][WORD_SIZE] =
-{ "You cannot do that",                  /*!< DC_ERROR*/
+{ " ",                  /*!< DC_ERROR*/
   "Exiting game...",                           /*!< DC_EXIT*/   
   "You picked *",                               /*!< DC_TAKE*/      
   "You dropped *",                              /*!< DC_DROP*/      
