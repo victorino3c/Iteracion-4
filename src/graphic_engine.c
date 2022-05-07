@@ -441,11 +441,17 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         sprintf(str, "  |                 |   |                 |   |                 |");
         screen_area_puts(ge->map, str);
         /*\\(\")/ ANT CODIFICATION */
-        if (id_right != 14 && id_right != 13) {
-          sprintf(str, "  |              %2ld|   | gpp0^        %2ld|   |              %2ld|",id_left, id_act, id_right);
-          screen_area_puts(ge->map, str);
-        } else {
+        if (id_right == 13) {
           sprintf(str, "  |              %2ld|   | gpp0^        %2ld|   |              %2ld |",id_left, id_act, id_right);
+          screen_area_puts(ge->map, str);
+        } else if (id_right == 14)
+        {
+          sprintf(str, "  |              %2ld|   | gpp0^        %2ld |   |              %2ld |",id_left, id_act, id_right);
+          screen_area_puts(ge->map, str);          
+        }
+        else
+        {
+          sprintf(str, "  |              %2ld|   | gpp0^        %2ld|   |              %2ld|",id_left, id_act, id_right);
           screen_area_puts(ge->map, str);
         }
         sprintf(str, "  |                 |   |                 |   |                 |");
