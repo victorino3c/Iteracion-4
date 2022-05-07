@@ -201,7 +201,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
 
     st = game_update(game, command, arg1, arg2);
 
-    game_update_day(game);
+    game_update_time(game);
 
     game_update_ls(game);
 
