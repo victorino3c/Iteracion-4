@@ -396,7 +396,7 @@ STATUS game_set_time(Game *game, Time time)
 
   for (i = 0; i < MAX_SPACES; i++)
   {
-    if ((s = game->spaces[i]) != NULL && (id = space_get_id(s)) != NO_ID)
+    if ((s = game->spaces[i]) != NULL || (id = space_get_id(s)) != NO_ID)
     {
       if (id != 121 && id != 125)
       {
@@ -405,11 +405,8 @@ STATUS game_set_time(Game *game, Time time)
           return ERROR;
         }
       } 
-    } else
-    {
-      i++;
     }
-  }
+  }   
   return OK;
 }
 
