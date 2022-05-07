@@ -16,7 +16,7 @@
 #include "space.h"
 #include "enemy.h"
 
-#define COMMAND_SIZE 27
+#define COMMAND_SIZE 28
 #define EVENT_SIZE 7
 
 typedef enum _enum_command_dialogue{
@@ -72,7 +72,7 @@ typedef struct _Dialogue Dialogue;
 Dialogue *dialogue_create();
 
 /**
- * @brief Function to free a given dialogue structure
+ * @brief Function to free a given dialogue
  * 
  * @author Nicolas Victorino
  * @param d pointer to the dialogue
