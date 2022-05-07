@@ -19,7 +19,7 @@ typedef struct _Object Object;  /*!< It defines the object structure, which can 
 
 
 /**
- * @brief Crea un objeto nuevo.
+ * @brief Creates a new object
  * @author Miguel Soto
  *
  * obj_create allocates memory for a new object and initializes all its members
@@ -29,7 +29,7 @@ typedef struct _Object Object;  /*!< It defines the object structure, which can 
 Object *obj_create(Id id);
 
 /**
- * @brief Destruye un objeto.
+ * @brief Destroys an object
  * @author Miguel Soto
  * 
  * obj_destroy frees the previously allocated memory for an object
@@ -76,23 +76,23 @@ const char *obj_get_name(Object *obj);
 STATUS obj_set_name(Object *obj, char *name);
 
 /**
- * @brief Obtiene la descripcion de un objeto.
+ * @brief Gets the description of a given object
  * @author Ignacio Nunnez
  * 
- * description_get_name devuelve la descripcion de un Object (obj).
- * @param obj un puntero a Object.
- * @return un string con la descripcion del objeto obj, o NULL si hubo algun error.
+ * description_get_name returns the descrption of the objetc(obj).
+ * @param obj pointer to given object
+ * @return char string with the description of the object, or NULL if there was an error
  */
 const char *obj_get_description(Object *obj);
 
 /**
- * @brief Establece una descripcion a un objeto.
+ * @brief Sets the description of a given object
  * @author Miguel Soto
  * 
- * obj_set_descripcion establece la descripcion (description)) de un Object (obj).
- * @param obj un puntero a Object.
- * @param description un string con la descripcion que se va a establecer al objeto.
- * @return OK, si ha funcionado correctamente o ERROR, si hubo algun error.
+ * obj_set_descripcion sets the description of the object (obj).
+ * @param obj pointer to given object
+ * @param description string with the new description of the object
+ * @return OK, if everything is right ERROR, if there was a mistake
  */
 STATUS obj_set_description(Object *obj, char *descripcion);
 
