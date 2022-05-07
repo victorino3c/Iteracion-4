@@ -15,30 +15,42 @@
 #include "../include/dialogue.h"
 
 char matrix_command[COMMAND_SIZE][WORD_SIZE] =
-{ "",                                          /*!< DC_ERROR*/
-  "Exiting game...",                           /*!< DC_EXIT*/
-  "You picked an object",                      /*!< DC_TAKE*/
-  "You dropped an object",                     /*!< DC_DROP*/
-  "You missed the attack and recieved damage", /*!< DC_ATTACK_MISSED*/
-  "You hit the opponent",                      /*!< DC_ATTACK_HIT*/
-  "You hit the opponent with a critical",      /*!< DC_ATTACK_CRITICAL*/
-  "You moved to the *",                    /*!< DC_MOVE_N*/
-  "You moved to the East",                     /*!< DC_MOVE_E*/
-  "You moved to the South",                    /*!< DC_MOVE_S*/
-  "You moved to the West",                     /*!< DC_MOVE_W*/
-  "",                                          /*!< DC_INSPECT*/
-  "Savement completed successfully",           /*!< DC_SAVE*/
+{ "You cannot do that",                  /*!< DC_ERROR*/
+  "Exiting game...",                           /*!< DC_EXIT*/   
+  "You picked *",                               /*!< DC_TAKE*/      
+  "You dropped *",                              /*!< DC_DROP*/      
+  "You missed and * hit you . ",                   /*!< DC_ATTACK_MISSED*/ 
+  "You hit * . ",                                  /*!< DC_ATTACK_HIT*/    
+  "It was a critical hit!",                     /*!< DC_ATTACK_CRITICAL*/
+  "You moved North, you are now in the *",                     /*!< DC_MOVE_N*/  
+  "You moved East, you are now in the *",                     /*!< DC_MOVE_E*/   
+  "You moved South, you are now in the *",                    /*!< DC_MOVE_S*/  
+  "You moved West, you are now in the *",                     /*!< DC_MOVE_W*/  
+  "You look around and found that the *"                              /*!< DC_INSPECT_space*/ 
+  "After a closer look, it",                              /*!< DC_INSPECT_obj*/ 
+  "Save completed successfully",                           /*!< DC_SAVE*/
   "Loading game...",                           /*!< DC_MLOAD*/
+  "You slept for a while, you should check the time ",
+  "You used an apple, you recovered health",
+  "You used an elixir, you recovered health",
+  "You used armor, max health increased",
+  "You used the hook, looks like you found a key!",
+  "You dropped the crumbs close to your cellmate, he thanked you for that and mentioned he left the key for a hidden door in an unreachable place so that no one will ever use it",
+  "What's with me, what am I even thinking?",
+  "Looks like the three candles activated a mechanism, a huge shelf slides to the side, revealing the opening to a Bedroom",
+  "You opened a door ",
+  "How dare you attack your creator? Have your punishment, little human"
+  "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath"
 };
 
 char matrix_event[EVENT_SIZE][WORD_SIZE] =
-{ "All seems ok",                                                   /*!< DE_NOTHING*/
-  "This object was not here, someone moved it...",      /*!< DE_MOVEOBJ*/
-  "Be carefull! You stepped on spikes and losses 1 HP", /*!< DE_TRAP*/
-  "An enemy appeared suddenly!",                        /*!< DE_SLIME*/
-  "Darkness came, Night is with us.",                   /*!< DE_NIGHT*/
-  "You can barely see the sun, is Day again",           /*!< DE_DAY*/
-  "You get lost"                                        /*!< DE_SPAWN*/
+{ "All seems ok",                                                           /*!< DE_NOTHING*/
+  "This object was not here, someone moved it...",                          /*!< DE_MOVEOBJ*/
+  "Be carefull! You stepped on spikes and lost 1 HP",                       /*!< DE_TRAP*/
+  "A rat suddenly appeared, and it is attacking you!",                      /*!< DE_SLIME*/
+  "Time seems to fly here. Darkness came and Night is upon us.",            /*!< DE_NIGHT*/
+  "You can see the sun rising, it is daytime again",                        /*!< DE_DAY*/
+  "You got lost and got back where you started"                             /*!< DE_SPAWN*/
 };
 
 struct _Dialogue
@@ -47,7 +59,11 @@ struct _Dialogue
     char *event;
 };
 
-char *strfmt(char *str, char *arg) {
+/*Function that substitutes the * on each default dialogue by specific modifiers*/
+char *strmod(char *str, char *arg);
+
+
+char *strmod(char *str, char *arg) {
     char *res = (char *) malloc(strlen(str)+strlen(arg)+1);
     int k = 0;
     int i;
@@ -116,18 +132,58 @@ char *dialogue_get_command(Dialogue *dialogue)
     return dialogue->command;
 }
 
-STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition)
+STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *current_loc, Object *obj, Enemy *enemy)
 {
     /*Error control*/
     if(dialogue == NULL){
         return ERROR;
     }
 
-    dialogue->command = matrix_command[condition];
+     if (condition == DC_TAKE || condition == DC_DROP){
+        
+         dialogue->command = strmod(matrix_command[condition], obj_get_name(obj) );
+     }
 
+     else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W){
+        
+         dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
+     }
+
+     else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W){
+        
+         dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
+     }
+
+     else if (condition == DC_ATTACK_HIT || condition == DC_ATTACK_MISSED ){
+        
+         dialogue->command = strmod(matrix_command[condition], enemy_get_name(enemy));
+     }
+
+     else if (condition == DC_INSPECT_O){
+         dialogue->command = strmod(matrix_command[condition], obj_get_description(obj));
+     }
+
+     else if (condition == DC_INSPECT_S){
+         dialogue->command = strmod(matrix_command[condition], space_get_long_description(current_loc));
+     }
+     
+     else if (condition == DC_OPEN){
+         dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
+     }
+
+    else
+     {
+        dialogue->command = matrix_command[condition];      
+     }     
+   
 
     return OK;
 }
+/**                     
+                 
+    DC_OPEN,                   
+                       
+    **/
 
 char *dialogue_get_event(Dialogue *dialogue)
 {
