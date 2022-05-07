@@ -934,6 +934,12 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   game->inspection = 0;
   dialogue_reset(game->dialogue);
 
+  game_update_object(game);
+
+  game_update_time(game);
+
+  game_update_ls(game);
+  
   switch (cmd)
   {
   case UNKNOWN:
@@ -2207,5 +2213,38 @@ STATUS game_update_time(Game *game)
       } 
     }
   }   
+  return OK;
+}
+
+STATUS game_update_object(Game *game)
+{
+  Enemy *e1 = NULL, *e2 = NULL;
+  Object *key1 = NULL, *key2 = NULL;
+
+  if (!game)
+  {
+    return ERROR;
+  }
+
+  e1 = game_get_enemy(game, 42);
+  e2 = game_get_enemy(game, 43);
+  key1 = game_get_object(game, 399);
+  key2 = game_get_object(game, 385);
+
+  if (!e1 || !e2 || !key1 || !key2)
+  {
+    return ERROR;
+  }
+
+  if (enemy_get_health(e1) <= 0)
+  {
+    obj_set_location(key1, 127);
+  }
+
+    if (enemy_get_health(e2) <= 0)
+  {
+    obj_set_location(key2, 126);
+  }
+
   return OK;
 }
