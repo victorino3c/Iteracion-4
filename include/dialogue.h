@@ -16,7 +16,7 @@
 #include "space.h"
 #include "enemy.h"
 
-#define COMMAND_SIZE 25
+#define COMMAND_SIZE 27
 #define EVENT_SIZE 7
 
 typedef enum _enum_command_dialogue{
@@ -31,6 +31,8 @@ typedef enum _enum_command_dialogue{
     DC_MOVE_E,                  /*!< Move east command dialogue*/
     DC_MOVE_S,                  /*!< Move south command dialogue*/
     DC_MOVE_W,                  /*!< Move west command dialogue*/
+    DC_MOVE_U,                  /*!< Move up command dialogue*/
+    DC_MOVE_D,                  /*!< Move down command dialogue*/
     DC_INSPECT_S,               /*!< Inspect object command dialogue*/
     DC_INSPECT_O,               /*!< Inspect space command dialogue*/
     DC_SAVE,                    /*!< Save command dialogue*/   
