@@ -22,13 +22,13 @@
 #o:322|Armor3|+1 Max_health|126|1|-1|-1|0|0|0|0|1|
 #o:323|Armor4|+1 Max_health|123|1|-1|-1|0|0|0|0|1|   
 #o:330|Hook|To grab something unreachable|124|1|-1|-1|0|0|1|0|-1|
-#o:340|Bed1| Makes it night or day time |17|1|-1|-1|0|0|1|0|-1|
+#o:340|Bed1| Makes it night or day time |11|1|-1|-1|0|0|1|0|-1|
 #o:341|Bed2| Makes it night or day time |14|1|-1|-1|0|0|1|0|-1|
 #o:350|Bread_Crumbs|Someone might appreciate them|125|1|-1|-1|0|0|1|0|1|
 #o:399|Small_key1|This opens the Alcove from the A_Corridor(127)|127|1|-1|505|0|0|1|0|1|               
 #o:385|Small_key2|This opens the Library from Corridor2(126)|126|1|-1|524|0|0|1|0|1| 
-#o:390|Torch1|Torch that can be lit up |11|1|-1|-1|0|0|1|0|-1|
-#o:391|Torch2|Torch that can be lit up |11|1|-1|-1|0|0|1|0|-1|
+#o:390|Torch1|Torch that can be lit up |11|1|-1|-1|1|0|1|0|-1|
+#o:391|Torch2|Torch that can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:392|Sword1|+0,2 power|121|1|-1|-1|0|0|1|0|3|
 #o:393|Sword2|+0,2 power|122|1|-1|-1|0|0|1|0|3|
 #o:394|Candle1|Can be lit up|125|1|-1|13|0|0|1|0|-1|                      
