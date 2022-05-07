@@ -383,14 +383,33 @@ Space *game_get_space(Game *game, Id id)
  */
 STATUS game_set_time(Game *game, Time time)
 {
+  int i = 0;
+  Space *s = NULL;
+  Id id = NO_ID;
+
   if (!game || (time != DAY && time != NIGHT))
   {
     return ERROR;
   }
 
   game->day_time = time;
-  return OK;
-}
+
+  for (i = 0; i < MAX_SPACES; i++)
+  {
+    if ((s = game->spaces[i]) != NULL && (id = space_get_id(s)) != NO_ID)
+    {
+      if (id != 121 && id != 125)
+      {
+        if (space_set_light_status(s, time) == ERROR)
+        {
+          return ERROR;
+        }
+      } 
+    } else
+    {
+      i++;
+    }
+  } 
 
 /** Gets if it is day or night
  */
