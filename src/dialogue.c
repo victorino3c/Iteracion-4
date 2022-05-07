@@ -60,10 +60,10 @@ struct _Dialogue
 };
 
 /*Function that substitutes the * on each default dialogue by specific modifiers*/
-char *strmod(char *str, char *arg);
+char *strmod(char *str, const char *arg);
 
 
-char *strmod(char *str, char *arg) {
+char *strmod(char *str, const char *arg) {
     char *res = (char *) malloc(strlen(str)+strlen(arg)+1);
     int k = 0;
     int i;
