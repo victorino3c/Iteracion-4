@@ -25,7 +25,9 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "You moved North, you are now in the *",                     /*!< DC_MOVE_N*/  
   "You moved East, you are now in the *",                     /*!< DC_MOVE_E*/   
   "You moved South, you are now in the *",                    /*!< DC_MOVE_S*/  
-  "You moved West, you are now in the *",                     /*!< DC_MOVE_W*/  
+  "You moved West, you are now in the *",                     /*!< DC_MOVE_W*/ 
+  "You moved Up, you are now in the *",                    
+  "You moved Down, you are now in the *", 
   "You look around and found that the *"                              /*!< DC_INSPECT_space*/ 
   "After a closer look, it",                              /*!< DC_INSPECT_obj*/ 
   "Save completed successfully",                           /*!< DC_SAVE*/
@@ -151,7 +153,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
          
      }
 
-     else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W){
+     else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W || condition == DC_MOVE_U || condition == DC_MOVE_D){
         
          dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
      }
