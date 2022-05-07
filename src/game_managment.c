@@ -286,9 +286,12 @@ STATUS game_load_objs(Game *game, char *filename)
         object_set_durability(obj, durability);
         
         /*Error control*/
-        if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
+        if (pos != -1)
         {
-          return ERROR;
+          if (space_add_objectid(game_get_space(game, pos), id) == ERROR)
+          {
+            return ERROR;
+          }
         }
         game_add_object(game, obj);
       }
