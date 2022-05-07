@@ -13,8 +13,10 @@
 
 #include "types.h"
 #include "object.h"
+#include "space.h"
+#include "enemy.h"
 
-#define COMMAND_SIZE 14
+#define COMMAND_SIZE 25
 #define EVENT_SIZE 7
 
 typedef enum _enum_command_dialogue{
@@ -29,9 +31,22 @@ typedef enum _enum_command_dialogue{
     DC_MOVE_E,                  /*!< Move east command dialogue*/
     DC_MOVE_S,                  /*!< Move south command dialogue*/
     DC_MOVE_W,                  /*!< Move west command dialogue*/
-    DC_INSPECT,                 /*!< Inspect command dialogue*/
+    DC_INSPECT_S,               /*!< Inspect object command dialogue*/
+    DC_INSPECT_O,               /*!< Inspect space command dialogue*/
     DC_SAVE,                    /*!< Save command dialogue*/   
-    DC_LOAD                     /*!< Load command dialogue*/
+    DC_LOAD,                    /*!< Load command dialogue*/
+    DC_USE_BED,                 /*!< USE_BED command dialogue*/
+    DC_USE_APPLE,                /*!< USE_APPLE command dialogue*/
+    DC_USE_ELIXIR,               /*!< USE_ELIXIR command dialogue*/
+    DC_USE_ARMOR,                /*!< USE_ARMOR command dialogue*/
+    DC_USE_HOOK,                 /*!< USE_HOOK command dialogue*/
+    DC_BREAD,                    /*!< BREAD command dialogue*/
+    DC_UNKNOWN,                  /*!< UNKNOWN command dialogue*/
+    DC_PUZZLE,                   /*!< PUZZLE command dialogue*/
+    DC_OPEN,                     /*!< OPEN command dialogue*/
+    DC_HIM,                      /*!< HIM command dialogue*/
+    DC_BOSS                      /*!< BOSS  command dialogue*/
+
 }DC_Enum;
 
 typedef enum _enum_event_dialogue{
@@ -88,7 +103,7 @@ char *dialogue_get_command(Dialogue *dialogue);
  * @param condition condition to set the new command dialogue
  * @return ERROR if something went wrong 
  */
-STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition);
+STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *current_loc, Object *obj, Enemy *enemy);
 
 /**
  * @brief Gets the dialogue information after executing an event
@@ -98,7 +113,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition);
  * @return Pointer to the event dialogue char 
  */
 char *dialogue_get_event(Dialogue *dialogue);
-
+ 
 /**
  * @brief Sets the dialogue information after executing an event
  * 
