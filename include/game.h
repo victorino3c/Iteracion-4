@@ -417,4 +417,23 @@ Dialogue *game_get_dialogue(Game *game);
  * @return The enemy, or in case there is no enemy with the player, NULL
  */
 Enemy *game_get_enemyWithPlayer(Game *game, Id player_loc); 
+
+/**
+ * @brief Checks if space is dark and player has a turnedon object, and then changes the light status of the space
+ * @author Nicolas Victorino
+ * 
+ * @param game Pointer to the game
+ * @return ERROR if something went wrong 
+ */
+STATUS game_update_ls(Game *game);
+
+/**
+ * @brief Checks if it is night time and sets all the rooms to dark
+ * @author Nicolas Victorino
+ * 
+ * @param game pointer to game
+ * @return ERROR if something went wrong
+ */
+STATUS game_update_time(Game *game);
+
 #endif
