@@ -2244,15 +2244,22 @@ STATUS game_update_object(Game *game)
     return ERROR;
   }
 
-  if (enemy_get_health(e1) <= 0)
+  if (enemy_get_health(e1) <= 0 && space_has_object(game_get_space(game, 127), obj_get_id(key1)) == FALSE)
   {
     obj_set_location(key1, 127);
+    space_add_objectid(game_get_space(game, 127), obj_get_id(key1));
+    enemy_set_health(e1, -1);
+    enemy_set_location(e1, -1);
   }
 
-    if (enemy_get_health(e2) <= 0)
+    if (enemy_get_health(e2) <= 0 && space_has_object(game_get_space(game, 126), obj_get_id(key2)) == FALSE)
   {
     obj_set_location(key2, 126);
+    space_add_objectid(game_get_space(game, 126), obj_get_id(key2));
+    enemy_set_health(e2, -1);
+    enemy_set_location(e2, -1);
   }
-return OK;
+
+  return OK;
 }
 
