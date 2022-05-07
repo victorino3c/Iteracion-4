@@ -933,13 +933,12 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   game->last_cmd = cmd;
   game->inspection = 0;
   dialogue_reset(game->dialogue);
-
   game_update_object(game);
-
   game_update_time(game);
-
   game_update_ls(game);
-  
+
+
+
   switch (cmd)
   {
   case UNKNOWN:
@@ -1352,7 +1351,7 @@ STATUS game_command_attack(Game *game, char *arg)
   {
     object_set_durability(Sword1, (object_get_durability(Sword1)-1));
     if(object_get_durability(Sword1)==0){
-      player_del_object(game->player[MAX_PLAYERS - 1], id_Sword1);
+      inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword1);
       obj_set_location(Sword1, -1);
     }
   }
@@ -1361,7 +1360,7 @@ STATUS game_command_attack(Game *game, char *arg)
   {
     object_set_durability(Sword2, (object_get_durability(Sword2)-1));
      if(object_get_durability(Sword1)==0){
-      player_del_object(game->player[MAX_PLAYERS - 1], id_Sword2);
+     inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword2);
       obj_set_location(Sword2, -1);
     }
   }
@@ -1512,11 +1511,13 @@ STATUS game_command_inspect(Game *game, char *arg)
   if (strcmp(arg, "space") == 0 || strcmp(arg, "s") == 0)
   {
     if(space_get_light_status(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1]))) == BRIGHT){
+      dialogue_set_command(game->dialogue, DC_INSPECT_S,game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])) , NULL, NULL);
       game->inspection = (char *)space_get_long_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
     }
     else{
       game->inspection = "El lugar está muy oscuro, no puedes ver nada";
     }
+    
     return st;
   }
 
@@ -1539,6 +1540,7 @@ STATUS game_command_inspect(Game *game, char *arg)
       st = ERROR;
     }
     game->inspection = (char *)obj_get_description(obj);
+    dialogue_set_command(game->dialogue, DC_INSPECT_O, NULL, obj, NULL);
     return st;
   }
   return st;
@@ -1554,6 +1556,7 @@ STATUS game_command_inspect(Game *game, char *arg)
  * @return OK if everything goes well or ERROR if there was any mistake
  */
 STATUS game_command_save(Game* game, char *arg){
+  dialogue_set_command(game->dialogue, DC_SAVE, NULL, NULL, NULL);
   return game_managment_save(arg, game);
 }
 
@@ -1573,6 +1576,7 @@ STATUS game_command_load(Game* game, char *arg){
   }
 
  st = game_managment_load(arg, game);
+ dialogue_set_command(game->dialogue, DC_LOAD, NULL, NULL, NULL);
  return st;
 }
 
@@ -1703,6 +1707,7 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
 
   if (link_get_id(l) == obj_open_link && player_get_location(game->player[0]) == link_get_start(l))
   {
+    dialogue_set_command(game->dialogue, DC_OPEN, game_get_space(game,player_get_location(game->player[MAX_PLAYERS - 1])), NULL, NULL) ;
     return link_set_status(l, OPEN_L);
   }
 
@@ -1787,6 +1792,7 @@ STATUS game_command_use(Game *game, char *arg)
     st = player_set_health(player, player_get_health(player) + 1);
 
     st = obj_set_location(game_get_object(game, id), -1);
+    dialogue_set_command(game->dialogue, DC_USE_APPLE, NULL, NULL, NULL);
 
     return st;
   }
@@ -1797,6 +1803,7 @@ STATUS game_command_use(Game *game, char *arg)
     st = player_set_health(player, player_get_health(player) + 2);
 
     st = obj_set_location(game_get_object(game, id), -1);
+    dialogue_set_command(game->dialogue, DC_USE_APPLE, NULL, NULL, NULL);
 
     return st;
   }
@@ -1807,6 +1814,7 @@ STATUS game_command_use(Game *game, char *arg)
     st = player_set_max_health(player, player_get_max_health(player) + 1);
 
     st = obj_set_location(game_get_object(game, id), -1);
+    dialogue_set_command(game->dialogue, DC_USE_ARMOR, NULL, NULL, NULL);
 
     return st;
   }
@@ -1820,6 +1828,7 @@ STATUS game_command_use(Game *game, char *arg)
       st = inventory_add_object(player_get_inventory(player), 32);
 
       st = obj_set_location(game_get_object(game, id), -1);
+      dialogue_set_command(game->dialogue, DC_USE_HOOK, NULL, NULL, NULL);
 
       return st;
     }
@@ -1837,7 +1846,7 @@ STATUS game_command_use(Game *game, char *arg)
       st = game_set_time(game, DAY);
     }
 
-    st = obj_set_location(game_get_object(game, id), -1);
+    dialogue_set_command(game->dialogue, DC_USE_BED, NULL, NULL, NULL);
 
     return st;
   } else if (type == BREAD_CRUMBS)
@@ -1845,8 +1854,7 @@ STATUS game_command_use(Game *game, char *arg)
     if (player_get_location(player) == 11) 
     {
       st = inventory_remove_object(player_get_inventory(player), id);
-
-      /*Hacer lo del enemigo bueno*/
+      dialogue_set_command(game->dialogue, DC_BREAD, NULL, NULL, NULL);
     }
     else 
     {
@@ -2245,6 +2253,6 @@ STATUS game_update_object(Game *game)
   {
     obj_set_location(key2, 126);
   }
-
-  return OK;
+return OK;
 }
+
