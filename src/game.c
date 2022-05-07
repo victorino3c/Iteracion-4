@@ -409,7 +409,9 @@ STATUS game_set_time(Game *game, Time time)
     {
       i++;
     }
-  } 
+  }
+  return OK;
+}
 
 /** Gets if it is day or night
  */
