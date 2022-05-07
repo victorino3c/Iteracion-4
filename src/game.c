@@ -1713,16 +1713,29 @@ STATUS game_command_use(Game *game, char *arg)
     return st;
   }
 
-  printf("Viendoo si el player tiene el objeto\n");
-  if (inventory_has_id(player_get_inventory(player), id) == FALSE)
-  {
-    printf("No tiene el objeto\n**\n");
-    st = ERROR;
-    return st;
-  }
-
   printf("Viendo tipo object\n");
   type = obj_get_type(id);
+
+  printf("Viendo si el player tiene el objeto\n");
+  if (type != BED)
+  {
+    if (inventory_has_id(player_get_inventory(player), id) == FALSE)
+    {
+      printf("No tiene el objeto\n**\n");
+      st = ERROR;
+      return st;
+    }
+  }
+  else if (type == BED)
+  {
+    if (space_has_object(game_get_space(game, player_get_location(player)), id) == FALSE)
+    {
+      printf("No tiene el objeto\n**\n");
+      st = ERROR;
+      return st;
+    }
+  }
+
 
   if (type == APPLE && st == OK) /*Case apples*/
   {
@@ -1771,7 +1784,7 @@ STATUS game_command_use(Game *game, char *arg)
   else if (type == BED && st == OK) /*Case bed*/
   {
     printf("Es cama\n");
-    st = inventory_remove_object(player_get_inventory(player), id);
+    st = set_del_id(space_get_objects(game_get_space(game, player_get_location(player))), id);
     if (game_get_time(game) == DAY)
     {
       st = game_set_time(game, NIGHT);
