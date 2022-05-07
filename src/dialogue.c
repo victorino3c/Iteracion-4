@@ -15,34 +15,34 @@
 #include "../include/dialogue.h"
 
 char matrix_command[COMMAND_SIZE][WORD_SIZE] =
-{ " ",                  /*!< DC_ERROR*/
-  "Exiting game...",                           /*!< DC_EXIT*/   
-  "You picked *",                               /*!< DC_TAKE*/      
-  "You dropped *",                              /*!< DC_DROP*/      
-  "You missed and * hit you . ",                   /*!< DC_ATTACK_MISSED*/ 
-  "You hit * . ",                                  /*!< DC_ATTACK_HIT*/    
-  "It was a critical hit!",                     /*!< DC_ATTACK_CRITICAL*/
-  "You moved North, you are now in the *",                     /*!< DC_MOVE_N*/  
-  "You moved East, you are now in the *",                     /*!< DC_MOVE_E*/   
-  "You moved South, you are now in the *",                    /*!< DC_MOVE_S*/  
-  "You moved West, you are now in the *",                     /*!< DC_MOVE_W*/ 
-  "You moved Up, you are now in the *",                    
-  "You moved Down, you are now in the *", 
-  "You look around and found that the *"                              /*!< DC_INSPECT_space*/ 
-  "After a closer look, it",                              /*!< DC_INSPECT_obj*/ 
-  "Save completed successfully",                           /*!< DC_SAVE*/
-  "Loading game...",                           /*!< DC_MLOAD*/
-  "You slept for a while, you should check the time ",
-  "You used an apple, you recovered health",
-  "You used an elixir, you recovered health",
-  "You used armor, max health increased",
-  "You used the hook, looks like you found a key!",
-  "You dropped the crumbs close to your cellmate, he thanked you for that and mentioned he left the key for a hidden door in an unreachable place so that no one will ever use it",
-  "What's with me, what am I even thinking?",
-  "Looks like the three candles activated a mechanism, a huge shelf slides to the side, revealing the opening to a Bedroom",
-  "You opened a door ",
-  "How dare you attack your creator? Have your punishment, little human"
-  "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath"
+{ " ",                                                      /*!< DC_ERROR*/
+  "Exiting game...",                                                        /*!< DC_EXIT*/   
+  "You picked *",                                                           /*!< DC_TAKE*/      
+  "You dropped *",                                                          /*!< DC_DROP*/      
+  "You missed and * hit you . ",                                            /*!< DC_ATTACK_MISSED*/ 
+  "You hit * . ",                                                           /*!< DC_ATTACK_HIT*/    
+  "It was a critical hit!",                                                 /*!< DC_ATTACK_CRITICAL*/
+  "You moved North, you are now in the *",                                  /*!< DC_MOVE_N*/  
+  "You moved East, you are now in the *",                                   /*!< DC_MOVE_E*/   
+  "You moved South, you are now in the *",                                  /*!< DC_MOVE_S*/  
+  "You moved West, you are now in the *",                                   /*!< DC_MOVE_W*/ 
+  "You moved Up, you are now in the *",                                     /*!< DC_MOVE_U*/     
+  "You moved Down, you are now in the *",                                   /*!< DC_MOVE_D*/
+  "You look around and found that the *"                                    /*!< DC_INSPECT_space*/ 
+  "After a closer look, it",                                                /*!< DC_INSPECT_obj*/ 
+  "Save completed successfully",                                            /*!< DC_SAVE*/
+  "Loading game...",                                                        /*!< DC_MLOAD*/
+  "You slept for a while, you should check the time ",                      /*!< DC_USE_BED*/
+  "You used an apple, you recovered health",                                /*!< DC_USE_APPLE*/
+  "You used an elixir, you recovered health",                               /*!< DC_USE_ELIXIR*/
+  "You used armor, max health increased",                                   /*!< DC_USE_ARMOR*/
+  "You used the hook, looks like you found a key!",                         /*!< DC_USE_HOOK*/
+  "You dropped the crumbs close to your cellmate, he thanked you for that and mentioned he left the key for a hidden door in an unreachable place so that no one will ever use it",     /*!< DC_BREAD*/
+  "What's with me, what am I even thinking?",                               /*!< DC_UNKNOWN*/
+  "Looks like the three candles activated a mechanism, a huge shelf slides to the side, revealing the opening to a Bedroom",                                                            /*!< DC_PUZZLE*/
+  "You opened a door ",                                                     /*!< DC_OPEN*/
+  "How dare you attack your creator? Have your punishment, little human"    /*!< DC_HIM*/
+  "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath" /*!< DC_BOSS*/ 
 };
 
 char matrix_event[EVENT_SIZE][WORD_SIZE] =
@@ -57,11 +57,17 @@ char matrix_event[EVENT_SIZE][WORD_SIZE] =
 
 struct _Dialogue
 {
-    char *command;
-    char *event;
+    char *command;      /*!< Command´s dialogue*/
+    char *event;        /*!< Event´s dialogue*/
 };
 
-/*Function that substitutes the * on each default dialogue by specific modifiers*/
+/**
+ * @brief Function that substitutes the * on each default dialogue by specific modifiers
+ * 
+ * @param str given command string
+ * @param arg Given argument
+ * @return Modified command
+ */
 char *strmod(char *str, const char *arg);
 
 
@@ -82,7 +88,8 @@ char *strmod(char *str, const char *arg) {
 }
 
 
-
+/** Function to create a dialogue struct
+*/
 Dialogue *dialogue_create()
 {
     Dialogue *new_dialogue = NULL;
@@ -102,8 +109,11 @@ Dialogue *dialogue_create()
 
 }
 
+/** Function to free a given dialogue structure
+*/
 STATUS dialogue_destroy(Dialogue *d)
 {
+    /*Error control*/
     if (!d)
     return ERROR;
 
@@ -111,6 +121,8 @@ STATUS dialogue_destroy(Dialogue *d)
     return OK;
 }
 
+/** Resets the dialogue
+*/
 STATUS dialogue_reset(Dialogue *dialogue){
     
     /*Error Control*/
@@ -124,6 +136,8 @@ STATUS dialogue_reset(Dialogue *dialogue){
     return OK;
 }
 
+/** Gets the dialogue information after executing a command
+*/
 char *dialogue_get_command(Dialogue *dialogue)
 {
     /*Error control */
@@ -134,6 +148,8 @@ char *dialogue_get_command(Dialogue *dialogue)
     return dialogue->command;
 }
 
+/** Sets the dialogue information after executing a command
+*/
 STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *current_loc, Object *obj, Enemy *enemy)
 {
     /*Error control*/
@@ -194,6 +210,8 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
                        
     **/
 
+/** Gets the dialogue information after executing an event
+*/
 char *dialogue_get_event(Dialogue *dialogue)
 {
     /*Error control */
@@ -204,6 +222,8 @@ char *dialogue_get_event(Dialogue *dialogue)
     return dialogue->event;
 }
 
+/** Sets the dialogue information after executing an event
+*/
 STATUS dialogue_set_event(Dialogue *dialogue, DE_Enum condition)
 {
     /*Error control*/
