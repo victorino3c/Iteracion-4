@@ -436,4 +436,14 @@ STATUS game_update_ls(Game *game);
  */
 STATUS game_update_time(Game *game);
 
+/**
+ * @brief Checks whether an object should be dropped on a space or not depending on the enemies health
+ * @author Nicolas Victorino
+ * 
+ * @param game Pointer to game
+ * @return ERROR if something went wrong 
+ */
+STATUS game_update_object(Game *game);
+
+
 #endif
