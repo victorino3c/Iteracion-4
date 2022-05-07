@@ -75,7 +75,8 @@ int _dir2i(DIRECTION dir)
   else if (dir == U)
   {
     n = 4;
-  } else if (dir == D)
+  } 
+  else if (dir == D)
   {
     n = 5;
   }
@@ -637,11 +638,20 @@ Id space_get_id_dest_by_link (Link *l)
 STATUS space_set_light_status (Space *space, Light ls)
 {
 
-  if (! space||!ls ) {
+  if (! space ) {
     return ERROR;
   } 
 
-  space->ls = ls;
+  if (ls == -1)
+  {
+    space->ls = UNKNOWN_LIGHT;
+  } else if (ls == 0)
+  {
+    space->ls = DARK;
+  } else if (ls == 1)
+  {
+    space->ls = BRIGHT;
+  }
 
   return OK;
 }
