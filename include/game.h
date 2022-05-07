@@ -445,5 +445,13 @@ STATUS game_update_time(Game *game);
  */
 STATUS game_update_object(Game *game);
 
+/**
+ * @brief Checks whether an enemy has 0 health and then changes its location to -1
+ * @author Nicolas Victorino
+ * 
+ * @param game pointer to game
+ * @return ERROR if something went wrong
+ */
+STATUS game_update_enemy(Game *game);
 
 #endif
