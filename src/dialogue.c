@@ -140,8 +140,15 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
     }
 
      if (condition == DC_TAKE || condition == DC_DROP){
-        
-         dialogue->command = strmod(matrix_command[condition], obj_get_name(obj) );
+        if(obj == NULL)
+        {
+            dialogue->command = matrix_command[DC_PUZZLE];   
+        }
+        else
+        {
+            dialogue->command = strmod(matrix_command[condition], obj_get_name(obj) );
+        }
+         
      }
 
      else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W){
@@ -170,11 +177,11 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
      else if (condition == DC_OPEN){
          dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
      }
-
-    else
+     else
      {
         dialogue->command = matrix_command[condition];      
-     }     
+     }
+   
    
 
     return OK;
