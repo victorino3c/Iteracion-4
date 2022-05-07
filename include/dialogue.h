@@ -72,7 +72,7 @@ typedef struct _Dialogue Dialogue;
 Dialogue *dialogue_create();
 
 /**
- * @brief Function to free a given dialogue
+ * @brief Function to free a given dialogue structure
  * 
  * @author Nicolas Victorino
  * @param d pointer to the dialogue
