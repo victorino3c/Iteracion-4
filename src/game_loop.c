@@ -201,6 +201,10 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
 
     st = game_update(game, command, arg1, arg2);
 
+    game_update_day(game);
+
+    game_update_ls(game);
+
     /*Cheks if the game is working in "log-mode" and if true it prints the commands in the output file*/
     if (wlog == 1)
     {
