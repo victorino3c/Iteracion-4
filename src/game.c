@@ -1083,6 +1083,7 @@ int game_command_unknown(Game *game, char *arg)
  */
 STATUS game_command_exit(Game *game, char *arg)
 {
+  dialogue_set_command(game->dialogue, DC_EXIT, NULL, NULL, NULL);
   return OK;
 }
 
@@ -1152,7 +1153,8 @@ STATUS game_command_take(Game *game, char *arg)
       {
         st = ERROR;
       }
-     
+      
+      dialogue_set_command(game->dialogue, DC_TAKE, NULL, o, NULL);
       return st;
     }
   }
@@ -1234,9 +1236,18 @@ STATUS game_command_drop(Game *game, char *arg)
     if (obj_id == 397)
     {
       link_set_status(game_get_link(game, space_get_link(s, U)), OPEN_L);
-      /*link_set_status(game_get_link(game, 509), OPEN_L);*/
     }
+    /*Puzzle completed*/
+    else 
+    {
+      link_set_status(game_get_link(game, space_get_link(s, E)), OPEN_L);
+      dialogue_set_command(game->dialogue, DC_PUZZLE, NULL, NULL, NULL);
+      return st;
+    }
+
   }
+
+  dialogue_set_command(game->dialogue, DC_DROP, NULL, o, NULL);
   return st;
 }
 
