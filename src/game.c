@@ -934,10 +934,9 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   game->inspection = 0;
   dialogue_reset(game->dialogue);
   game_update_object(game);
+  game_update_enemy(game);
   game_update_time(game);
   game_update_ls(game);
-
-
 
   switch (cmd)
   {
@@ -2260,6 +2259,32 @@ STATUS game_update_object(Game *game)
     enemy_set_location(e2, -1);
   }
 
+  return OK;
+}
+
+STATUS game_update_enemy(Game *game)
+{
+  int i = 0;
+  Enemy *e = NULL;
+
+  if (!game)
+  {
+    return ERROR;
+  }
+
+  for (i = 0; i < MAX_ENEMYS; i++)
+  {
+    e = game->enemy[i];
+
+    if (e)
+    {
+      if (enemy_get_health(e) <= 0 && enemy_get_location(e) != -1)
+      {
+        enemy_set_health(e, -1);
+        enemy_set_location(e, -1);
+      }
+    }
+  }
   return OK;
 }
 
