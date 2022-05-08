@@ -270,4 +270,74 @@ void test2_game_get_connection();
  */
 void test1_game_get_inspection();
 
+/**
+ * @test Test game time getter
+ * @pre memory-allocated game 
+ * @post return Day
+ */
+void test1_game_get_time();
+
+/**
+ * @test Test game time getter
+ * @pre non-memory-allocated game 
+ * @post return -1
+ */
+void test2_game_get_time();
+
+/**
+ * @test Test game time setter
+ * @pre memory-allocated game 
+ * @post return OK
+ */
+void test1_game_set_time();
+
+/**
+ * @test Test game time setter
+ * @pre non-memory-allocated game 
+ * @post return ERROR
+*/
+void test2_game_set_time();
+
+/**
+ * @test Test game last_event getter
+ * @pre memory-allocated game 
+ * @post return NOTHING
+ */
+void test1_game_get_last_event();
+
+/**
+ * @test Test game last_event getter
+ * @pre non-memory-allocated game 
+ * @post return -1
+ */
+void test2_game_get_last_event();
+
+/**
+ * @test Test game dialogue getter
+ * @pre memory-allocated game 
+ * @post return non NULL pointer
+ */
+void test1_game_get_dialogue();
+
+/**
+ * @test Test game dialogue getter
+ * @pre non-memory-allocated game 
+ * @post return NULL
+ */
+void test2_game_get_dialogue();
+
+/**
+ * @test Test game enemyWithPlayer getter
+ * @pre memory-allocated game 
+ * @post return non NULL pointer
+ */
+void test1_game_get_enemyWithPlayer();
+
+/**
+ * @test Test game enemyWithPlayer getter
+ * @pre non-memory-allocated game 
+ * @post return NULL
+ */
+void test2_game_get_enemyWithPlayer();
+
 #endif
