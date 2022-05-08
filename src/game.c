@@ -879,7 +879,7 @@ Id game_get_connection(Game *game, Id act_spaceid, DIRECTION dir)
 void game_get_new_event(Game *game){
 
   R_Event new_event = 0;
-  STATUS st;
+  STATUS st = ERROR;
 
   new_event = game_rules_get_event();
   game->last_event = new_event;
@@ -1007,9 +1007,6 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
 /* Gets the last event in the input
 */
 R_Event game_get_last_event(Game *game){
-  if(game==NULL){
-    return -1;
-  }
   return game->last_event;
 }
 
@@ -1017,9 +1014,6 @@ R_Event game_get_last_event(Game *game){
  */
 T_Command game_get_last_command(Game *game)
 {
-  if(game==NULL){
-    return -1;
-  }
   return game->last_cmd;
 }
 
@@ -1083,6 +1077,7 @@ BOOL game_is_over(Game *game)
  */
 int game_command_unknown(Game *game, char *arg)
 {
+  dialogue_set_command(game->dialogue, DC_UNKNOWN, NULL, NULL, NULL);
   return 5;
 }
 
@@ -1134,54 +1129,65 @@ STATUS game_command_take(Game *game, char *arg)
       /* Error control*/
       if (s == NULL)
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
 
       /* Error control*/
       if (o == NULL)
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
 
       /* Error control*/
       if (player_location != obj_loc)
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
 
       if (game_set_object_location(game, obj_get_id(o), NO_ID) == ERROR)
       /* Error control */
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
 
       /* Error control */
       if (player_add_object(game->player[MAX_PLAYERS - 1], o) == ERROR)
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
       /* Error control */
       if (space_del_objectid(s, id_obj_taken) == ERROR)
       {
+        dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
         st = ERROR;
       }
-
+      
       if (id_obj_taken == 383)
       {
+        dialogue_set_command(game->dialogue, DC_TAKE_M, NULL, NULL, NULL);
         player_set_max_health(game_get_player(game, 21), player_get_max_health(game_get_player(game, 21)) + 10);
         player_set_health(game_get_player(game, 21), player_get_health(game_get_player(game, 21)) + 10);
+        return st;
       }
 
       if (id_obj_taken == 384)
       {
+        dialogue_set_command(game->dialogue, DC_TAKE_S, NULL, NULL, NULL);
         player_set_baseDmg(game_get_player(game, 21), player_get_baseDmg(game_get_player(game, 21)) + 1);
+        return st;
       }
       
       dialogue_set_command(game->dialogue, DC_TAKE, NULL, o, NULL);
       return st;
     }
   }
-
+  
+  dialogue_set_error(game->dialogue, E_TAKE, NULL, o, NULL);
   st=ERROR;
   return st;
 }
@@ -1212,12 +1218,14 @@ STATUS game_command_drop(Game *game, char *arg)
   /* Error control */
   if (obj_id != obj_get_id(obj) || inventory_has_id(player_get_inventory(game->player[MAX_PLAYERS - 1]), obj_id) == FALSE)
   {
+    dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
     st = ERROR;
   }
 
   /* Error control*/
   if (player_get_inventory(game->player[MAX_PLAYERS - 1]) == NULL)
   {
+   dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
    st = ERROR;
   }
 
@@ -1225,30 +1233,35 @@ STATUS game_command_drop(Game *game, char *arg)
   /* Error control*/
   if (s == NULL)
   {
-    st = ERROR;
+     dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
+     st = ERROR;
   }
 
   o = game_get_object(game, obj_id);
   /* Error control*/
   if (o == NULL)
   {
+     dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
     st = ERROR;
   }
 
   /* Error control */
   if (space_add_objectid(s, obj_get_id(o)) == ERROR)
   {
+     dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
     st = ERROR;
   }
 
   /* Error control */
   if (game_set_object_location(game, obj_get_id(o), space_get_id(s)) == ERROR)
   {
+     dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
     st = ERROR;
   }
   /* Error control */
   if (player_del_object(game->player[MAX_PLAYERS - 1], obj_id) == ERROR)
   {
+     dialogue_set_error(game->dialogue, E_DROP, NULL, o, NULL);
     st = ERROR;
   }
 
@@ -1316,24 +1329,28 @@ STATUS game_command_attack(Game *game, char *arg)
   /* Error control */
   if(!enemy)
   {
+     dialogue_set_error(game->dialogue, E_ATTACK, NULL, NULL, NULL);
     return ERROR;
   }
 
   /* Error control */
   if (enemy_get_health(enemy) == 0)
   {
+    dialogue_set_error(game->dialogue, E_ATTACK, NULL, NULL, NULL);
     return ERROR;
   }
 
   /* Error control */
   if (player_loc == NO_ID || enemy_loc == NO_ID)
   {
+    dialogue_set_error(game->dialogue, E_ATTACK, NULL, NULL, NULL);
     return ERROR;
   }
 
   /* Error control */
   if (player_loc != enemy_loc)
   {
+    dialogue_set_error(game->dialogue, E_ATTACK, NULL, NULL, NULL);
     return ERROR;
   }
 
@@ -1348,22 +1365,33 @@ STATUS game_command_attack(Game *game, char *arg)
     dialogue_set_command(game->dialogue, DC_ATTACK_CRITICAL, NULL, NULL, NULL);
   }
 
-
+  if(enemy_loc != 11){
   /*Player wins if rand_num es > 5, else, they lose a life as the enemy won that round*/
-  if (rand_num > 5)
-  {
-    enemy_set_health(enemy, (enemy_get_health(enemy) - player_baseDmg));
-    dialogue_set_command(game->dialogue, DC_ATTACK_HIT, NULL, NULL, enemy);
-  }
-  else
-  {
-    player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
-    dialogue_set_command(game->dialogue, DC_ATTACK_MISSED, NULL, NULL, enemy);
-    if (player_get_health(game->player[MAX_PLAYERS - 1]) == 0)
+    if (rand_num > 5)
     {
-      game_is_over(game);
+      enemy_set_health(enemy, (enemy_get_health(enemy) - player_baseDmg));
+      dialogue_set_command(game->dialogue, DC_ATTACK_HIT, NULL, NULL, enemy);
     }
+    else
+    {
+      player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
+      dialogue_set_command(game->dialogue, DC_ATTACK_MISSED, NULL, NULL, enemy);
+      if (player_get_health(game->player[MAX_PLAYERS - 1]) == 0)
+      {
+       dialogue_set_command(game->dialogue, DC_GOVER, NULL, NULL, NULL);
+        game_is_over(game);
+      }
+    }
+
   }
+  else{
+    player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
+    dialogue_set_command(game->dialogue, DC_HIM, NULL, NULL, NULL);
+    enemy_set_name(enemy, "HIM");
+    enemy_set_location(enemy, -1);
+  }
+
+
 
   if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
   {
@@ -1371,15 +1399,17 @@ STATUS game_command_attack(Game *game, char *arg)
     if(object_get_durability(Sword1)==0){
       inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword1);
       obj_set_location(Sword1, -1);
+      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
     }
   }
 
-  if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
+  else if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
   {
     object_set_durability(Sword2, (object_get_durability(Sword2)-1));
      if(object_get_durability(Sword1)==0){
      inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword2);
       obj_set_location(Sword2, -1);
+      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
     }
   }
 
@@ -1415,6 +1445,10 @@ STATUS game_command_move(Game *game, char *arg)
     st = game_command_movement(game, W);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
     dialogue_set_command(game->dialogue, DC_MOVE_W, s, NULL, NULL);
+
+    if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_W, s, NULL, NULL);
+    }
   }
   else if (strcasecmp(arg, north[0]) == 0 || strcasecmp(arg, north[1]) == 0)
   {
@@ -1422,13 +1456,26 @@ STATUS game_command_move(Game *game, char *arg)
     st = game_command_movement(game, N);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
     dialogue_set_command(game->dialogue, DC_MOVE_N, s, NULL, NULL);
+
+     if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_N, s, NULL, NULL);
+    }
   }
   else if (strcasecmp(arg, south[0]) == 0 || strcasecmp(arg, south[1]) == 0)
   {
     /* Moving south */
     st = game_command_movement(game, S);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
-    dialogue_set_command(game->dialogue, DC_MOVE_S, s, NULL, NULL);
+    if( player_get_location(game->player[MAX_PLAYERS-1])!=123){
+      dialogue_set_command(game->dialogue, DC_MOVE_S, s, NULL, NULL);
+    }
+    else{
+       dialogue_set_command(game->dialogue, DC_BOSS, NULL, NULL, NULL);
+    }
+
+    if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_S, s, NULL, NULL);
+    }
   }
   else if (strcasecmp(arg, east[0]) == 0 || strcasecmp(arg, east[1]) == 0)
   {
@@ -1436,6 +1483,10 @@ STATUS game_command_move(Game *game, char *arg)
     st = game_command_movement(game, E);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
     dialogue_set_command(game->dialogue, DC_MOVE_E, s, NULL, NULL);
+
+     if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_E, s, NULL, NULL);
+    }
   }
   else if (strcasecmp(arg, up[0]) == 0 || strcasecmp(arg, up[1]) == 0)
   {
@@ -1443,6 +1494,10 @@ STATUS game_command_move(Game *game, char *arg)
     st = game_command_movement(game, U);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
     dialogue_set_command(game->dialogue, DC_MOVE_U, s, NULL, NULL);
+
+     if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_U, s, NULL, NULL);
+    }
   }
   else if (strcasecmp(arg, down[0]) == 0 || strcasecmp(arg, down[1]) == 0)
   {
@@ -1450,6 +1505,10 @@ STATUS game_command_move(Game *game, char *arg)
     st = game_command_movement(game, D);
     s = game_get_space(game, player_get_location(game->player[MAX_PLAYERS-1]));
     dialogue_set_command(game->dialogue, DC_MOVE_D, s, NULL, NULL);
+
+     if (st==ERROR){
+      dialogue_set_error(game->dialogue, E_MOVE_D, s, NULL, NULL);
+    }
   }
   else
   {
@@ -1533,6 +1592,8 @@ STATUS game_command_inspect(Game *game, char *arg)
       game->inspection = (char *)space_get_long_description(game_get_space(game, player_get_location(game->player[MAX_PLAYERS - 1])));
     }
     else{
+      dialogue_set_error(game->dialogue, E_INSPECT, NULL, NULL, NULL);
+    
       game->inspection = "El lugar está muy oscuro, no puedes ver nada";
     }
     
@@ -1544,17 +1605,20 @@ STATUS game_command_inspect(Game *game, char *arg)
   {
     if (arg == NULL)
     {
+      dialogue_set_error(game->dialogue, E_INSPECT, NULL, NULL, NULL);
       game->inspection = " ";
       st = ERROR;
     }
 
     if (obj == NULL)
     {
+      dialogue_set_error(game->dialogue, E_INSPECT, NULL, NULL, NULL);
       game->inspection = " ";
       st = ERROR;
     }
     if (player_has_object(game->player[0], obj_get_id(obj)) == FALSE && player_get_location(game->player[0]) != obj_get_location(obj))
     {
+       dialogue_set_error(game->dialogue, E_INSPECT, NULL, NULL, NULL);
       st = ERROR;
     }
     game->inspection = (char *)obj_get_description(obj);
@@ -1590,6 +1654,7 @@ STATUS game_command_save(Game* game, char *arg){
 STATUS game_command_load(Game* game, char *arg){
   STATUS st = OK;
   if(strcasecmp(arg, "savedata.dat") != 0 && strcasecmp(arg, "hormiguero.dat") != 0){
+    dialogue_set_error(game->dialogue, E_LOAD, NULL, NULL, NULL);
     st = ERROR;
   }
 
@@ -1616,6 +1681,7 @@ STATUS game_command_turnon(Game *game, char *arg)
   printf("**\nEntrando en turnon\n");
   if (!game || !arg)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     return ERROR;
   }
 
@@ -1623,6 +1689,7 @@ STATUS game_command_turnon(Game *game, char *arg)
   obj = game_get_object_byName(game, arg);
   if (!obj)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     printf("ERROR Obj is NULL\n**\n");
     return ERROR;
   }
@@ -1630,26 +1697,31 @@ STATUS game_command_turnon(Game *game, char *arg)
   player_loc = player_get_location(game->player[0]);
   if (player_loc == NO_ID)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     return ERROR;
   }
   
   if (player_has_object(game->player[MAX_PLAYERS-1], obj_get_id(obj)) == FALSE)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     return ERROR;
   }
   printf("Checking obj properties\n");
   if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == TRUE)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     /* Object has not iluminate attribute or object is already iluminated*/
     printf("ERROR object properties\n**\n");
     return ERROR;
   }
   else if (space_get_fire(game_get_space(game, player_loc)) == FALSE)
   {
+    dialogue_set_error(game->dialogue, E_TON, NULL, NULL, NULL);
     printf("There is no fire in space\n");
     return ERROR;
   }
   
+  dialogue_set_command(game->dialogue, DC_TON, NULL, obj, NULL);
   printf("Calling object_set_turnon");
   return object_set_turnedon(obj, TRUE);
 }
@@ -1671,6 +1743,7 @@ STATUS game_command_turnoff(Game *game, char *arg)
   printf("**\nEntrando en turnon\n");
   if (!game || !arg)
   {
+    dialogue_set_error(game->dialogue, E_TOFF, NULL, NULL, NULL);
     return ERROR;
   }
 
@@ -1678,22 +1751,26 @@ STATUS game_command_turnoff(Game *game, char *arg)
   obj = game_get_object_byName(game, arg);
   if (!obj)
   {
+    dialogue_set_error(game->dialogue, E_TOFF, NULL, NULL, NULL);
     printf("ERROR Obj es NULL\n**\n");
     return ERROR;
   }
 
   if (player_has_object(game->player[MAX_PLAYERS-1], obj_get_id(obj)) == FALSE)
   {
+    dialogue_set_error(game->dialogue, E_TOFF, NULL, NULL, NULL);
     return ERROR;
   }
   printf("Checking obj properties\n");
   if (object_get_illuminate(obj) == FALSE || object_get_turnedon(obj) == FALSE)
   {
+    dialogue_set_error(game->dialogue, E_TOFF, NULL, NULL, NULL);
     /* Object has not iluminate attribute or object is already not iluminated*/
     printf("ERROR object properties\n**\n");
     return ERROR;
   }
 
+  dialogue_set_command(game->dialogue, DC_TOFF, NULL, obj, NULL);
   printf("Calling object_set_turnon FALSE object properties\n**\n");
   return object_set_turnedon(obj, FALSE);
 }
@@ -1717,6 +1794,7 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
 
   if (!game || !link_name || !obj_name)
   {
+    dialogue_set_error(game->dialogue, E_OPEN, NULL, NULL, NULL);
     return ERROR;
   }  
 
@@ -1724,12 +1802,14 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
   obj = game_get_object_byName(game, obj_name);
   if (!l || !obj)
   {
+    dialogue_set_error(game->dialogue, E_OPEN, NULL, NULL, NULL);
     return ERROR;
   }
 
   if (link_get_status(l) == OPEN_L || player_has_object(game->player[0], obj_get_id(obj)) == FALSE)
   {
     /* Link is already open */
+    dialogue_set_error(game->dialogue, E_OPEN, NULL, NULL, NULL);
     return ERROR;
   }
 
@@ -1738,9 +1818,12 @@ STATUS game_command_open(Game *game, char *link_name, char *obj_name)
   if (link_get_id(l) == obj_open_link && player_get_location(game->player[0]) == link_get_start(l))
   {
     dialogue_set_command(game->dialogue, DC_OPEN, game_get_space(game,player_get_location(game->player[MAX_PLAYERS - 1])), NULL, NULL) ;
+    inventory_remove_object(player_get_inventory(game->player[0]),obj_get_id(obj));
+    obj_set_location(obj, -1);
     return link_set_status(l, OPEN_L);
   }
 
+  dialogue_set_error(game->dialogue, E_OPEN, NULL, NULL, NULL);
   return ERROR;
 }
 
@@ -1765,6 +1848,7 @@ STATUS game_command_use(Game *game, char *arg)
 
   if (!game || !arg)
   {
+    dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
     st = ERROR;
     return st;
   }
@@ -1774,6 +1858,7 @@ STATUS game_command_use(Game *game, char *arg)
 
   if (obj == NULL)
   {
+    dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
     printf("Obj es NULL\n**\n");
     st = ERROR;
     return st;
@@ -1786,6 +1871,7 @@ STATUS game_command_use(Game *game, char *arg)
   
   if (id == NO_ID || !player)
   {
+    dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
     printf("Id obj es NO_ID or player == NULL\n**\n");
     st = ERROR;
     return st;
@@ -1799,6 +1885,7 @@ STATUS game_command_use(Game *game, char *arg)
   {
     if (inventory_has_id(player_get_inventory(player), id) == FALSE)
     {
+      dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
       printf("No tiene el objeto\n**\n");
       st = ERROR;
       return st;
@@ -1808,6 +1895,7 @@ STATUS game_command_use(Game *game, char *arg)
   {
     if (space_has_object(game_get_space(game, player_get_location(player)), id) == FALSE)
     {
+      dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
       printf("No tiene el objeto\n**\n");
       st = ERROR;
       return st;
@@ -1893,6 +1981,7 @@ STATUS game_command_use(Game *game, char *arg)
     }
   }
 
+  dialogue_set_error(game->dialogue, E_USE, NULL, NULL, NULL);
   printf("No es ninguno: %d", (int) type);
   st = ERROR;
   return st;  
