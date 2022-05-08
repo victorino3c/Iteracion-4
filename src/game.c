@@ -2062,15 +2062,19 @@ STATUS game_event_trap(Game *game){
 /**
  * @brief It executes SLIME event
  * 
- * An slime appear on the players location 
+ * A rat appear on the players location 
  * 
  * @param game pointer to game struct
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_slime(Game *game){
   
-  Enemy *slime = game_get_enemy_byName(game, "slime");
+  Enemy *slime = game_get_enemy_byName(game, "Rat1");
   Id slime_loc = enemy_get_location(slime);
+
+  if(slime == NULL){
+    slime = game_get_enemy_byName(game, "Rat2");
+  }
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
