@@ -290,5 +290,22 @@ Floor space_get_floor(Space* space);
  * @return ERROR if something went wrong
  */
 STATUS space_set_floor(Space* space, Floor floor);
-#endif
 
+/**
+ * @brief It sets if there is fire in the space
+ * 
+ * @param s pointer to space
+ * @param fire BOOL with TRUE if space has fire or FALSE otherwise.
+ * @return OK, if everything goes well or ERROR if there was some mistake 
+ */
+STATUS space_set_fire(Space *s, BOOL fire);
+
+/**
+ * @brief It gets if the space has fire in it, so some objects can turn on.
+ * 
+ * @param s pointer to space
+ * @return TRUE if there is fire in space s. In case of error returns FALSE.
+ */
+BOOL space_get_fire(Space *s);
+
+#endif
