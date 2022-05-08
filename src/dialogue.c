@@ -267,7 +267,7 @@ char *dialogue_get_error(Dialogue *dialogue)
         return NULL;
     }
 
-    return dialogue->command;
+    return dialogue->error;
 }
 
 STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_loc, Object *obj, Enemy *enemy)
