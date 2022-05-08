@@ -115,7 +115,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
   char *space_name, *space_name2, *space_name3, blank20[] = "                   ";
   Set *object_set = NULL, *object_set_r = NULL, *object_set_l = NULL;
-
+  Enemy *enemy = NULL;
 
   /* setting all proper values for each variable */
   player_loc = game_get_player_location(game, 21);
@@ -250,17 +250,27 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
 
         gdesc = space_get_gdesc(game_get_space(game, id_act));
-        enemy_gdesc = enemy_get_gdesc(game_get_enemy_in_space(game, id_act));
+        enemy = NULL;
+        enemy = game_get_enemy_in_space(game, id_act);
+        if (enemy)
+        {
+          enemy_gdesc = enemy_get_gdesc(enemy);
+        }
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
-          if (i < ENEMY_GDESC_Y)
+          if (i < ENEMY_GDESC_Y && enemy)
           {
-            sprintf(str, "  | %s %s |", enemy_gdesc[i], gdesc[i]);
+            sprintf(str, "  | %s %s|", enemy_gdesc[i], gdesc[i]);
+          }
+          else if (enemy)
+          {
+            sprintf(str, "  |        %s|", gdesc[i]);
           }
           else
           {
-            sprintf(str, "  |       %s |", gdesc[i]);
+            sprintf(str, "  |    %s    |", gdesc[i]);
           }
+          
           screen_area_puts(ge->map, str);
         }
         
