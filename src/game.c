@@ -1592,6 +1592,7 @@ STATUS game_command_load(Game* game, char *arg){
 STATUS game_command_turnon(Game *game, char *arg)
 {
   Object *obj = NULL;
+  Id player_loc = NO_ID;
 
   printf("**\nEntrando en turnon\n");
   if (!game || !arg)
@@ -1607,6 +1608,12 @@ STATUS game_command_turnon(Game *game, char *arg)
     return ERROR;
   }
 
+  player_loc = player_get_location(game->player[0]);
+  if (player_loc == NO_ID)
+  {
+    return ERROR;
+  }
+  
   if (player_has_object(game->player[MAX_PLAYERS-1], obj_get_id(obj)) == FALSE)
   {
     return ERROR;
@@ -1618,7 +1625,12 @@ STATUS game_command_turnon(Game *game, char *arg)
     printf("ERROR object properties\n**\n");
     return ERROR;
   }
-
+  else if (space_get_fire(game_get_space(game, player_loc)) == FALSE)
+  {
+    printf("There is no fire in space\n");
+    return ERROR;
+  }
+  
   printf("Calling object_set_turnon");
   return object_set_turnedon(obj, TRUE);
 }
