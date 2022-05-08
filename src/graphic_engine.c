@@ -668,7 +668,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     sprintf(str, "   ") ;
     screen_area_puts(ge->descript, str);
 
-    sprintf(str, "PLAYER:");
+    sprintf(str, "  PLAYER (gpp0^):");
     screen_area_puts(ge->descript, str);
     gdesc = player_get_gdesc(game_get_player(game, 21));
     sprintf(str, "  +--------+");
