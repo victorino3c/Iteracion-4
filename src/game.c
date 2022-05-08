@@ -934,6 +934,10 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   game->inspection = 0;
   dialogue_reset(game->dialogue);
   
+  if (update_game_over(game) == TRUE)
+  {
+    game_is_over(game);
+  }
 
   switch (cmd)
   {
@@ -1417,7 +1421,6 @@ if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
        if (enemy_get_health(enemy) == 0 && enemy_loc==123)
       {
        dialogue_set_command(game->dialogue, DC_END, NULL, NULL, NULL);
-        game_is_over(game);
       }
     }
     else
@@ -2525,4 +2528,20 @@ Enemy *game_get_enemy_in_space(Game *game, Id space)
   }
 
   return NULL;
+}
+
+BOOL update_game_over(Game *game)
+{
+  if (!game)
+  {
+    return FALSE;
+  }
+
+  if (player_get_health <= 0)
+  {
+    return TRUE;
+  } else
+  {
+    return FALSE;
+  }
 }
