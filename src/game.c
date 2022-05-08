@@ -1007,6 +1007,9 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
 /* Gets the last event in the input
 */
 R_Event game_get_last_event(Game *game){
+  if(game==NULL){
+    return -1;
+  }
   return game->last_event;
 }
 
@@ -1014,6 +1017,9 @@ R_Event game_get_last_event(Game *game){
  */
 T_Command game_get_last_command(Game *game)
 {
+  if(game==NULL){
+    return -1;
+  }
   return game->last_cmd;
 }
 
