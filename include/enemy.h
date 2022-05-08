@@ -191,7 +191,7 @@ const char *enemy_get_graphic(Enemy *enemy);
  * @author Miguel Soto
  * 
  * @param enemy pointer to enemy
- * @param graphic 
+ * @param graphic new enemy graphic description
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong. 
  */
 STATUS enemy_set_graphic(Enemy *enemy, char *graphic);
