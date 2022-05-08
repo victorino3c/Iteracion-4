@@ -1,11 +1,28 @@
 move s
 move s
-move e
-move e
-move e
-move e
+move n
+move n
+take torch1
 inspect s
-take Hoja
-inspect Hoja
-drop Hoja
+inspect torch1
+ton torch1
+drop torch1
+move s
+move s
+move e
+move e
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 exit
