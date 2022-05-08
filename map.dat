@@ -25,8 +25,8 @@
 #o:340|Bed1|Makes it night or day time |17|0|-1|-1|0|0|1|0|-1|
 #o:341|Bed2|Makes it night or day time |14|0|-1|-1|0|0|1|0|-1|
 #o:350|Bread_Crumbs|might be appreciated by someone when used|125|1|-1|-1|0|0|1|0|1|
-#o:399|Small_key1|opens the Alcove from the A_Corridor(127)|-1|1|-1|505|0|0|1|0|1|               
-#o:385|Small_key2|opens the Library from Corridor2(126)|-1|1|-1|524|0|0|1|0|1| 
+#o:399|Key1|opens the Alcove from the A_Corridor(127)|-1|1|-1|505|0|0|1|0|1|               
+#o:385|Key2|opens the Library from Corridor2(126)|-1|1|-1|524|0|0|1|0|1| 
 #o:390|Torch1|can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:391|Torch2|can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:392|Sword1|increases +0,2 your power|121|1|-1|-1|0|0|1|0|3|
@@ -50,7 +50,7 @@
 #e:46|Rat1|-1|2|0|1|
 #e:47|Rat2|-1|2|0|1|
 #l:504|A_Alcove_w|17|127|3|1|
-#l:505|A_Corridor_e|127|17|2|0|
+#l:505|Door1|127|17|2|0|
 #l:506|A_Corridor_w|127|12|3|1|
 #l:507|A_Entry_e|12|127|2|1|
 #l:508|A_Entry_d|12|11|5|1|
@@ -70,7 +70,7 @@
 #l:521|Dining_Room_w|125|122|3|1|
 #l:522|Dining_Room_e|125|126|2|1|
 #l:523|Corridor2_w|126|125|3|1|
-#l:524|Corridor2_e|126|13|2|0|
+#l:524|Door2|126|13|2|0|
 #l:525|Library_w|13|126|3|1|
 #l:526|Library_e|13|14|2|0|
 #l:527|Bedroom_w|14|13|3|1|
