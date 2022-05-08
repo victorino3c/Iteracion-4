@@ -331,6 +331,7 @@ STATUS game_load_objs(Game *game, char *filename)
  */
 STATUS game_load_players(Game *game, char *filename)
 {
+  int i, j;
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -340,6 +341,7 @@ STATUS game_load_players(Game *game, char *filename)
   Player *player = NULL;
   STATUS status = OK;
   int crit = 0, base_dmg = 0;
+  char *aux, **gdesc = NULL;
 
   /*Error control*/
   if (!filename)
@@ -379,6 +381,21 @@ STATUS game_load_players(Game *game, char *filename)
       crit = atol(toks);
       toks = strtok(NULL, "|");
       base_dmg = atol(toks);
+      
+      gdesc = player_create_gdesc();
+      if (gdesc == NULL)
+      {
+        return ERROR;
+      }
+
+      for (i = 0; i < PLAYER_GDESC_Y; i++)
+      {
+        aux = strtok(NULL, "|");
+        for (j = 0; j < strlen(aux) && j < PLAYER_GDESC_X; j++)
+        {
+          gdesc[i][j] = aux[j];
+        }
+      }
 
       /*If debug is being used, it will print all the information from
         the current player that is being loaded*/
@@ -399,6 +416,7 @@ STATUS game_load_players(Game *game, char *filename)
         player_set_health(player, health);
         player_set_crit(player, crit);
         player_set_baseDmg(player, base_dmg);
+        player_set_gdesc(player, gdesc);
         game_add_player(game, player);
       }
     }
@@ -632,6 +650,7 @@ STATUS game_load_link(Game *game, char *filename)
         link_set_direction(link, dir);
         link_set_status(link, status);
         space_set_link(game_get_space(game, id_start), id, dir);
+        link_print(link);
         game_add_link(game, link);
       }
     }
