@@ -41,7 +41,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "What's with me, what am I even thinking?",                               /*!< DC_UNKNOWN*/
   "Looks like the three candles activated a mechanism, a huge shelf slides to the side, revealing the opening to a Bedroom",                                                            /*!< DC_PUZZLE*/
   "You opened a door ",                                                     /*!< DC_OPEN*/
-  "How dare you attack your creator? Have your punishment, little human",    /*!< DC_HIM*/
+  "How dare you attack your creator? It was me who touched you, who Blessed you, no help for you this time. ALSO, have your punishment, little human -YOU WERE ATTACKED BY HIM, leaving you wounded",    /*!< DC_HIM*/
   "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath", /*!< DC_BOSS*/ 
   "Your Sword broke",
   "You turned * on ",
@@ -75,7 +75,7 @@ char matrix_error[ERROR_SIZE][WORD_SIZE] =
   "You can't move West, you remain in the *",                                   /*!< E_MOVE_W*/ 
   "You can't move Up, you remain in the *",                                     /*!< E_MOVE_U*/     
   "You can't move Down, you remain in the *",                                   /*!< E_MOVE_D*/
-  "You look around and found that the *",                                   /*!< E_INSPECT*/ 
+  "You couldn't inpect that",                                   /*!< E_INSPECT*/ 
   "Couldn't save the game",                                            /*!< E_SAVE*/
   "Loading game... ERROR",                                             /*!< E_MLOAD*/
   "You cant use this now ",                                           /*!< E_USE*/
@@ -321,10 +321,6 @@ STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_l
          dialogue->error = strmod(matrix_error[condition], space_get_name(current_loc));
      }
 
-     else if (condition == E_INSPECT){
-         dialogue->error = strmod(matrix_error[condition], obj_get_description(obj));
-     }
-     
      else
      {
         dialogue->error = strmod(matrix_error[condition], " ");      
