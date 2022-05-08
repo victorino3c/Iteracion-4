@@ -294,7 +294,7 @@ STATUS game_load_objs(Game *game, char *filename)
         object_set_open(obj, open);
         object_set_illuminate(obj, illuminate);
         object_set_turnedon(obj, turnedon);
-        object_set_time_visible(obj,light_visible);
+        object_set_light_visible(obj,light_visible);
         object_set_crit(obj, crit);
         object_set_durability(obj, durability);
         
