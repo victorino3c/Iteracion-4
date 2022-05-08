@@ -2494,7 +2494,7 @@ STATUS game_destroy_load(Game *game)
     game->links[i] = NULL;
   }
 
-  dialogue_destroy(game->dialogue);
+  /*dialogue_destroy(game->dialogue);*/
 
   return OK;
 }
