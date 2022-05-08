@@ -406,7 +406,7 @@ BOOL object_get_turnedon(Object *obj)
 
 /** Set the time when an object is visible
 */
-STATUS object_set_time_visible(Object *obj, Light light)
+STATUS object_set_light_visible(Object *obj, Light light)
 {
   if (!obj || (light != BRIGHT && light != DARK))
   {
