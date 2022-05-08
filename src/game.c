@@ -2056,7 +2056,7 @@ STATUS game_event_move(Game *game){
   }
 
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY){
+  if(game->day_time == DAY|| game->last_cmd == ATTACK){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
@@ -2101,7 +2101,7 @@ STATUS game_event_move(Game *game){
 STATUS game_event_trap(Game *game){
 
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY){
+  if(game->day_time == DAY|| game->last_cmd == ATTACK){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
@@ -2130,7 +2130,7 @@ STATUS game_event_slime(Game *game){
     slime = game_get_enemy_byName(game, "Rat2");
   }
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY){
+  if(game->day_time == DAY|| game->last_cmd == ATTACK){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
