@@ -100,8 +100,8 @@ STATUS game_managment_save(char *filename, Game* game)
 STATUS game_managment_load(char *filename, Game *game)
 {
   STATUS st = OK;
-
-  st = game_destroy(game); /*Bien? O da error?*/
+  
+  st = game_destroy_load(game);
   st = game_create_from_file(game, filename);
   return st;
 }
