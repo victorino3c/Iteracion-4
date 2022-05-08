@@ -14,7 +14,8 @@
 #include "types.h"
 
 #define ENEMY_LEN_NAME 60  /*!< Enemy's name length */
-#define ENEMY_GRAPHIC 7
+#define ENEMY_GDESC_Y 3 /*!< Establish the maximun number of litednes ENEMY's graphic description (gdesc) will have  */
+#define ENEMY_GDESC_X 6 /*!< Establish the maximun number of characters each line of ENEMY's graphic description (gdesc) will have */
 
 /**
  * @brief Enemy
@@ -179,22 +180,39 @@ int enemy_get_baseDmg(Enemy *enemy);
 STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg); 
 
 /**
- * @brief It gets enemy graphic description
+ * @brief It alloc memory for the enemy_gdesc
  * @author Miguel Soto
- * 
- * @param enemy pointer to enemy
- * @return Enemy graphic description
+ *
+ * @return double pointer to char to the newgdesc or NULL if there has been an error
  */
-const char *enemy_get_graphic(Enemy *enemy);
+char **enemy_create_gdesc();
 
 /**
- * @brief It sets enemy graphic description
+ * @brief It frees memory for the enemy_gdesc
  * @author Miguel Soto
- * 
- * @param enemy pointer to enemy
- * @param graphic new enemy graphic description
- * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong. 
+ *
+ * @param gdesc pointer to the array of pointers to the gdesc field
+ * @return OK, if everything goes well or ERROR if there was some mistake
  */
-STATUS enemy_set_graphic(Enemy *enemy, char *graphic);
+STATUS enemy_destroy_gdesc(char **gdesc);
+
+/**
+ * @brief It sets the graphic description of a enemy
+ * @author Miguel Soto
+ *
+ * @param s a pointer to enemy
+ * @param newgdesc a double char array with the graphical description
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+STATUS enemy_set_gdesc(Enemy *s, char **newgdesc);
+
+/**
+ * @brief It gets the graphic description from a enemy
+ * @author Miguel Soto
+ *
+ * @param s a pointer to enemy
+ * @return a double char array with the graphical description, or NULL if there was some error.
+ */
+char **enemy_get_gdesc(Enemy *s);
 
 #endif
