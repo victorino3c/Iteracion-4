@@ -933,10 +933,7 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   game->last_cmd = cmd;
   game->inspection = 0;
   dialogue_reset(game->dialogue);
-  game_update_object(game);
-  game_update_enemy(game);
-  game_update_time(game);
-  game_update_ls(game);
+  
 
   switch (cmd)
   {
@@ -995,6 +992,11 @@ int game_update(Game *game, T_Command cmd, char *arg1, char *arg2)
   default:
     break;
   }
+
+  game_update_object(game);
+  game_update_enemy(game);
+  game_update_time(game);
+  game_update_ls(game);
   
   game_get_new_event(game);
 
