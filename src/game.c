@@ -1058,6 +1058,13 @@ BOOL game_is_over(Game *game)
 {
   if (player_get_health(game->player[MAX_PLAYERS - 1]) <= 0)
   {
+    dialogue_set_command(game->dialogue, DC_GOVER, NULL, NULL, NULL);
+    return TRUE;
+  }
+
+   if (enemy_get_health(game_get_enemy(game, 45)) <= 0)
+  {
+    dialogue_set_command(game->dialogue, DC_END, NULL, NULL, NULL);
     return TRUE;
   }
 
