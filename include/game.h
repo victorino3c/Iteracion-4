@@ -473,4 +473,13 @@ STATUS game_destroy_load(Game *game);
  */
 Enemy *game_get_enemy_in_space(Game *game, Id space);
 
+/**
+ * @brief Function to check if player is alive
+ * @author Nicolas Victorino
+ * 
+ * @param game pointer to game
+ * @return TRUE if player is dead 
+ */
+BOOL update_game_over(Game *game);
+
 #endif
