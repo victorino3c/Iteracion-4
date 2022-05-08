@@ -32,6 +32,7 @@ struct _Space
   char **gdesc;                      /*!< Array de 5 strings de 9 caracteres */
   Light ls;                          /*!< Status of light (Brief for Light Status) */
   Floor floor;                       /*!< Floor level of the space*/
+  BOOL fire;                         /*!< If TRUE, torches can be turnon. If FALSE, torches cannot illuminate*/
 } ;
 
 /**
