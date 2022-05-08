@@ -108,6 +108,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i;
   char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL;
+  char **enemy_gdesc = NULL;
   char *description;
   char *en_name[MAX_ENEMYS];
   char *inspection, *dialogue, *events;
@@ -249,10 +250,17 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
 
         gdesc = space_get_gdesc(game_get_space(game, id_act));
-        
+        enemy_gdesc = enemy_get_gdesc(game_get_enemy_in_space(game, id_act));
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
-          sprintf(str, "  |    %s    |", gdesc[i]);
+          if (i < ENEMY_GDESC_Y)
+          {
+            sprintf(str, "  | %s %s |", enemy_gdesc[i], gdesc[i]);
+          }
+          else
+          {
+            sprintf(str, "  |       %s |", gdesc[i]);
+          }
           screen_area_puts(ge->map, str);
         }
         
