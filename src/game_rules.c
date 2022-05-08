@@ -50,7 +50,6 @@ int random(){
 
     int rand_num;
 
-    srand(time(NULL));
     rand_num = rand() % 100;
 
     return rand_num;
