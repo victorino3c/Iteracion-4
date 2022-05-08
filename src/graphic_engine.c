@@ -818,11 +818,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 screen_area_clear(ge->dialogue);
 
 screen_area_puts(ge->dialogue, " Dialogue:");
-dialogue = dialogue_get_command(game_get_dialogue(game));
-  
+dialogue = dialogue_get_error(game_get_dialogue(game));
+
 if(dialogue == NULL){}
 else if(strcmp(dialogue, " ") == 0){
-  dialogue = dialogue_get_error(game_get_dialogue(game));
+  dialogue = dialogue_get_command(game_get_dialogue(game));
 }
 
 if (dialogue)
