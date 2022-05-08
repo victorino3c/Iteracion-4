@@ -2472,3 +2472,22 @@ STATUS game_destroy_load(Game *game)
   return OK;
 }
 
+Enemy *game_get_enemy_in_space(Game *game, Id space)
+{
+  int i;
+
+  if (!game || space == NO_ID)
+  {
+    return NULL;
+  }
+  
+  for (i = 0; i < MAX_ENEMYS && game->enemy[i]; i++)
+  {
+    if (enemy_get_location(game->enemy[i]) == space)
+    {
+      return game->enemy[i];
+    }
+  }
+  
+  return NULL;
+}
