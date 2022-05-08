@@ -632,7 +632,6 @@ STATUS game_load_link(Game *game, char *filename)
         link_set_direction(link, dir);
         link_set_status(link, status);
         space_set_link(game_get_space(game, id_start), id, dir);
-        link_print(link);
         game_add_link(game, link);
       }
     }
