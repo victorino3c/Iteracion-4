@@ -84,6 +84,20 @@ void test2_dialogue_get_event();
 /**
  * @test Test dialogue reset
  * @pre pointer to dialogue
+ * @post Non-NULL pointer
+ */
+void test1_dialogue_get_error();
+
+/**
+ * @test Test dialogue reset
+ * @pre pointer to dialogue = NULL
+ * @post NULL pointer
+ */
+void test2_dialogue_get_error();
+
+/**
+ * @test Test dialogue reset
+ * @pre pointer to dialogue
  * @post output == OK
  */
 void test1_dialogue_set_command();
@@ -108,5 +122,19 @@ void test1_dialogue_set_event();
  * @post output == ERROR
  */
 void test2_dialogue_set_event();
+
+/**
+ * @test Test dialogue reset
+ * @pre pointer to dialogue
+ * @post output == OK
+ */
+void test1_dialogue_set_error();
+
+/**
+ * @test Test dialogue reset
+ * @pre pointer to dialogue = NULL
+ * @post output == ERROR
+ */
+void test2_dialogue_set_error();
 
 #endif
