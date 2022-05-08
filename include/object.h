@@ -230,7 +230,7 @@ STATUS obj_print_save(char *filename, Object *obj);
  * @param obj is a pointer to the target object @param light new value of the condition
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
  */
-STATUS object_set_time_visible(Object *obj, Light light);
+STATUS object_set_light_visible(Object *obj, Light light);
 
 /**
  * @brief Gets the light_visible condition of an object
@@ -239,7 +239,7 @@ STATUS object_set_time_visible(Object *obj, Light light);
  * @param obj is a pointer to the target object
  * @return Light when the object is visible, -1 if error
  */
-Light object_get_time_visible(Object *obj);
+Light object_get_light_visible(Object *obj);
 
 /** 
  * @brief Return true if the object is visible
