@@ -24,6 +24,7 @@ struct _Enemy
 {
   Id id;  /*!< Enemy's id. */
   char name[ENEMY_LEN_NAME]; /*!< Enemy's name. */
+  char graphic[ENEMY_GRAPHIC];  /*!< Enemy graphic description */
   Id location;  /*!< Id to enemy's space location */
   int health;   /*!< Enemy's health */
   int Crit_dmg;               /*!< Enemy's crit chance (scale 0 to 10) */
@@ -53,6 +54,7 @@ Enemy *enemy_create(Id id)
   new_enemy->id = id;
   new_enemy->health = 3;
   new_enemy->name[0] = '\0';
+  new_enemy->graphic[0] = '\0';
   new_enemy->location = NO_ID;
 
   return new_enemy;
@@ -281,3 +283,34 @@ STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg){
 
  return OK;
 } 
+
+const char *enemy_get_graphic(Enemy *enemy)
+{
+	/* Error control */
+  if (!enemy)
+  {
+    return NULL;
+  }
+  
+  return enemy->graphic;
+}
+
+STATUS enemy_set_graphic(Enemy *enemy, char *graphic)
+{
+	/* Error control */
+  if (!enemy || !graphic)
+  {
+    return ERROR;
+  }
+  
+  if (strlen(graphic) >= ENEMY_GRAPHIC)
+  {
+    strncpy(enemy->graphic, graphic, ENEMY_GRAPHIC);
+  }
+  else
+  {
+    strcpy(enemy->graphic, graphic);
+  }
+  
+  return OK;
+}
