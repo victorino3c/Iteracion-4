@@ -177,5 +177,23 @@ int enemy_get_baseDmg(Enemy *enemy);
  */
 STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg); 
 
+/**
+ * @brief It gets enemy graphic description
+ * @author Miguel Soto
+ * 
+ * @param enemy pointer to enemy
+ * @return Enemy graphic description
+ */
+const char *enemy_get_graphic(Enemy *enemy);
+
+/**
+ * @brief It sets enemy graphic description
+ * @author Miguel Soto
+ * 
+ * @param enemy pointer to enemy
+ * @param graphic 
+ * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong. 
+ */
+STATUS enemy_set_graphic(Enemy *enemy, char *graphic);
 
 #endif
