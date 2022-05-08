@@ -720,3 +720,30 @@ STATUS space_set_floor(Space* space, Floor floor)
   space->floor = floor;
   return OK;
 }
+
+/**
+ * It gets if the space has fire in it, so some objects can turn on.
+ */
+BOOL space_get_fire(Space *s)
+{
+  if (!s)
+  {
+    return FALSE;
+  }
+  
+  return s->fire;
+}
+
+/**
+ * It sets if there is fire in the space
+ */
+STATUS space_set_fire(Space *s, BOOL fire)
+{
+  if (!s)
+  {
+    return ERROR;
+  }
+  
+  s->fire = fire;
+  return OK;
+}
