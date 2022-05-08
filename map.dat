@@ -36,7 +36,7 @@
 #o:396|Candle3|Cannot be moved|13|0|-1|-1|1|0|1|0|-1|
 #o:397|Ladder|will make you able to access the attic from the cell when dropped|122|1|-1|509|0|0|1|0|-1| 
 #o:398|Dawn_Key|is Only for the worthy who can enter the Secret_Chamber|125|1|-1|516|0|0|1|0|1|
-#o:380|Crit_Sword|gives +0,3 Crit chance|14|1|-1|-1|0|0|1|3|-1|
+#o:380|Crit_Sword|gives +0,5 Crit chance|14|1|-1|-1|0|0|1|5|-1|
 #o:381|Dusk_Key|is A key to his doorstep|124|1|-1|514|0|0|1|0|1|
 #o:382|Treasure_key|is An old looking key|17|1|-1|519|0|0|1|0|1|
 #o:383|Moon_Armor|gives +10 permanent health, also recovers 10 health |16|1|-1|-1|0|0|0|0|-1|
