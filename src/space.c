@@ -112,7 +112,7 @@ Space *space_create(Id id)
   newSpace->name[0] = '\0';
   newSpace->brief_description[0] = '\0';
   newSpace->long_description[0] = '\0';
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 6; i++)
   {
     newSpace->link[i] = NO_ID;
   }
@@ -138,7 +138,7 @@ STATUS space_destroy(Space *space)
     return ERROR;
   }
 
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 6; i++)
   {
     space->link[i] = NO_ID;
   }
