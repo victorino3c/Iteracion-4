@@ -431,6 +431,7 @@ STATUS game_load_enemy(Game *game, char *filename)
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
+  char graphic[ENEMY_GRAPHIC] = "";
   char *toks = NULL;
   Id id = NO_ID, location = NO_ID;
   int health;
@@ -473,6 +474,8 @@ STATUS game_load_enemy(Game *game, char *filename)
       crit = atol(toks);
       toks = strtok(NULL, "|");
       base_dmg = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(graphic, toks);
 
       /*If debug is being used, it will print all the information
       from the current enemy that is being loaded*/
@@ -493,6 +496,7 @@ STATUS game_load_enemy(Game *game, char *filename)
         enemy_set_health(enemy, health);
         enemy_set_crit(enemy, crit);
         enemy_set_baseDmg(enemy, base_dmg);
+        enemy_set_graphic(enemy, graphic);
         game_add_enemy(game, enemy);
       }
     }
