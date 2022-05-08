@@ -2537,7 +2537,7 @@ BOOL update_game_over(Game *game)
     return FALSE;
   }
 
-  if (player_get_health <= 0)
+  if (player_get_health(game_get_player(game, 21)) <= 0)
   {
     return TRUE;
   } else
