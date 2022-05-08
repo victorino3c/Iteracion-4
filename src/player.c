@@ -25,11 +25,12 @@ struct _Player
   Id id;	/*!< Player's id */
   char name[PLAYER_NAME_LEN];	/*!< Player's name */
   Inventory *inventory;		/*!< Player's inventory */
-  Id location;		/*!< Id to player's space location */
+  Id location;		/*!< Id to player's player location */
   int health;		/*!< Player's health */
   int max_health; /*!< Max player´s health */
   int Crit_dmg;               /*!< Player's crit chance (scale 0 to 10) */
   int base_dmg;               /*!< Player's base damage */
+  char **gdesc;   /*!< Graphic visualization player */
 } ;
 
 /** player_create allocates memory for a new player
@@ -59,6 +60,7 @@ Player *player_create(Id id)
   new_player->location = NO_ID;
   new_player->max_health = 10;
   new_player->inventory = inventory_create();
+  new_player->gdesc = NULL;
 
   return new_player;
 }
@@ -79,6 +81,11 @@ STATUS player_destroy(Player *player)
     player->inventory = NULL;
   }
 	
+  if (player->gdesc)
+  {
+    player_destroy_gdesc(player->gdesc);
+  }
+  
   free(player);
   player = NULL;
   return OK;
@@ -323,7 +330,7 @@ int player_get_max_health(Player *player)
 
 STATUS player_print_save(char *filename, Player *player)
 {
-
+  int i, j;
   FILE *file = NULL;
 
   file = fopen(filename, "a");
@@ -334,8 +341,19 @@ STATUS player_print_save(char *filename, Player *player)
     return ERROR;
   }
 
-  fprintf(file, "#p:%ld|%s|%ld|%d|%d|%d|%d|\n", player->id, player->name, player->location, player->health, inventory_get_maxObjs(player->inventory), player->Crit_dmg, player->base_dmg);
+  fprintf(file, "#p:%ld|%s|%ld|%d|%d|%d|%d|", player->id, player->name, player->location, player->health, inventory_get_maxObjs(player->inventory), player->Crit_dmg, player->base_dmg);
 
+  for (i = 0; i < PLAYER_GDESC_Y && player->gdesc[i]; i++)
+  {
+    for (j = 0; j < PLAYER_GDESC_X && player->gdesc[i][j]; j++)
+    {
+      fprintf(file, "%c", player->gdesc[i][j]);
+    }
+    fprintf(file, "|");
+  }
+  
+  fprintf(file, "\n");
+  
   fclose(file);
 
   return OK;
@@ -371,4 +389,87 @@ STATUS player_set_baseDmg(Player *player, int base_dmg){
  player->base_dmg = base_dmg;
 
  return OK;
+}
+
+char **player_create_gdesc()
+{
+  char **newgdesc = NULL;
+  int i, j;
+
+  newgdesc = (char **)malloc((PLAYER_GDESC_Y + 1) * sizeof(char *));
+  if (!newgdesc)
+  {
+    return NULL;
+  }
+  for (i = 0; i < (PLAYER_GDESC_Y + 1); i++)
+  {
+    newgdesc[i] = NULL;
+    newgdesc[i] = (char *)malloc((PLAYER_GDESC_X + 2) * sizeof(char));
+    if (!newgdesc[i])
+    {
+      return NULL;
+    }
+
+    for (j = 0; j < (PLAYER_GDESC_X + 2); j++)
+    {
+      newgdesc[i][j] = '\0';
+    }
+  }
+
+  return newgdesc;
+}
+
+STATUS player_destroy_gdesc(char **gdesc)
+{
+  int i;
+
+  /* Error control*/
+  if (!gdesc)
+  {
+    return ERROR;
+  }
+
+  if (gdesc)
+  {
+    for (i = PLAYER_GDESC_Y; i >= 0; i--)
+    {
+      if (gdesc[i])
+      {
+        free(gdesc[i]);
+        gdesc[i] = NULL;
+      }
+    }
+
+    free(gdesc);
+    gdesc = NULL;
+  }
+
+  return OK;
+}
+
+/**
+ * It gets the graphic description from a player.
+ */
+STATUS player_set_gdesc(Player *p, char **newgdesc)
+{
+  /* Error control*/
+  if (!p || !newgdesc)
+  {
+    return ERROR;
+  }
+
+  p->gdesc = newgdesc;
+
+  return OK;
+}
+
+char **player_get_gdesc(Player *p)
+{
+  /* Error control*/
+  if (!p)
+  {
+    return NULL;
+  }
+
+  return p->gdesc;
 }
