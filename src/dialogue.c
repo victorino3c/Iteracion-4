@@ -29,7 +29,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "You moved Up, you are now in the *",                                     /*!< DC_MOVE_U*/     
   "You moved Down, you are now in the *",                                   /*!< DC_MOVE_D*/
   "You look around and found that the *",                                   /*!< DC_INSPECT_space*/ 
-  "After a closer look, it * ",                                             /*!< DC_INSPECT_obj*/ 
+  "After a closer look, it * ",                                                /*!< DC_INSPECT_obj*/ 
   "Save completed successfully",                                            /*!< DC_SAVE*/
   "Loading game... Successful",                                             /*!< DC_MLOAD*/
   "You slept for a while, you should check the time ",                      /*!< DC_USE_BED*/
@@ -42,7 +42,15 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "Looks like the three candles activated a mechanism, a huge shelf slides to the side, revealing the opening to a Bedroom",                                                            /*!< DC_PUZZLE*/
   "You opened a door ",                                                     /*!< DC_OPEN*/
   "How dare you attack your creator? Have your punishment, little human",    /*!< DC_HIM*/
-  "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath" /*!< DC_BOSS*/ 
+  "So here you are, seeking a final battle. Pathetic that you believe his promises, HE will abandon you, once again, like every other time. If not His, you will suffer the Dusk wrath", /*!< DC_BOSS*/ 
+  "Your Sword broke",
+  "You turned * on ",
+  "You turned * off ",
+  "After being knocked out, you found yourself in a Cell, a hungry cellmate is asking you for anything he could get, although you could attack him, you'd rather spare him, not evil apparently ",
+  "Well here I am son, congrats for destroying the last remain of evil in this land, here, I'll end your pain - HE said while unraveling a sword and beheading you - Peace, at last  ",
+  "You were slained by an enemy, you ask for a miracle so you can finish your quest, HE will bring you back next time ",
+  "As soon as you took the Sun_Sword, the Moon_Armor dissapeared, you should inspect it, you feel a lot more powerful yielding it ",
+  "As soon as you took the Moon_Armor, the  Sun_Sword dissapeared, you should inspect it, you feel a lot stronger wearing it "
 };
 
 char matrix_event[EVENT_SIZE][WORD_SIZE] =
@@ -55,10 +63,32 @@ char matrix_event[EVENT_SIZE][WORD_SIZE] =
   "You got lost and got back where you started"                             /*!< DE_SPAWN*/
 };
 
+char matrix_error[ERROR_SIZE][WORD_SIZE] =
+{ " ",                                                                      /*!< E_ERROR*/
+  "Error exiting game...",                                                        /*!< E_EXIT*/   
+  "You can't take *",                                                           /*!< E_TAKE*/      
+  "You can't drop *",                                                          /*!< E_DROP*/      
+  "You can't attack now . ",                                            /*!< E_ATTACK */ 
+  "You can't move North, you remain in the *",                                  /*!< E_MOVE_N*/  
+  "You can't move East, you remain in the *",                                   /*!< E_MOVE_E*/   
+  "You can't move South, you remain in the *",                                  /*!< E_MOVE_S*/  
+  "You can't move West, you remain in the *",                                   /*!< E_MOVE_W*/ 
+  "You can't move Up, you remain in the *",                                     /*!< E_MOVE_U*/     
+  "You can't move Down, you remain in the *",                                   /*!< E_MOVE_D*/
+  "You look around and found that the *",                                   /*!< E_INSPECT*/ 
+  "Couldn't save the game",                                            /*!< E_SAVE*/
+  "Loading game... ERROR",                                             /*!< E_MLOAD*/
+  "You cant use this now ",                                           /*!< E_USE*/
+  "You couldn't open it, wrong key? maybe wrong door? ",                    /*!< E_OPEN*/
+  "You couldn't turn * on ",                                             /*!< E_TON*/
+  "You couldn't turn * off "                                             /*!< E_TOFF*/
+};
+
 struct _Dialogue
 {
     char *command;      /*!< Command´s dialogue*/
     char *event;        /*!< Event´s dialogue*/
+    char *error;         /*!< Error´s dialogue*/
 };
 
 /**
@@ -104,6 +134,7 @@ Dialogue *dialogue_create()
 
     new_dialogue->command = matrix_command[DC_ERROR];
     new_dialogue->event = matrix_event[DE_NOTHING];
+    new_dialogue->error = matrix_error[E_ERROR];
     
     return new_dialogue;
 
@@ -132,6 +163,7 @@ STATUS dialogue_reset(Dialogue *dialogue){
 
     dialogue->command = matrix_command[DC_ERROR];
     dialogue->event = matrix_event[DE_NOTHING];
+    dialogue->error = matrix_event[E_ERROR];
 
     return OK;
 }
@@ -174,11 +206,6 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
          dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
      }
 
-     else if (condition == DC_MOVE_N || condition == DC_MOVE_E || condition == DC_MOVE_S || condition == DC_MOVE_W){
-        
-         dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
-     }
-
      else if (condition == DC_ATTACK_HIT || condition == DC_ATTACK_MISSED ){
         
          dialogue->command = strmod(matrix_command[condition], enemy_get_name(enemy));
@@ -192,9 +219,6 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
          dialogue->command = strmod(matrix_command[condition], space_get_long_description(current_loc));
      }
      
-     else if (condition == DC_OPEN){
-         dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
-     }
      else
      {
         dialogue->command = matrix_command[condition];      
@@ -232,6 +256,46 @@ STATUS dialogue_set_event(Dialogue *dialogue, DE_Enum condition)
     }
 
     dialogue->event = matrix_event[condition];
+
+    return OK;
+}
+
+char *dialogue_get_error(Dialogue *dialogue)
+{
+    /*Error control */
+    if(dialogue == NULL){
+        return NULL;
+    }
+
+    return dialogue->command;
+}
+
+STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_loc, Object *obj, Enemy *enemy)
+{
+    /*Error control*/
+    if(dialogue == NULL){
+        return ERROR;
+    }
+
+     if (condition == E_TAKE || condition == E_DROP){
+        
+            dialogue->error = strmod(matrix_error[condition], obj_get_name(obj) );
+        }
+     else if (condition == E_MOVE_N || condition == E_MOVE_E || condition == E_MOVE_S || condition == E_MOVE_W || condition == E_MOVE_U || condition == E_MOVE_D){
+        
+         dialogue->error = strmod(matrix_error[condition], space_get_name(current_loc));
+     }
+
+     else if (condition == E_INSPECT){
+         dialogue->error = strmod(matrix_error[condition], obj_get_description(obj));
+     }
+     
+     else
+     {
+        dialogue->error = matrix_error[condition];      
+     }
+   
+   
 
     return OK;
 }
