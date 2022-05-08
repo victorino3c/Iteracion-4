@@ -194,8 +194,6 @@ dialogue_test: $(O)dialogue_test.o $(O)dialogue.o
 vdialogue_test: dialogue_test
 	valgrind --leak-check=full ./dialogue_test
 
-all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test dialogue_test
-
 
 #GAME_RULES_TEST
 $(O)game_rules_test.o: $(T)game_rules_test.c $(T)game_rules_test.h $(T)test.h $(I)game_rules.h
