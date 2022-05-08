@@ -2313,3 +2313,47 @@ STATUS game_update_enemy(Game *game)
   return OK;
 }
 
+STATUS game_destroy_load(Game *game)
+{
+   int i = 0;
+
+   if (!game)
+   {
+     return ERROR;
+   } 
+
+  for (i = 0; i < MAX_OBJS && game->object[i] != NULL; i++)
+  {
+    obj_destroy(game->object[i]);
+    game->object[i] = NULL;
+  }
+
+  for (i = 0; i < MAX_PLAYERS && game->player[i] != NULL; i++)
+  {
+    player_destroy(game->player[i]);
+    game->player[i] = NULL;
+  }
+
+  for (i = 0; i < MAX_ENEMYS && game->enemy[i] != NULL; i++)
+  {
+    enemy_destroy(game->enemy[i]);
+    game->enemy[i] = NULL;
+  }
+
+  for (i = 0; i < MAX_SPACES && game->spaces[i] != NULL; i++)
+  {
+    space_destroy(game->spaces[i]);
+    game->spaces[i] = NULL;
+  }
+
+  for (i = 0; i < MAX_LINKS; i++)
+  {
+    link_destroy(game->links[i]);
+    game->links[i] = NULL;
+  }
+
+  dialogue_destroy(game->dialogue);
+
+  return OK;
+}
+
