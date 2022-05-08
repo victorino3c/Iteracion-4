@@ -242,5 +242,41 @@ int player_get_baseDmg(Player *player);
  * @return Ok if it succesfully completed the task or ERROR, if anything goes wrong.
  */
 STATUS player_set_baseDmg(Player *player, int base_dmg);
-#endif
 
+/**
+ * @brief It alloc memory for the player_gdesc
+ * @author Miguel Soto
+ *
+ * @return double pointer to char to the newgdesc or NULL if there has been an error
+ */
+char **player_create_gdesc();
+
+/**
+ * @brief It frees memory for the player_gdesc
+ * @author Miguel Soto
+ *
+ * @param gdesc pointer to the array of pointers to the gdesc field
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+STATUS player_destroy_gdesc(char **gdesc);
+
+/**
+ * @brief It sets the graphic description of a player
+ * @author Miguel Soto
+ *
+ * @param s a pointer to player
+ * @param newgdesc a double char array with the graphical description
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+STATUS player_set_gdesc(Player *s, char **newgdesc);
+
+/**
+ * @brief It gets the graphic description from a player
+ * @author Miguel Soto
+ *
+ * @param s a pointer to player
+ * @return a double char array with the graphical description, or NULL if there was some error.
+ */
+char **player_get_gdesc(Player *s);
+
+#endif
