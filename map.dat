@@ -41,7 +41,7 @@
 #o:382|Treasure_key|is An old looking key|17|1|-1|519|0|0|1|0|1|
 #o:383|Moon_Armor|gives +10 permanent health, also recovers 10 health |16|1|-1|-1|0|0|0|0|-1|
 #o:384|Sun_Sword|gives +1 permanent attack, deals you 1 damage per attack, enhances all healing items|16|1|-1|-1|0|0|0|0|-1|
-#p:21|Player|11|10|30|0|1|
+#p:21|Player|11|10|30|0|1| oo |l()p| /\ |
 #e:41|Beggar|11|20|0|9|
 #e:42|Guard1|127|5|0|1|
 #e:43|Guard2|126|5|0|1|
