@@ -1118,7 +1118,7 @@ STATUS game_command_take(Game *game, char *arg)
   id_obj_taken = obj_get_id(obj_taken);
   
   /* Error control*/
-  if(object_get_movable(obj_taken)==TRUE && obj_is_visible(obj_taken, space_get_light_status(game_get_space(game, player_location)))){  
+  if(object_get_movable(obj_taken)==TRUE && obj_is_visible(obj_taken, space_get_light_status(game_get_space(game, player_location))) && id_obj_taken != 398){  
     /* Error control*/
     if (space_has_object(game_get_space(game, player_location), id_obj_taken) == TRUE && set_get_nids(inventory_get_objects(player_get_inventory(game->player[0]))) < inventory_get_maxObjs(player_get_inventory(game->player[0])))
     {
@@ -1179,6 +1179,13 @@ STATUS game_command_take(Game *game, char *arg)
       {
         dialogue_set_command(game->dialogue, DC_TAKE_S, NULL, NULL, NULL);
         player_set_baseDmg(game_get_player(game, 21), player_get_baseDmg(game_get_player(game, 21)) + 1);
+        return st;
+      }
+
+      if (id_obj_taken == 380)
+      {
+        dialogue_set_command(game->dialogue, DC_TAKE, NULL, o, NULL);
+        player_set_crit(game_get_player(game, 21), object_get_crit(obj_taken));
         return st;
       }
       
@@ -1318,6 +1325,7 @@ STATUS game_command_attack(Game *game, char *arg)
   Id id_Sword1 = obj_get_id(Sword1) ;
   Id id_Sword2 = obj_get_id(Sword2) ;
 
+  int hit_chance=5;
  
 
   srand(time(NULL));
@@ -1358,19 +1366,44 @@ STATUS game_command_attack(Game *game, char *arg)
   /* Changing the base dmg if it is a crit from the player*/
   if(rand_crit_player < player_crit){
     player_baseDmg = player_baseDmg*2;
-    dialogue_set_command(game->dialogue, DC_ATTACK_CRITICAL, NULL, NULL, NULL);
   }
   if(rand_crit_enemy < enemy_crit){
     enemy_baseDmg = enemy_baseDmg*2;
     dialogue_set_command(game->dialogue, DC_ATTACK_CRITICAL, NULL, NULL, NULL);
   }
 
+/*Basically if a player has either sword, hit chance is increased, each attack removes one durability, after 3 attacks sword must be destroyed*/
+if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
+  {
+     hit_chance= hit_chance-2;
+    object_set_durability(Sword1, (object_get_durability(Sword1)-1));
+    if(object_get_durability(Sword1)<=0){
+      inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword1);
+      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
+    }
+  }
+  else if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
+  {
+    hit_chance= hit_chance-2;
+    object_set_durability(Sword2, (object_get_durability(Sword2)-1));
+     if(object_get_durability(Sword1)<=0){
+      inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword2);
+      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
+      
+    }
+  }
+
   if(enemy_loc != 11){
   /*Player wins if rand_num es > 5, else, they lose a life as the enemy won that round*/
-    if (rand_num > 5)
+    if (rand_num > hit_chance)
     {
       enemy_set_health(enemy, (enemy_get_health(enemy) - player_baseDmg));
       dialogue_set_command(game->dialogue, DC_ATTACK_HIT, NULL, NULL, enemy);
+       if (enemy_get_health(enemy) == 0 && enemy_loc==123)
+      {
+       dialogue_set_command(game->dialogue, DC_END, NULL, NULL, NULL);
+        game_is_over(game);
+      }
     }
     else
     {
@@ -1381,6 +1414,7 @@ STATUS game_command_attack(Game *game, char *arg)
        dialogue_set_command(game->dialogue, DC_GOVER, NULL, NULL, NULL);
         game_is_over(game);
       }
+      
     }
 
   }
@@ -1388,30 +1422,16 @@ STATUS game_command_attack(Game *game, char *arg)
     player_set_health(game->player[MAX_PLAYERS - 1], (player_get_health(game->player[MAX_PLAYERS - 1]) - enemy_baseDmg));
     dialogue_set_command(game->dialogue, DC_HIM, NULL, NULL, NULL);
     enemy_set_name(enemy, "HIM");
-    enemy_set_location(enemy, -1);
+    if (player_get_health(game->player[MAX_PLAYERS - 1]) == 0)
+      {
+       dialogue_set_command(game->dialogue, DC_GOVER, NULL, NULL, NULL);
+        game_is_over(game);
+      }
   }
 
 
 
-  if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
-  {
-    object_set_durability(Sword1, (object_get_durability(Sword1)-1));
-    if(object_get_durability(Sword1)==0){
-      inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword1);
-      obj_set_location(Sword1, -1);
-      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
-    }
-  }
-
-  else if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
-  {
-    object_set_durability(Sword2, (object_get_durability(Sword2)-1));
-     if(object_get_durability(Sword1)==0){
-     inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword2);
-      obj_set_location(Sword2, -1);
-      dialogue_set_command(game->dialogue, DC_SBROKE, NULL, NULL, NULL);
-    }
-  }
+  
 
   return OK;
 }
@@ -1594,7 +1614,7 @@ STATUS game_command_inspect(Game *game, char *arg)
     else{
       dialogue_set_error(game->dialogue, E_INSPECT, NULL, NULL, NULL);
     
-      game->inspection = "El lugar está muy oscuro, no puedes ver nada";
+      game->inspection = "El lugar esta muy oscuro, no puedes ver nada";
     }
     
     return st;
@@ -2480,7 +2500,7 @@ Enemy *game_get_enemy_in_space(Game *game, Id space)
   {
     return NULL;
   }
-  
+
   for (i = 0; i < MAX_ENEMYS && game->enemy[i]; i++)
   {
     if (enemy_get_location(game->enemy[i]) == space)
@@ -2488,6 +2508,6 @@ Enemy *game_get_enemy_in_space(Game *game, Id space)
       return game->enemy[i];
     }
   }
-  
+
   return NULL;
 }
