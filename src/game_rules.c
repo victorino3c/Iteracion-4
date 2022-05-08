@@ -26,19 +26,19 @@ R_Event game_rules_get_event(){
 
     magic = random();
 
-    if(magic > EVENT_FIVE){
+    if(magic >= EVENT_FIVE){
         return SPAWN;
     }
-    if(magic > EVENT_FOUR){
+    if(magic >= EVENT_FOUR){
         return DAYNIGHT;
     }
-    if(magic > EVENT_THREE){
+    if(magic >= EVENT_THREE){
         return SLIME;
     }
-    if(magic > EVENT_TWO){
+    if(magic >= EVENT_TWO){
         return TRAP;
     }
-    if(magic > EVENT_ONE){
+    if(magic >= EVENT_ONE){
         return MOVE_OBJ;
     }
 
