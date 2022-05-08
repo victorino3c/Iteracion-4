@@ -102,9 +102,19 @@ char *strmod(char *str, const char *arg);
 
 
 char *strmod(char *str, const char *arg) {
-    char *res = (char *) malloc(strlen(str)+strlen(arg)+1);
+    char *res;
     int k = 0;
     int i;
+
+    if(!str){
+        return NULL;
+    }
+
+    if(arg == NULL){
+        arg = " ";
+    }
+
+    res = (char *) malloc(strlen(str)+strlen(arg)+1);
     for (i=0; i<strlen(str); i++) {
         if (str[i] != '*') 
             res[k++] = str[i];
@@ -132,9 +142,9 @@ Dialogue *dialogue_create()
         return NULL;
     }
 
-    new_dialogue->command = matrix_command[DC_ERROR];
-    new_dialogue->event = matrix_event[DE_NOTHING];
-    new_dialogue->error = matrix_error[E_ERROR];
+    new_dialogue->command = NULL;
+    new_dialogue->event = NULL;
+    new_dialogue->error = NULL;
     
     return new_dialogue;
 
@@ -148,7 +158,15 @@ STATUS dialogue_destroy(Dialogue *d)
     if (!d)
     return ERROR;
 
+    if(d->command != NULL){
+        free(d->command);
+    }
+    if(d->error != NULL){
+        free(d->error);
+    }
+
     free(d);
+
     return OK;
 }
 
@@ -161,9 +179,16 @@ STATUS dialogue_reset(Dialogue *dialogue){
         return ERROR;
     }
 
-    dialogue->command = matrix_command[DC_ERROR];
+    if(dialogue->command != NULL){
+        free(dialogue->command);
+    }
+    if(dialogue->error != NULL){
+        free(dialogue->error);
+    }
+
+    dialogue->command = strmod(matrix_command[DC_ERROR], " ");
     dialogue->event = matrix_event[DE_NOTHING];
-    dialogue->error = matrix_event[E_ERROR];
+    dialogue->error = strmod(matrix_error[E_ERROR], " ");
 
     return OK;
 }
@@ -192,7 +217,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
      if (condition == DC_TAKE || condition == DC_DROP){
         if(obj == NULL)
         {
-            dialogue->command = matrix_command[DC_PUZZLE];   
+            dialogue->command = strmod(matrix_command[DC_PUZZLE], " ");   
         }
         else
         {
@@ -221,10 +246,12 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
      
      else
      {
-        dialogue->command = matrix_command[condition];      
+        dialogue->command = strmod(matrix_command[condition], " ");      
      }
    
-   
+    if(dialogue->command == NULL){
+        return ERROR;
+    }
 
     return OK;
 }
@@ -292,10 +319,12 @@ STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_l
      
      else
      {
-        dialogue->error = matrix_error[condition];      
+        dialogue->error = strmod(matrix_error[condition], " ");      
      }
    
-   
+    if(dialogue->error == NULL){
+        return ERROR;
+    }
 
     return OK;
 }
