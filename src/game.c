@@ -1157,6 +1157,17 @@ STATUS game_command_take(Game *game, char *arg)
       {
         st = ERROR;
       }
+
+      if (id_obj_taken == 383)
+      {
+        player_set_max_health(game_get_player(game, 21), player_get_max_health(game_get_player(game, 21)) + 10);
+        player_set_health(game_get_player(game, 21), player_get_health(game_get_player(game, 21)) + 10);
+      }
+
+      if (id_obj_taken == 384)
+      {
+        player_set_baseDmg(game_get_player(game, 21), player_get_baseDmg(game_get_player(game, 21)) + 1);
+      }
       
       dialogue_set_command(game->dialogue, DC_TAKE, NULL, o, NULL);
       return st;
