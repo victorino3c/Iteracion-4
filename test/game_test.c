@@ -15,7 +15,7 @@
 #include "game_test.h"
 #include "test.h"
 
-#define MAX_TESTS 36 /*!< It defines the maximun tests in this file */
+#define MAX_TESTS 46 /*!< It defines the maximun tests in this file */
 
 /**
  * @brief Main function for inventory unit tests.
@@ -138,6 +138,31 @@ int main(int argc, char **argv)
   i++;
 
   if (all || test == i) test1_game_get_inspection();
+  i++;
+
+  if (all || test == i) test1_game_get_time();
+  i++;
+  if (all || test == i) test2_game_get_time();
+  i++;
+
+	if (all || test == i) test1_game_set_time();
+  i++;
+  if (all || test == i) test2_game_set_time();
+  i++;
+
+	if (all || test == i) test1_game_get_last_event();
+  i++;
+  if (all || test == i) test2_game_get_last_event();
+  i++;
+
+	if (all || test == i) test1_game_get_dialogue();
+  i++;
+  if (all || test == i) test2_game_get_dialogue();
+  i++;
+
+	if (all || test == i) test1_game_get_enemyWithPlayer();
+  i++;
+  if (all || test == i) test2_game_get_enemyWithPlayer();
   i++;
 
   PRINT_PASSED_PERCENTAGE;
@@ -524,4 +549,91 @@ void test1_game_get_inspection(){
     game_create(g);
     PRINT_TEST_RESULT(game_get_inspection(g) != NULL);
     game_destroy(g);
+}
+
+/*game_get_time*/
+void test1_game_get_time(){
+	Game *g = NULL;
+	g = game_alloc2();
+	game_create(g);
+
+  PRINT_TEST_RESULT(game_get_time(g) == DAY);
+  game_destroy(g);
+}
+
+void test2_game_get_time(){
+	Game *g = NULL;
+	PRINT_TEST_RESULT(game_get_time(g) == -1);
+}
+
+/*game_set_time*/
+void test1_game_set_time(){
+	Game *g = NULL;
+	g = game_alloc2();
+	game_create(g);
+
+  PRINT_TEST_RESULT(game_set_time(g, NIGHT) == OK);
+  game_destroy(g);
+}
+
+void test2_game_set_time(){
+	Game *g = NULL;
+  PRINT_TEST_RESULT(game_set_time(g, NIGHT) == ERROR);	
+}
+
+/*game_get_last_event*/
+void test1_game_get_last_event(){
+	Game *g = NULL;
+	g = game_alloc2();
+	game_create(g);
+
+  PRINT_TEST_RESULT(game_get_last_event(g) == NOTHING);
+  game_destroy(g);	
+}
+
+void test2_game_get_last_event(){
+	Game *g = NULL;
+
+  PRINT_TEST_RESULT(game_get_last_event(g) == -1);	
+}
+
+/*game_get_dialogue*/
+void test1_game_get_dialogue(){
+	Game *g = NULL;
+	g = game_alloc2();
+	game_create(g);
+
+  PRINT_TEST_RESULT(game_get_dialogue(g) != NULL);
+  game_destroy(g);	
+}
+
+void test2_game_get_dialogue(){
+	Game *g = NULL;
+  PRINT_TEST_RESULT(game_get_dialogue(g) == NULL);	
+}
+
+/*game_get_enemyWithPlayer*/
+void test1_game_get_enemyWithPlayer(){
+	Game *g = NULL;
+	Player *p;
+	Enemy *e;
+	g = game_alloc2();
+	game_create(g);
+
+	p = player_create(1);
+	player_set_location(p, 20);
+
+	e = enemy_create(1);
+	enemy_set_location(e, 20);
+
+	game_add_enemy(g, e);
+	game_add_player(g, p);
+
+	PRINT_TEST_RESULT(game_get_enemyWithPlayer(g, 20) == e);
+	game_destroy(g);	
+}
+
+void test2_game_get_enemyWithPlayer(){
+	Game *g = NULL;
+	PRINT_TEST_RESULT(game_get_enemyWithPlayer(g, 20) == NULL);
 }
