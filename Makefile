@@ -188,7 +188,7 @@ vgame_test: game_test
 $(O)dialogue_test.o: $(T)dialogue_test.c $(T)dialogue_test.h $(T)test.h $(I)dialogue.h
 	$(CC) -o $@ $(FLAGS) $<
 
-dialogue_test: $(O)dialogue_test.o $(O)dialogue.o
+dialogue_test: $(O)dialogue_test.o $(O)dialogue.o $(O)space.o $(O)enemy.o $(O)object.o $(O)set.o $(O)link.o
 	$(CC) -o $@ -Wall $^ $(LIBRARY)
 
 vdialogue_test: dialogue_test
@@ -206,7 +206,7 @@ vgame_rules_test: game_rules_test
 	valgrind --leak-check=full ./game_rules_test
 
 
-all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test dialogue_test game_rules_test
+all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test game_rules_test
 
 #CLEAN
 oclean:
