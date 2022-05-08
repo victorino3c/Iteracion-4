@@ -462,4 +462,15 @@ STATUS game_update_enemy(Game *game);
  * @return ERROR if something went wrong 
  */
 STATUS game_destroy_load(Game *game);
+
+
+/**
+ * @brief Gets the enemy that is in space location
+ * 
+ * @param game pointer to game
+ * @param space space id
+ * @return pointer to enemy in that sapce. NULL in case of error.
+ */
+Enemy *game_get_enemy_in_space(Game *game, Id space);
+
 #endif
