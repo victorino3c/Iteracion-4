@@ -1998,10 +1998,24 @@ STATUS game_command_use(Game *game, char *arg)
 STATUS game_event_move(Game *game){
   
   int rand_num;
-  Object *apple = game_get_object_byName(game, "Apple");
-  Object *elixir = game_get_object_byName(game, "Elixir");
+  Object *apple = game_get_object_byName(game, "_Apple1");
+  Object *elixir = game_get_object_byName(game, "_Elixir1");
   Id apple_loc = game_get_object_location(game, obj_get_id(apple));
   Id elixir_loc = game_get_object_location(game, obj_get_id(elixir));
+
+  if(apple_loc == -1){
+    apple = game_get_object_byName(game, "_Apple2");
+    apple_loc = game_get_object_location(game, obj_get_id(apple));
+    if(apple_loc == -1){
+      apple = game_get_object_byName(game, "Apple3");
+      apple_loc = game_get_object_location(game, obj_get_id(apple));      
+    }
+  }
+
+  if(elixir_loc == -1){
+    elixir = game_get_object_byName(game, "_Elixir2");
+    elixir_loc = game_get_object_location(game, obj_get_id(elixir));
+  }
 
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
@@ -2011,7 +2025,6 @@ STATUS game_event_move(Game *game){
 
   /*Generates a random number between 0-1
   This is for moving Elixir or Apple*/
-  srand(time(NULL));
   rand_num = rand() % 2;
 
   /*If elixir is not in the map, cant be moved*/
@@ -2021,13 +2034,17 @@ STATUS game_event_move(Game *game){
   }
 
   if(apple_loc != -1 || rand_num == 0){
-    game_set_object_location(game, obj_get_id(apple), game_get_player_location(game, 21));
+    if (obj_set_location(apple, player_get_location(game->player[0])) == ERROR){
+      return ERROR;
+    }
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
 
   if(elixir_loc != -1 || rand_num == 1){
-    game_set_object_location(game, obj_get_id(elixir), game_get_player_location(game, 21));
+    if (obj_set_location(elixir, player_get_location(game->player[0])) == ERROR){
+      return ERROR;
+    }
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
