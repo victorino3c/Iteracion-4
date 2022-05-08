@@ -360,4 +360,33 @@ void test1_space_get_light_status();
  */
 void test2_space_get_light_status();
 
+
+
+/**
+ * @test Test function setting floor status
+ * @pre pointer to space != NULL
+ * @post Output==OK
+ */
+void test1_space_set_floor();
+/**
+ * @test Test function for setting floor status
+ * @pre pointer to space = NULL
+ * @post Output==ERROR
+ */
+void test2_space_set_floor();
+
+
+/**
+ * @test Test function for getting floor status
+ * @pre pointer to space != NULL
+ * @post Output==DUNGEON
+ */
+void test1_space_get_floor();
+/**
+ * @test Test function for getting floor status
+ * @pre pointer to space = NULL
+ * @post Output==UNKNOWN_FLOOR
+ */
+void test2_space_get_floor();
+
 #endif
