@@ -322,7 +322,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         strncat(space_name, blank20, 15 - strlen(space_name));
         space_name2 = (char *)space_get_name(game_get_space(game, id_right));
         strncat(space_name2, blank20, 15 - strlen(space_name2));
-        if (id_right == 16)
+        if (id_right == 16 && game_get_time(game) == DAY)
         {
           strcpy(space_name2, "¬¬¬¬¬¬¬ ");
         }
@@ -339,7 +339,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         gdesc_right = space_get_gdesc(game_get_space(game, id_right));
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
-          if (id_right == 16)
+          if (id_right == 16 && game_get_time(game) == DAY)
           {
             strcpy(gdesc_right[i], "¬¬¬¬ ");
           } 
@@ -611,37 +611,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       sprintf(str, "  |                 |");
       screen_area_puts(ge->map, str);
     }
-
-    /* Space to the south of the current space CASE 14
-    if (id_down != NO_ID && id_act == 14)
-    {
-      for(i = 0; i < set_get_nids(object_set); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
-        {
-          obj = ' ';
-        } else {
-          obj = '*';              
-          break;
-        }
-      }
-
-      sprintf(str, "                                  v");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                        +-----------------+");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                        |                 |");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                        |              %2d |", (int)id_down);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                        |        %c        |", obj);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                        |                 |");
-      screen_area_puts(ge->map, str);
-    }
-    */
   }
   
   /* Paint in the description area */
