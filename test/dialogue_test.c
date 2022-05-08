@@ -134,7 +134,7 @@ void test1_dialogue_get_command()
 	int condition = 4;
   d = dialogue_create();
 
-	dialogue_set_command(d, condition);
+	dialogue_set_command(d, condition, NULL, NULL, NULL);
   PRINT_TEST_RESULT(dialogue_get_command(d) != NULL);
   dialogue_destroy(d);
 }
@@ -170,7 +170,7 @@ void test1_dialogue_set_command()
 	int condition = 4;
   d = dialogue_create();
 
-  PRINT_TEST_RESULT(dialogue_set_command(d, condition) == OK);
+  PRINT_TEST_RESULT(dialogue_set_command(d, condition, NULL, NULL, NULL) == OK);
   dialogue_destroy(d);
 }
 
@@ -178,7 +178,7 @@ void test2_dialogue_set_command()
 {
 	Dialogue *d = NULL;
 	int condition = 4;
-	PRINT_TEST_RESULT(dialogue_set_command(d, condition)==ERROR);
+	PRINT_TEST_RESULT(dialogue_set_command(d, condition, NULL, NULL, NULL)==ERROR);
 }
 
 /*dialogue_set_event*/
