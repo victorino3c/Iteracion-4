@@ -878,7 +878,7 @@ Id game_get_connection(Game *game, Id act_spaceid, DIRECTION dir)
 (just a continuation of game_update)*/
 void game_get_new_event(Game *game){
 
-  R_Event new_event;
+  R_Event new_event = 0;
   STATUS st;
 
   new_event = game_rules_get_event();
