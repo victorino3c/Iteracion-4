@@ -694,7 +694,7 @@ STATUS space_print_save(char *filename, Space *space)
     fprintf(file, "|");
   }
 
-  fprintf(file, "%d|\n", space->floor); 
+  fprintf(file, "%d|%d|\n", space->floor, space->fire); 
 
   fclose(file);
 
