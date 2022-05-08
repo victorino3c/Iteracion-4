@@ -29,7 +29,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "You moved Up, you are now in the *",                                     /*!< DC_MOVE_U*/     
   "You moved Down, you are now in the *",                                   /*!< DC_MOVE_D*/
   "You look around and found that the *",                                   /*!< DC_INSPECT_space*/ 
-  "After a closer look, it",                                                /*!< DC_INSPECT_obj*/ 
+  "After a closer look, it * ",                                             /*!< DC_INSPECT_obj*/ 
   "Save completed successfully",                                            /*!< DC_SAVE*/
   "Loading game... Successful",                                             /*!< DC_MLOAD*/
   "You slept for a while, you should check the time ",                      /*!< DC_USE_BED*/
