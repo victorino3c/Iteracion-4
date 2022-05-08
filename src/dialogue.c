@@ -213,6 +213,10 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
     if(dialogue == NULL){
         return ERROR;
     }
+  
+    if(dialogue->command!=NULL){
+        free(dialogue->command);
+    }
 
      if (condition == DC_TAKE || condition == DC_DROP){
         if(obj == NULL)
@@ -302,6 +306,10 @@ STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_l
     /*Error control*/
     if(dialogue == NULL){
         return ERROR;
+    }
+  
+    if(dialogue->error!=NULL){
+        free(dialogue->error);
     }
 
      if (condition == E_TAKE || condition == E_DROP){
