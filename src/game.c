@@ -44,8 +44,7 @@ void game_get_new_event(Game *game);
 STATUS game_command_exit(Game *game, char *arg);
 STATUS game_command_take(Game *game, char *arg);
 STATUS game_command_drop(Game *game, char *arg);
-STATUS 
-(Game *game, char *arg);
+STATUS game_command_attack(Game *game, char *arg);
 STATUS game_command_move(Game *game, char *arg);
 STATUS game_command_movement(Game *game, DIRECTION dir);
 STATUS game_command_inspect(Game *game, char *arg);
@@ -1275,7 +1274,7 @@ STATUS game_command_drop(Game *game, char *arg)
       link_set_status(game_get_link(game, space_get_link(s, U)), OPEN_L);
     }
     /*Puzzle completed*/
-     else 
+    else 
     {
       link_set_status(game_get_link(game, 526), OPEN_L);
       dialogue_set_command(game->dialogue, DC_PUZZLE, NULL, NULL, NULL);
@@ -2062,20 +2061,19 @@ STATUS game_event_trap(Game *game){
 /**
  * @brief It executes SLIME event
  * 
- * A rat appear on the players location 
+ * An slime appear on the players location 
  * 
  * @param game pointer to game struct
  * @return OK if event happens, ERROR if not
  */
 STATUS game_event_slime(Game *game){
   
-  Enemy *slime = game_get_enemy_byName(game, "Rat1");
+   Enemy *slime = game_get_enemy_byName(game, "Rat1");
   Id slime_loc = enemy_get_location(slime);
-
-  if(slime == NULL){
+  
+    if(slime == NULL){
     slime = game_get_enemy_byName(game, "Rat2");
   }
-
   /*Events only Occurs at Night*/
   if(game->day_time == DAY){
     dialogue_set_event(game->dialogue, DE_NOTHING);
