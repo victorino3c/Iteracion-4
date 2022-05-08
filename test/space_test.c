@@ -133,7 +133,7 @@ int main(int argc, char **argv)
   i++;
   if (all || test == i) test2_space_get_id();
   i++;
-/*
+
   if (all || test == i) test1_space_set_gdesc();
   i++;
   if (all || test == i) test2_space_set_gdesc();
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
   i++;
   if (all || test == i) test2_space_get_gdesc();
   i++;
-*/
+
 
   if (all || test == i) test1_space_set_light_status();
   i++;
@@ -475,12 +475,12 @@ void test2_space_get_link_west()
 }
 
 /*  space_set_gdesc*/
-/*
 void test1_space_set_gdesc()
 {
   Space *s = NULL;
-  char *gdesc[TAM_GDESC_X] = {"123456789", "123456789", "123456789", "123456789", "123456789"};
+  char **gdesc;
   s = space_create(5);
+  gdesc = space_create_gdesc();
   PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == OK);
   space_destroy(s);
 }
@@ -498,22 +498,16 @@ void test3_space_set_gdesc()
   PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == ERROR);
   space_destroy(s);
 }
-*/
+
 /*  space_get_desc*/
-/*
 void test1_space_get_gdesc()
 {
   Space *s = NULL;
-  int res = 0, i = 0;
-  char *gdesc[TAM_GDESC_X] = {"123456789", "123456789", "123456789", "123456789", "123456789"};
+  char **gdesc;
   s = space_create(5);
-  space_set_gdesc(s, gdesc);
-  for (res = 0, i = 0; i < 5; i++)
-  {
-    res += strcmp(space_get_gdesc(s)[4], gdesc[i]);
-  }
+  gdesc = space_create_gdesc();
   
-  PRINT_TEST_RESULT(res == 0);
+  PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == OK);
   space_destroy(s);
 }
 void test2_space_get_gdesc()
@@ -521,7 +515,6 @@ void test2_space_get_gdesc()
   Space *s = NULL;  
   PRINT_TEST_RESULT(space_get_gdesc(s) == NULL);
 }
-*/
 
 /* space_set_light_status*/
 void test1_space_set_light_status()
