@@ -175,4 +175,60 @@ void test1_enemy_set_location();
  */
 void test2_enemy_set_location();
 
+/**
+ * @test Test getting enemy health
+ * @pre having set the enemy health to 3
+ * @post Output == 3
+ */
+void test1_enemy_get_crit();
+
+/**
+ * @test Test setting enemy health
+ * @pre pointer to enemy = NULL
+ * @post Output==NULL
+ */
+void test2_enemy_get_crit();
+
+/**
+ * @test Test setting enemy health
+ * @pre having set the enemy health to 3
+ * @post Output == OK
+ */
+void test1_enemy_set_crit();
+
+/**
+ * @test Test getting enemy health
+ * @pre having set the enemy health to -1
+ * @post Output==ERROR
+ */
+void test2_enemy_set_crit();
+
+/**
+ * @test Test getting enemy health
+ * @pre having set the enemy health to 3
+ * @post Output == 3
+ */
+void test1_enemy_get_baseDmg();
+
+/**
+ * @test Test setting enemy health
+ * @pre pointer to enemy = NULL
+ * @post Output==NULL
+ */
+void test2_enemy_get_baseDmg();
+
+/**
+ * @test Test setting enemy health
+ * @pre having set the enemy health to 3
+ * @post Output == OK
+ */
+void test1_enemy_set_baseDmg();
+
+/**
+ * @test Test getting enemy health
+ * @pre having set the enemy health to -1
+ * @post Output==ERROR
+ */
+void test2_enemy_set_baseDmg();
+
 #endif
