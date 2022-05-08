@@ -126,6 +126,7 @@ STATUS game_load_spaces(Game *game, char *filename)
   Id id = NO_ID;
   Floor floor;
   Light ls;
+  BOOL fire;
   Space *space = NULL;
   STATUS status = OK;
   int i, j;
@@ -174,6 +175,17 @@ STATUS game_load_spaces(Game *game, char *filename)
       toks = strtok(NULL, "|");
       floor = atoi(toks);
 
+      toks = strtok(NULL, "|");
+      if (atoi(toks) == 1)
+      {
+        fire = TRUE;
+      }
+      else
+      {
+        fire = FALSE;
+      }
+      
+
 #ifdef DEBUG
       // printf("Leido: %ld|%s|%s\n", id, name, description);
 #endif
@@ -186,6 +198,7 @@ STATUS game_load_spaces(Game *game, char *filename)
         space_set_gdesc(space, gdesc);
         space_set_light_status(space, ls);
         space_set_floor(space, floor);
+        space_set_fire(space, fire);
         game_add_space(game, space);
       }
     }
