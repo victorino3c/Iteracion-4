@@ -21,7 +21,7 @@ char matrix_command[COMMAND_SIZE][WORD_SIZE] =
   "You dropped *",                                                          /*!< DC_DROP*/      
   "You missed and * hit you . ",                                            /*!< DC_ATTACK_MISSED*/ 
   "You hit * . ",                                                           /*!< DC_ATTACK_HIT*/    
-  "It was a critical hit!",                                                 /*!< DC_ATTACK_CRITICAL*/
+  "It was a critical hit from *!",                                                 /*!< DC_ATTACK_CRITICAL*/
   "You moved North, you are now in the *",                                  /*!< DC_MOVE_N*/  
   "You moved East, you are now in the *",                                   /*!< DC_MOVE_E*/   
   "You moved South, you are now in the *",                                  /*!< DC_MOVE_S*/  
@@ -66,8 +66,8 @@ char matrix_event[EVENT_SIZE][WORD_SIZE] =
 char matrix_error[ERROR_SIZE][WORD_SIZE] =
 { " ",                                                                      /*!< E_ERROR*/
   "Error exiting game...",                                                        /*!< E_EXIT*/   
-  "You can't take *",                                                           /*!< E_TAKE*/      
-  "You can't drop *",                                                          /*!< E_DROP*/      
+  "You can't take that * (if it is a key, it might be unreachable)",                                                           /*!< E_TAKE*/      
+  "You can't drop that * ",                                                          /*!< E_DROP*/      
   "You can't attack now . ",                                            /*!< E_ATTACK */ 
   "You can't move North, you remain in the *",                                  /*!< E_MOVE_N*/  
   "You can't move East, you remain in the *",                                   /*!< E_MOVE_E*/   
@@ -218,7 +218,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
         free(dialogue->command);
     }
 
-     if (condition == DC_TAKE || condition == DC_DROP){
+     if (condition == DC_TAKE || condition == DC_DROP || condition == DC_TON || condition == DC_TOFF){
         if(obj == NULL)
         {
             dialogue->command = strmod(matrix_command[DC_PUZZLE], " ");   
@@ -235,7 +235,7 @@ STATUS dialogue_set_command(Dialogue *dialogue, DC_Enum condition, Space *curren
          dialogue->command = strmod(matrix_command[condition], space_get_name(current_loc));
      }
 
-     else if (condition == DC_ATTACK_HIT || condition == DC_ATTACK_MISSED ){
+     else if (condition == DC_ATTACK_HIT || condition == DC_ATTACK_MISSED || condition == DC_ATTACK_CRITICAL ){
         
          dialogue->command = strmod(matrix_command[condition], enemy_get_name(enemy));
      }
@@ -312,7 +312,7 @@ STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_l
         free(dialogue->error);
     }
 
-     if (condition == E_TAKE || condition == E_DROP){
+     if (condition == E_TAKE || condition == E_DROP || condition == E_TON || condition == E_TOFF){
         
             dialogue->error = strmod(matrix_error[condition], obj_get_name(obj) );
         }
