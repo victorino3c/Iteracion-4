@@ -663,6 +663,20 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
     sprintf(str, "   ") ;
     screen_area_puts(ge->descript, str);
+
+    sprintf(str, "PLAYER:");
+    screen_area_puts(ge->descript, str);
+    gdesc = player_get_gdesc(game_get_player(game, 21));
+    sprintf(str, "  +--------+");
+    screen_area_puts(ge->descript, str);
+    for (i = 0; i < PLAYER_GDESC_Y; i++)
+    {
+      sprintf(str, "  |  %s  |", gdesc[i]);
+      screen_area_puts(ge->descript, str);
+    }
+    sprintf(str, "  +--------+");
+    screen_area_puts(ge->descript, str);
+
     sprintf(str, "  Player location:%d", (int)player_loc);
     screen_area_puts(ge->descript, str);
   
