@@ -120,6 +120,7 @@ Space *space_create(Id id)
   newSpace->gdesc = NULL;
   newSpace->ls = UNKNOWN_LIGHT;
   newSpace->floor = UNKNOWN_FLOOR;
+  newSpace->fire = FALSE;
 
   return newSpace;
 }
