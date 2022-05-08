@@ -133,8 +133,256 @@ void test1_obj_get_location();
  */
 void test2_obj_get_location();
 
+/**
+ * @test Test function for obj_movable setting
+ * @pre Boolean (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_movable();
 
+/**
+ * @test Test function for object_movable setting
+ * @pre Boolean (pointer to object == NULL)
+ * @post Output==ERROR
+ */
+void test2_obj_set_movable();
 
+/**
+ * @test Test function for obj_dependency setting
+ * @pre Id from object (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_dependency();
 
+/**
+ * @test Test function for object_dependency setting
+ * @pre Id from object (pointer to object == NULL)
+ * @post Output==ERROR
+ */ 
+void test2_obj_set_dependency();
+
+/**
+ * @test Test function for obj_open setting
+ * @pre Id from object (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_open();
+
+/**
+ * @test Test function for object_open setting
+ * @pre Id from object (pointer to object == NULL)
+ * @post Output==ERROR
+ */ 
+void test2_obj_set_open();
+
+/**
+ * @test Test function for obj_illuminate setting
+ * @pre Boolean (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_illuminate();
+
+/**
+ * @test Test function for object_illuminate setting
+ * @pre Boolean (pointer to object == NULL)
+ * @post Output==ERROR
+ */ 
+void test2_obj_set_illuminate();
+
+/**
+ * @test Test function for obj_turnedon setting
+ * @pre Boolean (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_turnedon();
+
+ /**
+ * @test Test function for object_turnedon setting
+ * @pre Boolean (pointer to object == NULL)
+ * @post Output==ERROR
+ */  
+void test2_obj_set_turnedon();
+
+/**
+ * @test Test function for getting obj_movable
+ * @pre pointer to Object != NULL
+ * @post Output==TRUE
+ */
+void test1_obj_get_movable();
+
+/**
+ * @test Test function for getting obj_location
+ * @pre pointer to Object = NULL
+ * @post Output==FALSE
+ */
+void test2_obj_get_movable();
+
+/**
+ * @test Test function for getting obj_dependency
+ * @pre pointer to Object != NULL
+ * @post Output==Id_dependency
+ */
+void test1_obj_get_dependency();
+
+ /**
+ * @test Test function for getting obj_dependency
+ * @pre pointer to Object = NULL
+ * @post Output==NO_ID
+ */ 
+void test2_obj_get_dependency();
+
+/**
+ * @test Test function for getting obj_open
+ * @pre pointer to Object != NULL 
+ * @post Output == id_dependency
+ */
+void test1_obj_get_open();
+
+ /**
+ * @test Test function for getting obj_open
+ * @pre pointer to Object = NULL
+ * @post Output==NO_ID
+ */ 
+void test2_obj_get_open();
+
+/**
+ * @test Test function for getting obj_illuminate
+ * @pre pointer to Object != NULL
+ * @post Output==TRUE
+ */
+void test1_obj_get_illuminate();
+
+ /**
+ * @test Test function for getting obj_illuminate
+ * @pre pointer to Object = NULL
+ * @post Output==FALSE
+ */ 
+void test2_obj_get_illuminate();
+
+/**
+ * @test Test function for getting obj_turnedon
+ * @pre pointer to Object != NULL
+ * @post Output==TRUE
+ */
+void test1_obj_get_turnedon();
+
+ /**
+ * @test Test function for getting obj_turnedon
+ * @pre pointer to Object = NULL
+ * @post Output==FALSE
+ */ 
+void test2_obj_get_turnedon();
+
+/**
+ * @test Test function for obj_light_visible setting
+ * @pre Boolean (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_light_visible();
+
+/**
+ * @test Test function for object_light_visible setting
+ * @pre Boolean (pointer to object != NULL)
+ * @post Output==ERROR
+ */  
+void test2_obj_set_light_visible();
+
+/**
+ * @test Test function for getting obj_light_visible
+ * @pre pointer to Object != NULL (LIGHT)
+ * @post Output==BRIGHT
+ */
+void test1_obj_get_light_visible();
+
+/**
+ * @test Test function for getting obj_location
+ * @pre pointer to Object = NULL
+ * @post Output==UNKNOW_LIGHT
+ */  
+void test2_obj_get_light_visible();
+
+/**
+ * @test Test function for knowing obj_visible 
+ * @pre pointer to Object != NULL
+ * @post Output==TRUE
+ */
+void test1_obj_is_visible();
+
+/**
+ * @test Test function for getting obj_location
+ * @pre pointer to Object = NULL
+ * @post Output==FALSE
+ */   
+void test2_obj_is_visible(); 
+
+/**
+ * @test Test function for getting obj_type
+ * @pre pointer to Object != NULL (id for APPLE)
+ * @post Output==APPLE
+ */
+void test1_obj_get_type();
+
+/**
+ * @test Test function for getting obj_location
+ * @pre pointer to Object = NULL
+ * @post Output==UNKNOW_TYPE
+ */ 
+void test2_obj_get_type();
+
+/**
+ * @test Test function for obj_crit setting
+ * @pre int (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_crit();
+  
+/**
+ * @test Test function for object_crit setting
+ * @pre int (pointer to object = NULL)
+ * @post Output==ERROR
+ */  
+void test2_obj_set_crit();
+
+/**
+ * @test Test function for getting obj_durability
+ * @pre pointer to Object != NULL
+ * @post Output==5
+ */
+void test1_obj_get_durability();
+
+/**
+ * @test Test function for getting obj_durability
+ * @pre pointer to Object = NULL
+ * @post Output==0
+ */  
+void test2_obj_get_durability();  
+
+/**
+ * @test Test function for obj_durability setting
+ * @pre int (pointer to object != NULL)
+ * @post Output==OK
+ */
+void test1_obj_set_durability();
+
+/**
+ * @test Test function for obj_durability setting
+ * @pre int (pointer to object = NULL)
+ * @post Output==ERROR
+ */ 
+void test2_obj_set_durability();
+
+/**
+ * @test Test function for knowing obj_visible 
+ * @pre pointer to Object != NULL
+ * @post Output==FALSE
+ */
+void test1_obj_isBroken();
+
+/**
+ * @test Test function for getting obj_location
+ * @pre pointer to Object = NULL
+ * @post Output==TRUE
+ */   
+void test2_obj_isBroken();
 
 #endif
