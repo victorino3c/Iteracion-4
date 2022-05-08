@@ -305,4 +305,60 @@ void test2_player_has_object();
  */
 void test3_player_has_object();
 
+/**
+ * @test Test getting player health
+ * @pre having set the player health to 3
+ * @post Output == 3
+ */
+void test1_player_get_crit();
+
+/**
+ * @test Test setting player health
+ * @pre pointer to player = NULL
+ * @post Output==NULL
+ */
+void test2_player_get_crit();
+
+/**
+ * @test Test setting player health
+ * @pre having set the player health to 3
+ * @post Output == OK
+ */
+void test1_player_set_crit();
+
+/**
+ * @test Test getting player health
+ * @pre having set the player health to -1
+ * @post Output==ERROR
+ */
+void test2_player_set_crit();
+
+/**
+ * @test Test getting player health
+ * @pre having set the player health to 3
+ * @post Output == 3
+ */
+void test1_player_get_baseDmg();
+
+/**
+ * @test Test setting player health
+ * @pre pointer to player = NULL
+ * @post Output==NULL
+ */
+void test2_player_get_baseDmg();
+
+/**
+ * @test Test setting player health
+ * @pre having set the player health to 3
+ * @post Output == OK
+ */
+void test1_player_set_baseDmg();
+
+/**
+ * @test Test getting player health
+ * @pre having set the player health to -1
+ * @post Output==ERROR
+ */
+void test2_player_set_baseDmg();
+
 #endif

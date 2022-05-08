@@ -15,7 +15,7 @@
 #include "player_test.h"
 #include "test.h"
 
-#define MAX_TESTS 40 /*!< It defines the maximun tests in this file */
+#define MAX_TESTS 48 /*!< It defines the maximun tests in this file */
 
 /**
  * @brief Main function for player unit tests.
@@ -144,6 +144,26 @@ int main(int argc, char **argv)
   if (all || test == i) test2_player_has_object();
   i++;
   if (all || test == i) test3_player_has_object();
+  i++;
+
+  if (all || test == i) test1_player_get_crit();
+  i++;
+  if (all || test == i) test2_player_get_crit();
+  i++;
+
+  if (all || test == i) test1_player_set_crit();
+  i++;
+  if (all || test == i) test2_player_set_crit();
+  i++;
+
+  if (all || test == i) test1_player_get_baseDmg();
+  i++;
+  if (all || test == i) test2_player_get_baseDmg();
+  i++;
+
+  if (all || test == i) test1_player_set_baseDmg();
+  i++;
+  if (all || test == i) test2_player_set_baseDmg();
   i++;
 
   PRINT_PASSED_PERCENTAGE;
@@ -495,4 +515,68 @@ void test3_player_has_object()
   Player *p = NULL;
   player_set_max_inventory(p, 5);
   PRINT_TEST_RESULT( player_has_object(p, NO_ID) == FALSE);
+}
+
+/*player_get_crit */
+void  test1_player_get_crit()
+{
+  Player *s;
+  s = player_create(4);
+	player_set_crit(s, 3);
+	PRINT_TEST_RESULT(player_get_crit(s)==3);
+	player_destroy(s);
+}
+ 
+void  test2_player_get_crit()
+{
+	Player *s = NULL;
+  s = NULL;
+	PRINT_TEST_RESULT(player_get_crit(s)==(0));
+}
+
+/*player_set_crit */
+void   test1_player_set_crit()
+{
+	Player *s;
+  s = player_create(4);
+	PRINT_TEST_RESULT(player_set_crit(s, 3)==OK);
+	player_destroy(s);
+}
+
+void   test2_player_set_crit()
+{
+	Player *s = NULL;
+	PRINT_TEST_RESULT(player_set_crit(s, -1)==ERROR);
+}
+  
+/*player_get_baseDmg */
+void  test1_player_get_baseDmg()
+{
+  Player *s;
+  s = player_create(4);
+	player_set_baseDmg(s, 3);
+	PRINT_TEST_RESULT(player_get_baseDmg(s)==3);
+	player_destroy(s);
+}
+ 
+void  test2_player_get_baseDmg()
+{
+	Player *s = NULL;
+  s = NULL;
+	PRINT_TEST_RESULT(player_get_baseDmg(s)==(0));
+}
+
+/*player_set_baseDmg */
+void   test1_player_set_baseDmg()
+{
+	Player *s;
+  s = player_create(4);
+	PRINT_TEST_RESULT(player_set_baseDmg(s, 3)==OK);
+	player_destroy(s);
+}
+
+void   test2_player_set_baseDmg()
+{
+	Player *s = NULL;
+	PRINT_TEST_RESULT(player_set_baseDmg(s, -1)==ERROR);
 }
