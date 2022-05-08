@@ -158,6 +158,19 @@ int main(int argc, char **argv)
   i++;
 
 
+
+  if (all || test == i) test1_space_set_floor();
+  i++;
+  if (all || test == i) test2_space_set_floor();
+  i++;
+
+
+  if (all || test == i) test1_space_get_floor();
+  i++;
+  if (all || test == i) test2_space_get_floor();
+  i++;
+
+
   PRINT_PASSED_PERCENTAGE;
 
   return 1;
@@ -537,4 +550,34 @@ void test2_space_get_light_status()
 {
   Space *s = NULL;
   PRINT_TEST_RESULT(space_get_light_status(s) == UNKNOWN_LIGHT);
+}
+
+
+/* space_set_floor*/
+void test1_space_set_floor()
+{
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_floor(s, DUNGEON) == OK);
+  space_destroy(s);
+}
+void test2_space_set_floor()
+{
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_set_floor(s, DUNGEON) == ERROR);
+}
+
+/* space_get_floor*/
+void test1_space_get_floor()
+{
+  Space *s;
+  s = space_create(5);
+  space_set_floor(s, DUNGEON);
+  PRINT_TEST_RESULT(space_get_floor(s) == DUNGEON);
+  space_destroy(s);
+}
+void test2_space_get_floor()
+{
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_get_floor(s) == UNKNOWN_FLOOR);
 }
