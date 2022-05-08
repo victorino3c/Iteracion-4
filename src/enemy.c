@@ -24,11 +24,11 @@ struct _Enemy
 {
   Id id;  /*!< Enemy's id. */
   char name[ENEMY_LEN_NAME]; /*!< Enemy's name. */
-  char graphic[ENEMY_GRAPHIC];  /*!< Enemy graphic description */
   Id location;  /*!< Id to enemy's space location */
   int health;   /*!< Enemy's health */
   int Crit_dmg;               /*!< Enemy's crit chance (scale 0 to 10) */
   int base_dmg;               /*!< Enemy's base damage */
+  char **gdesc;   /*!< Graphic visualization enemy */
 } ;
 
 /**enemy_create allocates memory for a new enemy and initializes all its members .
@@ -54,8 +54,8 @@ Enemy *enemy_create(Id id)
   new_enemy->id = id;
   new_enemy->health = 3;
   new_enemy->name[0] = '\0';
-  new_enemy->graphic[0] = '\0';
   new_enemy->location = NO_ID;
+  new_enemy->gdesc = NULL;
 
   return new_enemy;
 }
@@ -70,6 +70,11 @@ STATUS enemy_destroy(Enemy *enemy)
     return ERROR;
   }
   
+  if (enemy->gdesc)
+  {
+    enemy_destroy_gdesc(enemy->gdesc);
+  }
+
   free(enemy);
   enemy = NULL;
   return OK;
@@ -235,6 +240,7 @@ STATUS enemy_print(Enemy *enemy)
  */
 STATUS enemy_print_save(char *filename, Enemy *enemy)
 {
+  int i, j;
   FILE *file = NULL;
 
   file = fopen(filename, "a");
@@ -245,7 +251,18 @@ STATUS enemy_print_save(char *filename, Enemy *enemy)
       return ERROR;
   }
 
-  fprintf(file, "#e:%ld|%s|%ld|%d|%d|%d|\n", enemy->id, enemy->name, enemy->location, enemy->health, enemy->Crit_dmg, enemy->base_dmg);
+  fprintf(file, "#e:%ld|%s|%ld|%d|%d|%d|", enemy->id, enemy->name, enemy->location, enemy->health, enemy->Crit_dmg, enemy->base_dmg);
+
+  for (i = 0; i < ENEMY_GDESC_Y && enemy->gdesc[i]; i++)
+  {
+    for (j = 0; j < ENEMY_GDESC_X && enemy->gdesc[i][j]; j++)
+    {
+      fprintf(file, "%c", enemy->gdesc[i][j]);
+    }
+    fprintf(file, "|");
+  }
+  
+  fprintf(file, "\n");
 
   fclose(file);
 
@@ -284,33 +301,85 @@ STATUS enemy_set_baseDmg(Enemy *enemy, int base_dmg){
  return OK;
 } 
 
-const char *enemy_get_graphic(Enemy *enemy)
+char **enemy_create_gdesc()
 {
-	/* Error control */
-  if (!enemy)
+  char **newgdesc = NULL;
+  int i, j;
+
+  newgdesc = (char **)malloc((ENEMY_GDESC_Y + 1) * sizeof(char *));
+  if (!newgdesc)
   {
     return NULL;
   }
-  
-  return enemy->graphic;
+  for (i = 0; i < (ENEMY_GDESC_Y + 1); i++)
+  {
+    newgdesc[i] = NULL;
+    newgdesc[i] = (char *)malloc((ENEMY_GDESC_X + 2) * sizeof(char));
+    if (!newgdesc[i])
+    {
+      return NULL;
+    }
+
+    for (j = 0; j < (ENEMY_GDESC_X + 2); j++)
+    {
+      newgdesc[i][j] = '\0';
+    }
+  }
+
+  return newgdesc;
 }
 
-STATUS enemy_set_graphic(Enemy *enemy, char *graphic)
+STATUS enemy_destroy_gdesc(char **gdesc)
 {
-	/* Error control */
-  if (!enemy || !graphic)
+  int i;
+
+  /* Error control*/
+  if (!gdesc)
   {
     return ERROR;
   }
-  
-  if (strlen(graphic) >= ENEMY_GRAPHIC)
+
+  if (gdesc)
   {
-    strncpy(enemy->graphic, graphic, ENEMY_GRAPHIC);
+    for (i = ENEMY_GDESC_Y; i >= 0; i--)
+    {
+      if (gdesc[i])
+      {
+        free(gdesc[i]);
+        gdesc[i] = NULL;
+      }
+    }
+
+    free(gdesc);
+    gdesc = NULL;
   }
-  else
-  {
-    strcpy(enemy->graphic, graphic);
-  }
-  
+
   return OK;
+}
+
+/**
+ * It gets the graphic description from a enemy.
+ */
+STATUS enemy_set_gdesc(Enemy *e, char **newgdesc)
+{
+  /* Error control*/
+  if (!e || !newgdesc)
+  {
+    return ERROR;
+  }
+
+  e->gdesc = newgdesc;
+
+  return OK;
+}
+
+char **enemy_get_gdesc(Enemy *e)
+{
+  /* Error control*/
+  if (!e)
+  {
+    return NULL;
+  }
+
+  return e->gdesc;
 }
