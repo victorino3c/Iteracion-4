@@ -449,13 +449,14 @@ STATUS game_load_enemy(Game *game, char *filename)
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
-  char graphic[ENEMY_GRAPHIC] = "";
   char *toks = NULL;
   Id id = NO_ID, location = NO_ID;
   int health;
   Enemy *enemy = NULL;
   STATUS status = OK;
   int crit = 0, base_dmg = 0;
+  char *aux, **gdesc = NULL;
+  int i, j;
 
   /*Error control*/
   if (!filename)
@@ -492,9 +493,21 @@ STATUS game_load_enemy(Game *game, char *filename)
       crit = atol(toks);
       toks = strtok(NULL, "|");
       base_dmg = atol(toks);
-      toks = strtok(NULL, "|");
-      strcpy(graphic, toks);
 
+      gdesc = enemy_create_gdesc();
+      if (gdesc == NULL)
+      {
+        return ERROR;
+      }
+
+      for (i = 0; i < ENEMY_GDESC_Y; i++)
+      {
+        aux = strtok(NULL, "|");
+        for (j = 0; j < strlen(aux) && j < ENEMY_GDESC_X; j++)
+        {
+          gdesc[i][j] = aux[j];
+        }
+      }
       /*If debug is being used, it will print all the information
       from the current enemy that is being loaded*/
 #ifdef DEBUG
@@ -502,7 +515,7 @@ STATUS game_load_enemy(Game *game, char *filename)
 #endif
 
       /*Defines a private variable called "enemy" and saves
-      a pointer to player with the given id in it*/
+      a pointer to enemy with the given id in it*/
       enemy = enemy_create(id);
 
       /*Error control, and in case everything is fine, it saves
@@ -514,7 +527,7 @@ STATUS game_load_enemy(Game *game, char *filename)
         enemy_set_health(enemy, health);
         enemy_set_crit(enemy, crit);
         enemy_set_baseDmg(enemy, base_dmg);
-        enemy_set_graphic(enemy, graphic);
+        enemy_set_gdesc(enemy, gdesc);
         game_add_enemy(game, enemy);
       }
     }
