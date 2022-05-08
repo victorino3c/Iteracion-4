@@ -1394,7 +1394,7 @@ STATUS game_command_attack(Game *game, char *arg)
 /*Basically if a player has either sword, hit chance is increased, each attack removes one durability, after 3 attacks sword must be destroyed*/
 if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
   {
-     hit_chance= hit_chance-2;
+     hit_chance= hit_chance--;
     object_set_durability(Sword1, (object_get_durability(Sword1)-1));
     if(object_get_durability(Sword1)<=0){
       inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword1);
@@ -1403,7 +1403,7 @@ if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword1))
   }
   else if(player_has_object(game->player[MAX_PLAYERS - 1], id_Sword2))
   {
-    hit_chance= hit_chance-2;
+    hit_chance= hit_chance--;
     object_set_durability(Sword2, (object_get_durability(Sword2)-1));
      if(object_get_durability(Sword1)<=0){
       inventory_remove_object(player_get_inventory(game->player[MAX_PLAYERS - 1]), id_Sword2);
