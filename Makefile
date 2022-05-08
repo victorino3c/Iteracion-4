@@ -177,14 +177,38 @@ vlink_test: link_test
 $(O)game_test.o: $(T)game_test.c $(T)game_test.h $(T)test.h $(I)game.h
 	$(CC) -o $@ $(FLAGS) $<
 
-game_test: $(O)game_test.o $(O)game.o $(O)object.o $(O)space.o $(O)player.o $(O)enemy.o $(O)inventory.o $(O)set.o $(O)link.o
+game_test: $(O)game_test.o $(O)game.o $(O)object.o $(O)space.o $(O)player.o $(O)enemy.o $(O)inventory.o $(O)set.o $(O)link.o $(O)dialogue.o $(O)game_rules.o $(O)game_managment.o
 	$(CC) -o $@ -Wall $^ $(LIBRARY)
 
 vgame_test: game_test
 	valgrind --leak-check=full ./game_test
 
 
-all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test
+#DIALOGUE_TEST
+$(O)dialogue_test.o: $(T)dialogue_test.c $(T)dialogue_test.h $(T)test.h $(I)dialogue.h
+	$(CC) -o $@ $(FLAGS) $<
+
+dialogue_test: $(O)dialogue_test.o $(O)dialogue.o
+	$(CC) -o $@ -Wall $^ $(LIBRARY)
+
+vdialogue_test: dialogue_test
+	valgrind --leak-check=full ./dialogue_test
+
+all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test dialogue_test
+
+
+#GAME_RULES_TEST
+$(O)game_rules_test.o: $(T)game_rules_test.c $(T)game_rules_test.h $(T)test.h $(I)game_rules.h
+	$(CC) -o $@ $(FLAGS) $<
+
+game_rules_test: $(O)game_rules_test.o $(O)game_rules.o
+	$(CC) -o $@ -Wall $^ $(LIBRARY)
+
+vgame_rules_test: game_rules_test
+	valgrind --leak-check=full ./game_rules_test
+
+
+all_test: player_test object_test inventory_test set_test enemy_test link_test game_test space_test dialogue_test game_rules_test
 
 #CLEAN
 oclean:
