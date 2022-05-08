@@ -454,4 +454,12 @@ STATUS game_update_object(Game *game);
  */
 STATUS game_update_enemy(Game *game);
 
+/**
+ * @brief Frees all the memory allocated in the game structure
+ * @author Nicolas Victorino
+ * 
+ * @param game pointer to the game 
+ * @return ERROR if something went wrong 
+ */
+STATUS game_destroy_load(Game *game);
 #endif
