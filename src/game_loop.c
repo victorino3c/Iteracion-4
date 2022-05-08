@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../include/graphic_engine.h"
 #include "../include/game.h"
 #include "../include/command.h"
@@ -38,6 +39,9 @@ int main(int argc, char *argv[])
   char *wlog_name = NULL, *cmdf_name = NULL;
   int i; /* Used in loops */
 
+  /*Necessary for random features*/
+  srand(time(NULL));
+  
   /* Alloc game's struct in memory */
   game = game_alloc2();
   if (!game)
