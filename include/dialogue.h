@@ -15,9 +15,10 @@
 #include "object.h"
 #include "space.h"
 #include "enemy.h"
-
-#define COMMAND_SIZE 28
+ 
+#define COMMAND_SIZE 36
 #define EVENT_SIZE 7
+#define ERROR_SIZE 18
 
 typedef enum _enum_command_dialogue{
     DC_ERROR = 0,               /*!< Error command dialogue*/
@@ -47,7 +48,15 @@ typedef enum _enum_command_dialogue{
     DC_PUZZLE,                   /*!< PUZZLE command dialogue*/
     DC_OPEN,                     /*!< OPEN command dialogue*/
     DC_HIM,                      /*!< HIM command dialogue*/
-    DC_BOSS                      /*!< BOSS  command dialogue*/
+    DC_BOSS,                      /*!< BOSS  command dialogue*/
+    DC_SBROKE,                    /*!< SBROKE  command dialogue*/
+    DC_TON,                       /*!< Turnon  command dialogue*/
+    DC_TOFF,                      /*!< Turnoff  command dialogue*/
+    DC_START,                     /*!< Starting  command dialogue*/
+    DC_END,                       /*!< ENDGAME  command dialogue*/
+    DC_GOVER,                      /*!< GAME OVER  command dialogue*/
+    DC_TAKE_S,                     /*!< TAKE Sun_Sword command dialogue*/
+    DC_TAKE_M                      /*!< TAKE Moon_armor  command dialogue*/
 
 }DC_Enum;
 
@@ -60,6 +69,28 @@ typedef enum _enum_event_dialogue{
     DE_DAY,                     /*!< Day event dialogue*/
     DE_SPAWN                    /*!< Spawn event dialogue*/
 }DE_Enum;
+
+typedef enum _enum_error_dialogue{
+    E_ERROR = 0,               /*!< Error command dialogue*/
+    E_EXIT,                    /*!< Exit command dialogue*/
+    E_TAKE,                    /*!< Take command dialogue*/
+    E_DROP,                    /*!< Drop command dialogue*/
+    E_ATTACK,                   /*!< Attack command dialogue*/
+    E_MOVE_N,                  /*!< Move north command dialogue*/
+    E_MOVE_E,                  /*!< Move east command dialogue*/
+    E_MOVE_S,                  /*!< Move south command dialogue*/
+    E_MOVE_W,                  /*!< Move west command dialogue*/
+    E_MOVE_U,                  /*!< Move up command dialogue*/
+    E_MOVE_D,                  /*!< Move down command dialogue*/
+    E_INSPECT,                  /*!< Inspect object command dialogue*/
+    E_SAVE,                    /*!< Save command dialogue*/   
+    E_LOAD,                    /*!< Load command dialogue*/
+    E_USE,                      /*!< USE_BED command dialogue*/
+    E_OPEN,                     /*!< OPEN command dialogue*/
+    E_TON,                       /*!< Turnon  command dialogue*/
+    E_TOFF                      /*!< Turnoff  command dialogue*/
+
+}E_Enum;
 
 typedef struct _Dialogue Dialogue;
 
@@ -119,10 +150,29 @@ char *dialogue_get_event(Dialogue *dialogue);
 /**
  * @brief Sets the dialogue information after executing an event
  * 
- * @param dialogue pointer to the dialogue
+ * @param dialogue pointer to the dialogue 
  * @param condition condition to set the new event dialogue
  * @return ERROR if something went wrong 
  */
 STATUS dialogue_set_event(Dialogue *dialogue, DE_Enum condition);
+
+/**
+ * @brief Gets the dialogue information after executing a command
+ * @author Antonio Van-Oers
+ * 
+ * @param dialogue pointer to the dialogue
+ * @return Pointer to the command dialogue char 
+ */
+char *dialogue_get_error(Dialogue *dialogue);
+
+/**
+ * @brief Sets the dialogue information after executing a command
+ * 
+ * @param dialogue pointer to the dialogue
+ * @param condition condition to set the new command dialogue
+ * @return ERROR if something went wrong 
+ */
+STATUS dialogue_set_error(Dialogue *dialogue, E_Enum condition, Space *current_loc, Object *obj, Enemy *enemy);
+
 
 #endif
