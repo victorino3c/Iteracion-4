@@ -16,6 +16,8 @@
 #include "inventory.h"
 
 #define PLAYER_NAME_LEN 60   /*!< Establish player's name length */
+#define PLAYER_GDESC_Y 3 /*!< Establish the maximun number of litednes player's graphic description (gdesc) will have  */
+#define PLAYER_GDESC_X 4 /*!< Establish the maximun number of characters each line of player's graphic description (gdesc) will have */
 
 typedef struct _Player Player; /*!< It defines the player structure, it can move, attack or take and drop objects */
 
