@@ -292,7 +292,7 @@ PRINT_TEST_RESULT(link_get_direction(link) == ND);
 void test1_link_set_status(){
 Link *link = NULL;
 link = link_create(1);
-PRINT_TEST_RESULT(link_set_status(link, OPEN) == OK);
+PRINT_TEST_RESULT(link_set_status(link, OPEN_L) == OK);
 link_destroy(link);
 
 }
@@ -305,8 +305,8 @@ PRINT_TEST_RESULT(link_set_status(link, INT_MAX) == ERROR);
 void test1_link_get_status(){
 Link *link = NULL;
 link = link_create(1);
-link_set_status(link, OPEN);
-PRINT_TEST_RESULT(link_get_status(link) == OPEN);
+link_set_status(link, OPEN_L);
+PRINT_TEST_RESULT(link_get_status(link) == OPEN_L);
 link_destroy(link);
 
 }

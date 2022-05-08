@@ -137,7 +137,7 @@ int main(int argc, char **argv)
   if (all || test == i) test2_game_get_connection();
   i++;
 
-  if (all || test == i) test1_game_get_description();
+  if (all || test == i) test1_game_get_inspection();
   i++;
 
   PRINT_PASSED_PERCENTAGE;
@@ -183,17 +183,17 @@ void test2_game_create(){
 /*game_update*/
 void test1_game_update(){
     Game *g = NULL;
-    char *arg = NULL;
+    char *arg = NULL, *arg2 = NULL;
     g = game_alloc2();
     game_create(g);
-    PRINT_TEST_RESULT(game_update(g, EXIT, arg) > 0);
+    PRINT_TEST_RESULT(game_update(g, EXIT, arg, arg2) > 0);
     game_destroy(g);
 }
 
 void test2_game_update(){
     Game *g = NULL;
-    char *arg = NULL;
-    PRINT_TEST_RESULT(game_update(g, EXIT, arg) == 0);
+    char *arg = NULL, *arg2 = NULL;
+    PRINT_TEST_RESULT(game_update(g, EXIT, arg, arg2) == 0);
 }
 
 /*game_is_over*/
@@ -373,20 +373,20 @@ void test2_game_get_object_location(){
 /*game_get_last_command*/
 void test1_game_get_last_command(){
     Game *g = NULL;
-    char *arg = NULL;
+    char *arg = NULL, *arg2 = NULL;
     g = game_alloc2();
     game_create(g);
-    game_update(g, EXIT, arg);
+    game_update(g, EXIT, arg, arg2);
     PRINT_TEST_RESULT(game_get_last_command(g) == EXIT);
     game_destroy(g);
 }
 
 void test2_game_get_last_command(){
     Game *g = NULL;
-    char *arg = NULL;
+    char *arg = NULL, *arg2 = NULL;
     g = game_alloc2();
     game_create(g);
-    game_update(g, EXIT, arg);
+    game_update(g, EXIT, arg, arg2);
     PRINT_TEST_RESULT(game_get_last_command(g) != MOVE);
     game_destroy(g);
 }
@@ -460,11 +460,11 @@ void test1_game_get_connection_status(){
     game_create(g);
     l = link_create(40);
     s1 = space_create(11);
-    link_set_status(l, OPEN);
+    link_set_status(l, OPEN_L);
     space_set_link(s1, 40, W);
     game_add_space(g, s1);
     game_add_link(g, l);
-    PRINT_TEST_RESULT(game_get_connection_status(g, 11, W) == OPEN);
+    PRINT_TEST_RESULT(game_get_connection_status(g, 11, W) == OPEN_L);
     game_destroy(g);
 }
 
@@ -518,10 +518,10 @@ void test2_game_get_connection(){
 }
 
 /*game_get_description*/
-void test1_game_get_description(){
+void test1_game_get_inspection(){
     Game *g = NULL;
     g =  game_alloc2();
     game_create(g);
-    PRINT_TEST_RESULT(game_get_description(g) != NULL);
+    PRINT_TEST_RESULT(game_get_inspection(g) != NULL);
     game_destroy(g);
 }

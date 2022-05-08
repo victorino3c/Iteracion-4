@@ -15,7 +15,7 @@
 #include "player_test.h"
 #include "test.h"
 
-#define MAX_TESTS 38 /*!< It defines the maximun tests in this file */
+#define MAX_TESTS 40 /*!< It defines the maximun tests in this file */
 
 /**
  * @brief Main function for player unit tests.
@@ -106,6 +106,11 @@ int main(int argc, char **argv)
   if (all || test == i) test1_player_set_health();
   i++;
   if (all || test == i) test2_player_set_health();
+  i++;
+
+  if (all || test == i) test1_player_set_max_health();
+  i++;
+  if (all || test == i) test2_player_set_max_health();
   i++;
 
 	if (all || test == i) test1_player_get_health();
@@ -321,6 +326,7 @@ void  test1_player_set_health()
 {
   Player *p = NULL;
   p = player_create(23);
+  player_set_max_health(p, 20);
 	PRINT_TEST_RESULT(player_set_health(p, 12)==OK);
 	player_destroy(p);
 }
@@ -331,11 +337,27 @@ void  test2_player_set_health()
 	PRINT_TEST_RESULT(player_set_health(p, 12)==ERROR);
 }
 
+/*player_set_max_health */
+void  test1_player_set_max_health()
+{
+  Player *p = NULL;
+  p = player_create(23);
+	PRINT_TEST_RESULT(player_set_max_health(p, 20)==OK);
+	player_destroy(p);
+}
+ 
+void  test2_player_set_max_health()
+{
+	Player *p = NULL;
+	PRINT_TEST_RESULT(player_set_max_health(p, 20)==ERROR);
+}
+
 /*player_get_location */
 void   test1_player_get_health()
 {
 	Player *p = NULL;
   p = player_create(24);
+  player_set_max_health(p, 20);
   player_set_health(p, 12);
 	PRINT_TEST_RESULT(player_get_health(p) == 12);
 	player_destroy(p);

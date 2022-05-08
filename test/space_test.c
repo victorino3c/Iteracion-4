@@ -513,8 +513,9 @@ void test2_space_get_gdesc()
 /* space_set_light_status*/
 void test1_space_set_light_status()
 {
-  Space *s = space_create(1);
-  PRINT_TEST_RESULT(space_set_light_status(s, DARK) == OK);
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_light_status(s, BRIGHT) == OK);
   space_destroy(s);
 }
 void test2_space_set_light_status()
@@ -526,8 +527,10 @@ void test2_space_set_light_status()
 /* space_get_light_status*/
 void test1_space_get_light_status()
 {
-  Space *s = space_create(1);
-  PRINT_TEST_RESULT(space_get_light_status(s) == BRIGHT);
+  Space *s;
+  s = space_create(5);
+  space_set_light_status(s, DARK);
+  PRINT_TEST_RESULT(space_get_light_status(s) == DARK);
   space_destroy(s);
 }
 void test2_space_get_light_status()

@@ -268,6 +268,6 @@ void test2_game_get_connection();
  * @pre allocated game pointer 
  * @post return non-NULL pointer
  */
-void test1_game_get_description();
+void test1_game_get_inspection();
 
 #endif

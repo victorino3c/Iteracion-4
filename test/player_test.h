@@ -187,6 +187,20 @@ void test2_player_set_health();
 /**
  * @test Test player
  * @pre	player pointer
+ * @post output = OK
+ */
+void test1_player_set_max_health();
+
+/**
+ * @test Test player
+ * @pre	player pointer
+ * @post output = ERROR
+ */
+void test2_player_set_max_health();
+
+/**
+ * @test Test player
+ * @pre	player pointer
  * @post specific ID
  */
 void test1_player_get_health();
