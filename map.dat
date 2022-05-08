@@ -5,13 +5,13 @@
 #s:121|Corridor1|First main corridor|Corridor 1 has something that you could see in the dark, was it a Door with weird inscriptions? there are also some objects|0|  /   \  |{ ___   ]|[    z Z)|\__    _/|   \  /  |0|0|
 #s:16|Secret_Chamber|A decision for the worthy|re is a decision before you, you can only take one, which will it be?|1|_/^^^\_/\|(    __ ]|[    o 0}|{       ]|\__    _/|0|0|
 #s:122|Hall|Hall leading to the throne room|Hall has a ladder, maybe you could use it to get up to the attic through a trapdoor, there is also a big black door, you sense evil behind it|1|  /   \  |{ ___   ]|[      --|\__    __|   \  /  |0|0|
-#s:123|Throne_Room|Lair of the Dusk_King  |a|1|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |0|0|
+#s:123|Throne_Room|Lair of the Dusk_King  |Dusk_King is there, you spot a piece of armor which with luck, you could sneak and take it to use it before the combat|1|  /   \  |{ ___   ]|[ /\oo/\)|\__    _/|   \  /  |0|0|
 #s:125|Dining_Room|Dark at the beginning, hides many mysteries|a|0|  /   \  |{ _ _   ]|[  xx   )|\__    _/|   \  /  |0|0|
-#s:126|Corridor2|Second main corridor|a|1|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|0|0|
-#s:13|Library|What about the third candle |a|1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|0|0|
-#s:14|Bedroom|This trapdoor may lead somewhere|a|1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|0|0|
-#s:15|D_Chamber|Anteroom to the D_Treasury|a|1| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |-1|0|
-#s:124|D_Treasury|Where the Dusk_Key lays|a|1|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|-1|0|
+#s:126|Corridor2|Second main corridor|Corridor has a Guard protecting a closed door at the end|1|  ___   _|_/   \_/ |     c 0 |   _ 0o8o|__/ \___/|0|0|
+#s:13|Library|What about the third candle? |Library is perfectly arranged, except for a table, with a triangle drawn on it and two candles on two corners, one appears to be missing|1|  ___   _|_/^^^\_/ |  '  o 0 |   _ z_  |__/ \___/|0|0|
+#s:14|Bedroom|This trapdoor may lead somewhere|Bedroom has some useful items. Also there is a trapdoor in a corner, you open it and find some stairs, maybe you could move down and see what is at the end of them|1|  ___    |_/   \_/\|     o 0)|  _ 0o8o]|__/ \___}|0|0|
+#s:15|D_Chamber|Anteroom to the D_Treasury|The Chamber leads to a door that looks very old. But you are not alone, the Dusk Dusk_Assassin shows and hides in the shadows, waiting for you to make the first move|1| _/   \_ |{ _ _   ]|[  xx   )|\    z Z/|   \__/  |-1|0|
+#s:124|D_Treasury|Where the Dusk_Key lays|This room has the treasure of the Dusk_King, the most loyal lackey of his was also guarding the key tho the Throne Room, south of the hall|1|  ___   _|_/   \_/ |     o 0 |   _ 0o8o|__/ \___/|-1|0|
 #o:300|Apple1|Recovers 1 health when used|12|1|-1|-1|0|0|1|0|1|
 #o:301|Apple2|Recovers 1 health when used|12|1|-1|-1|0|0|1|0|1|
 #o:302|Apple3|Recovers 1 health when used|121|1|-1|-1|0|0|1|0|1|
@@ -25,8 +25,8 @@
 #o:340|Bed1|Makes it night or day time |17|0|-1|-1|0|0|1|0|-1|
 #o:341|Bed2|Makes it night or day time |14|0|-1|-1|0|0|1|0|-1|
 #o:350|Bread_Crumbs|might be appreciated by someone when used|125|1|-1|-1|0|0|1|0|1|
-#o:399|key1|opens the Alcove from the A_Corridor(127)|-1|1|-1|505|0|0|1|0|1|               
-#o:385|key2|opens the Library from Corridor2(126)|-1|1|-1|524|0|0|1|0|1| 
+#o:399|Small_key1|opens the Alcove from the A_Corridor(127)|-1|1|-1|505|0|0|1|0|1|               
+#o:385|Small_key2|opens the Library from Corridor2(126)|-1|1|-1|524|0|0|1|0|1| 
 #o:390|Torch1|can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:391|Torch2|can be lit up |11|1|-1|-1|1|0|1|0|-1|
 #o:392|Sword1|increases +0,2 your power|121|1|-1|-1|0|0|1|0|3|
