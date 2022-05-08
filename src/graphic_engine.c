@@ -24,6 +24,7 @@
 
 #define ROWS 44       /*!< Establish screen size in y dimension */
 #define COLUMNS 120   /*!< Establish screen size in x dimension */
+#define TAMCELL_X 19  /*!< Establish cell size per line */
 
 /**
  * @brief Graphic engine
@@ -111,7 +112,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   char *en_name[MAX_ENEMYS];
   char *inspection, *dialogue, *events;
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
+  char *space_name, *space_name2, *space_name3, blank20[] = "                   ";
   Set *object_set = NULL, *object_set_r = NULL, *object_set_l = NULL;
+
 
   /* setting all proper values for each variable */
   player_loc = game_get_player_location(game, 21);
@@ -147,7 +150,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     object_set = space_get_objects(game_get_space(game, id_act));
     object_set_r = space_get_objects(game_get_space(game, id_right));
     object_set_l = space_get_objects(game_get_space(game, id_left));
-    space_print(space_act);
 
     /* Space to the north of the current space */
     if (id_up != NO_ID)
@@ -165,14 +167,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
 
-      if (id_up < 100)
-      {
-        sprintf(str, "  |              %2d |", (int)id_up);
-      }
-      else
-      {
-        sprintf(str, "  |              %2d|", (int)id_up);
-      }
+      space_name = (char *)space_get_name(game_get_space(game, id_up));
+      strncat(space_name, blank20, 15 - strlen(space_name));
+      sprintf(str, "  | %s |", space_name);
       screen_area_puts(ge->map, str);
 
       sprintf(str, "  |                 |");
@@ -239,21 +236,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       {
         sprintf(str, "  +-----------------+");
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |                 |");
+
+        space_name = (char *)space_get_name(game_get_space(game, id_act));
+        strncat(space_name, blank20, 15 - strlen(space_name));
+        sprintf(str, "  | %s |", space_name);
         screen_area_puts(ge->map, str);
-        /*\\(\")/ ANT CODIFICATION */
-        if (id_act < 100)
-        {
-          sprintf(str, "  | gpp0^        %2d |", (int)id_act);
-        }
-        else
-        {
-          sprintf(str, "  | gpp0^        %2d|", (int)id_act);
-        }
+
+        sprintf(str, "  |           gpp0^ | ");
         screen_area_puts(ge->map, str);
 
         sprintf(str, "  |                 |");
         screen_area_puts(ge->map, str);
+
         gdesc = space_get_gdesc(game_get_space(game, id_act));
         
         for (i = 0; i < TAM_GDESC_Y; i++)
@@ -278,95 +272,89 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       if (id_right != NO_ID && id_left == NO_ID)
       {  
 
-      for(i = 0; i < set_get_nids(object_set); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set); i++)
         {
-          obj = ' ';
-        } else {
-          obj = '*';              
-          i = set_get_nids(object_set) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+          {
+            obj = ' ';
+          } else {
+            obj = '*';              
+            i = set_get_nids(object_set) + 1;
+          }
         }
-      }
 
-      for(i = 0; i < set_get_nids(object_set_r); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set_r, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_right))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set_r); i++)
         {
-          obj_r = ' ';
-        } else {
-          obj_r = '*';              
-          i = set_get_nids(object_set_r) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set_r, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_right))) ==  FALSE) 
+          {
+            obj_r = ' ';
+          } else {
+            obj_r = '*';              
+            i = set_get_nids(object_set_r) + 1;
+          }
         }
-      }
 
-      if (game_get_connection_status(game, id_act, E) == OPEN_L)
-      {
-        link_right = '>';
-      }
-      else
-      {
-        link_right = ' ';
-      }
+        if (game_get_connection_status(game, id_act, E) == OPEN_L)
+        {
+          link_right = '>';
+        }
+        else
+        {
+          link_right = ' ';
+        }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN_L)
-      {
-        link_left = '<';
-      }
-      else
-      {
-        link_left = ' ';
-      }
+        if (game_get_connection_status(game, id_act, W) == OPEN_L)
+        {
+          link_left = '<';
+        }
+        else
+        {
+          link_left = ' ';
+        }
 
-        sprintf(str, "  +------------------+   ------------------|");
+        sprintf(str, "  +-----------------+   +-----------------+");
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |                  |   |                 |");
+
+        space_name = (char *)space_get_name(game_get_space(game, id_act));
+        printf("%s\n", space_name);
+        strncat(space_name, blank20, 15 - strlen(space_name));
+        space_name2 = (char *)space_get_name(game_get_space(game, id_right));
+        printf("HOLA337\n");
+        strncat(space_name2, blank20, 15 - strlen(space_name2));
+        printf("%s\n", space_name);
+        sprintf(str, "  | %s |   | %s |", space_name, space_name2);
         screen_area_puts(ge->map, str);
-        /*\\(\")/ ANT CODIFICATION */
-        if (id_act < 100 && id_right < 100)
-        {
-          sprintf(str, "  | gpp0^         %2ld |   |              %2ld |", id_act, id_right);
-        }
-        else if (id_act > 100 && id_right < 100)
-        {
-          sprintf(str, "  | gpp0^         %2ld|   |              %2ld |", id_act, id_right);          
-        }
-        else if (id_act < 100 && id_right > 100)
-        {
-          sprintf(str, "  | gpp0^         %2ld |   |              %2ld|", id_act, id_right);
-        }
-        else if (id_act > 100 && id_right > 100)
-        {
-          sprintf(str, "  | gpp0^         %2ld|   |              %2ld|", id_act, id_right);
-        }
+
+        sprintf(str, "  |           gpp0^ |   |                 |");
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |                  |   |                 |");
+        
+        sprintf(str, "  |                 |   |                 |");
         screen_area_puts(ge->map, str);
+
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
         gdesc_right = space_get_gdesc(game_get_space(game, id_right)); 
-        
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
           if (i != 3) {
-            sprintf(str, "  |     %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
+            sprintf(str, "  |    %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
             screen_area_puts(ge->map, str);
           } else {
-            sprintf(str, "  |     %s    | %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
+            sprintf(str, "  |    %s    | %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
             screen_area_puts(ge->map, str);
           }
         }
         
-        sprintf(str, "  |                  |   |                 |");
+        sprintf(str, "  |                 |   |                 |");
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |                  |   |                 |");
+        sprintf(str, "  |                 |   |                 |");
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |        %c         |   |        %c        |", obj, obj_r);
+        sprintf(str, "  |        %c        |   |        %c        |", obj, obj_r);
         screen_area_puts(ge->map, str);
-        sprintf(str, "  +------------------+>> ------------------|");
+        sprintf(str, "  +-----------------+   +-----------------+");
         screen_area_puts(ge->map, str);  
       }
       
@@ -379,81 +367,78 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
         }
 
-      for(i = 0; i < set_get_nids(object_set); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set); i++)
         {
-          obj = ' ';
-        } else {
-          obj = '*';              
-          i = set_get_nids(object_set) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+          {
+            obj = ' ';
+          } else {
+            obj = '*';              
+            i = set_get_nids(object_set) + 1;
+          }
         }
-      }
 
-      for(i = 0; i < set_get_nids(object_set_r); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set_r, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_right))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set_r); i++)
         {
-          obj_r = ' ';
-        } else {
-          obj_r = '*';              
-          i = set_get_nids(object_set_r) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set_r, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_right))) ==  FALSE) 
+          {
+            obj_r = ' ';
+          } else {
+            obj_r = '*';              
+            i = set_get_nids(object_set_r) + 1;
+          }
         }
-      }
 
-      for(i = 0; i < set_get_nids(object_set_l); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set_l, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set_l); i++)
         {
-          obj_l = ' ';
-        } else {
-          obj_l = '*';              
-          i = set_get_nids(object_set_l) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set_l, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
+          {
+            obj_l = ' ';
+          } else {
+            obj_l = '*';              
+            i = set_get_nids(object_set_l) + 1;
+          }
         }
-      }
 
-      if (game_get_connection_status(game, id_act, E) == OPEN_L)
-      {
-        link_right = '>';
-      }
-      else
-      {
-        link_right = ' ';
-      }
-
-      if (game_get_connection_status(game, id_act, W) == OPEN_L)
-      {
-        link_left = '<';
-      }
-      else
-      {
-        link_left = ' ';
-      }
-        
-        sprintf(str, "  |-----------------    +-----------------+   ------------------|");
-        screen_area_puts(ge->map, str);
-        sprintf(str, "  |                 |   |                 |   |                 |");
-        screen_area_puts(ge->map, str);
-        /*\\(\")/ ANT CODIFICATION */
-        if (id_right == 13) {
-          sprintf(str, "  |              %2ld|   | gpp0^        %2ld|   |              %2ld |",id_left, id_act, id_right);
-          screen_area_puts(ge->map, str);
-        } else if (id_right == 14)
+        if (game_get_connection_status(game, id_act, E) == OPEN_L)
         {
-          sprintf(str, "  |              %2ld|   | gpp0^        %2ld |   |              %2ld |",id_left, id_act, id_right);
-          screen_area_puts(ge->map, str);          
+          link_right = '>';
         }
         else
         {
-          sprintf(str, "  |              %2ld|   | gpp0^        %2ld|   |              %2ld|",id_left, id_act, id_right);
-          screen_area_puts(ge->map, str);
+          link_right = ' ';
         }
+
+        if (game_get_connection_status(game, id_act, W) == OPEN_L)
+        {
+          link_left = '<';
+        }
+        else
+        {
+          link_left = ' ';
+        }
+        
+        sprintf(str, "  +-----------------+   +-----------------+   +-----------------+");
+        screen_area_puts(ge->map, str);
+
+        space_name = (char *)space_get_name(game_get_space(game, id_left));
+        strncat(space_name, blank20, 15 - strlen(space_name));
+        space_name2 = (char *)space_get_name(game_get_space(game, id_act));
+        strncat(space_name2, blank20, 15 - strlen(space_name2));
+        space_name3 = (char *)space_get_name(game_get_space(game, id_right));
+        strncat(space_name3, blank20, 15 - strlen(space_name3));
+        sprintf(str, "  | %s |   | %s |   | %s |", space_name, space_name2, space_name3);
+        screen_area_puts(ge->map, str);
+
+        sprintf(str, "  |                 |   |           gpp0^ |   |                 |");
+        screen_area_puts(ge->map, str);
+
         sprintf(str, "  |                 |   |                 |   |                 |");
         screen_area_puts(ge->map, str);
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
@@ -479,7 +464,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
         sprintf(str, "  |         %c       |   |         %c       |   |         %c       |", obj_l, obj, obj_r);
         screen_area_puts(ge->map, str);  
-        sprintf(str, "  |-----------------    +-----------------+   ------------------|");
+        sprintf(str, "  +-----------------+   +-----------------+   +-----------------+");
         screen_area_puts(ge->map, str);
       }
 
@@ -492,62 +477,69 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
         }
 
-      for(i = 0; i < set_get_nids(object_set); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set); i++)
         {
-          obj = ' ';
-        } else {
-          obj = '*';              
-          break;
+          aux_obj_id = set_get_ids_by_number(object_set, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
+          {
+            obj = ' ';
+          } else {
+            obj = '*';              
+            break;
+          }
         }
-      }
 
-      for(i = 0; i < set_get_nids(object_set_l); i++)
-      {
-        aux_obj_id = set_get_ids_by_number(object_set_l, i);
-
-        if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
+        for(i = 0; i < set_get_nids(object_set_l); i++)
         {
-          obj_l = ' ';
-        } else {
-          obj_l = '*';              
-          i = set_get_nids(object_set_l) + 1;
+          aux_obj_id = set_get_ids_by_number(object_set_l, i);
+
+          if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
+          {
+            obj_l = ' ';
+          } else {
+            obj_l = '*';              
+            i = set_get_nids(object_set_l) + 1;
+          }
         }
-      }
-  
-      if (game_get_connection_status(game, id_act, E) == OPEN_L)
-      {
-        link_right = '>';
-      }
-      else
-      {
-        link_right = ' ';
-      }
 
-      if (game_get_connection_status(game, id_act, W) == OPEN_L)
-      {
-        link_left = '<';
-      }
-      else
-      {
-        link_left = ' ';
-      }
+        if (game_get_connection_status(game, id_act, E) == OPEN_L)
+        {
+          link_right = '>';
+        }
+        else
+        {
+          link_right = ' ';
+        }
 
-        sprintf(str, "  |------------------   +-----------------+");
+        if (game_get_connection_status(game, id_act, W) == OPEN_L)
+        {
+          link_left = '<';
+        }
+        else
+        {
+          link_left = ' ';
+        }
+
+        sprintf(str, "  +-----------------+   +-----------------+");
         screen_area_puts(ge->map, str);
+
+
+        space_name = (char *)space_get_name(game_get_space(game, id_left));
+        strncat(space_name, blank20, 15 - strlen(space_name));
+        space_name2 = (char *)space_get_name(game_get_space(game, id_act));
+        strncat(space_name2, blank20, 15 - strlen(space_name2));
+        sprintf(str, "  | %s |   | %s |", space_name, space_name2);
+        screen_area_puts(ge->map, str);
+
+        sprintf(str, "  |                 |   |           gpp0^ |");
+        screen_area_puts(ge->map, str);
+
         sprintf(str, "  |                 |   |                 |");
         screen_area_puts(ge->map, str);
-        /*\\(\")/ ANT CODIFICATION */
-        sprintf(str, "  |              %2ld|   |  gpp0^       %2ld |", id_left, id_act);
-        screen_area_puts(ge->map, str);
-        sprintf(str, "  |                 |   |                 |");
-        screen_area_puts(ge->map, str);
+
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
         gdesc_left = space_get_gdesc(game_get_space(game, id_left)); 
-        
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
           if (i != 3) {
@@ -600,24 +592,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       screen_area_puts(ge->map, str);
       sprintf(str, "  +-----------------+");
       screen_area_puts(ge->map, str);
+
+      space_name = (char *)space_get_name(game_get_space(game, id_down));
+      strncat(space_name, blank20, 15 - strlen(space_name));
+      sprintf(str, "  | %s |", space_name);
+      screen_area_puts(ge->map, str);
+
       sprintf(str, "  |                 |");
       screen_area_puts(ge->map, str);
-      if (id_down != 13) {
-        sprintf(str, "  |              %2d|", (int)id_down);
-        screen_area_puts(ge->map, str);
-      } else {
-        sprintf(str, "  |              %2d |", (int)id_down);
-        screen_area_puts(ge->map, str);   
-      }
+
       sprintf(str, "  |        %c        |", obj);
       screen_area_puts(ge->map, str);
+
       sprintf(str, "  |                 |");
       screen_area_puts(ge->map, str);
     }
-    
-  }
 
-      /* Space to the south of the current space CASE 14 */
+    /* Space to the south of the current space CASE 14
     if (id_down != NO_ID && id_act == 14)
     {
       for(i = 0; i < set_get_nids(object_set); i++)
@@ -646,7 +637,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       sprintf(str, "                        |                 |");
       screen_area_puts(ge->map, str);
     }
-
+    */
+  }
+  
   /* Paint in the description area */
   screen_area_clear(ge->descript);
   
