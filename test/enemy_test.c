@@ -15,7 +15,7 @@
 #include "enemy_test.h"
 #include "test.h"
 
-#define MAX_TESTS 33  /*!< It defines the maximun tests in this file */
+#define MAX_TESTS 41  /*!< It defines the maximun tests in this file */
 
 /**
  * @brief Main function for enemy unit tests.
@@ -104,6 +104,26 @@ int main(int argc, char **argv)
   if (all || test == i) test1_enemy_set_location();
   i++;
   if (all || test == i) test2_enemy_set_location();
+  i++;
+
+  if (all || test == i) test1_enemy_get_crit();
+  i++;
+  if (all || test == i) test2_enemy_get_crit();
+  i++;
+
+  if (all || test == i) test1_enemy_set_crit();
+  i++;
+  if (all || test == i) test2_enemy_set_crit();
+  i++;
+
+  if (all || test == i) test1_enemy_get_baseDmg();
+  i++;
+  if (all || test == i) test2_enemy_get_baseDmg();
+  i++;
+
+  if (all || test == i) test1_enemy_set_baseDmg();
+  i++;
+  if (all || test == i) test2_enemy_set_baseDmg();
   i++;
 
   PRINT_PASSED_PERCENTAGE;
@@ -285,5 +305,66 @@ void   test2_enemy_set_location()
 	PRINT_TEST_RESULT(enemy_set_location(s,2)==ERROR);
 }
   
+/*enemy_get_crit */
+void  test1_enemy_get_crit()
+{
+  Enemy *s;
+  s = enemy_create(4);
+	enemy_set_crit(s, 3);
+	PRINT_TEST_RESULT(enemy_get_crit(s)==3);
+	enemy_destroy(s);
+}
+ 
+void  test2_enemy_get_crit()
+{
+	Enemy *s = NULL;
+  s = NULL;
+	PRINT_TEST_RESULT(enemy_get_crit(s)==(0));
+}
 
+/*enemy_set_crit */
+void   test1_enemy_set_crit()
+{
+	Enemy *s;
+  s = enemy_create(4);
+	PRINT_TEST_RESULT(enemy_set_crit(s, 3)==OK);
+	enemy_destroy(s);
+}
+
+void   test2_enemy_set_crit()
+{
+	Enemy *s = NULL;
+	PRINT_TEST_RESULT(enemy_set_crit(s, -1)==ERROR);
+}
   
+/*enemy_get_baseDmg */
+void  test1_enemy_get_baseDmg()
+{
+  Enemy *s;
+  s = enemy_create(4);
+	enemy_set_baseDmg(s, 3);
+	PRINT_TEST_RESULT(enemy_get_baseDmg(s)==3);
+	enemy_destroy(s);
+}
+ 
+void  test2_enemy_get_baseDmg()
+{
+	Enemy *s = NULL;
+  s = NULL;
+	PRINT_TEST_RESULT(enemy_get_baseDmg(s)==(0));
+}
+
+/*enemy_set_baseDmg */
+void   test1_enemy_set_baseDmg()
+{
+	Enemy *s;
+  s = enemy_create(4);
+	PRINT_TEST_RESULT(enemy_set_baseDmg(s, 3)==OK);
+	enemy_destroy(s);
+}
+
+void   test2_enemy_set_baseDmg()
+{
+	Enemy *s = NULL;
+	PRINT_TEST_RESULT(enemy_set_baseDmg(s, -1)==ERROR);
+}
