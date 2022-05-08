@@ -271,7 +271,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       /* Checks that there is no space to the left but there is one to the right */    
       if (id_right != NO_ID && id_left == NO_ID)
       {  
-
         for(i = 0; i < set_get_nids(object_set); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set, i);
@@ -320,12 +319,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
 
         space_name = (char *)space_get_name(game_get_space(game, id_act));
-        printf("%s\n", space_name);
         strncat(space_name, blank20, 15 - strlen(space_name));
         space_name2 = (char *)space_get_name(game_get_space(game, id_right));
-        printf("HOLA337\n");
         strncat(space_name2, blank20, 15 - strlen(space_name2));
-        printf("%s\n", space_name);
+        if (id_right == 16)
+        {
+          strcpy(space_name2, "¬¬¬¬¬¬¬ ");
+        }
         sprintf(str, "  | %s |   | %s |", space_name, space_name2);
         screen_area_puts(ge->map, str);
 
@@ -336,9 +336,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         screen_area_puts(ge->map, str);
 
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
-        gdesc_right = space_get_gdesc(game_get_space(game, id_right)); 
+        gdesc_right = space_get_gdesc(game_get_space(game, id_right));
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
+          if (id_right == 16)
+          {
+            strcpy(gdesc_right[i], "¬¬¬¬ ");
+          } 
           if (i != 3) {
             sprintf(str, "  |    %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
             screen_area_puts(ge->map, str);
