@@ -270,7 +270,7 @@ STATUS player_destroy_gdesc(char **gdesc);
  * @param newgdesc a double char array with the graphical description
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-STATUS player_set_gdesc(Player *s, char **newgdesc);
+STATUS player_set_gdesc(Player *p, char **newgdesc);
 
 /**
  * @brief It gets the graphic description from a player
@@ -279,6 +279,6 @@ STATUS player_set_gdesc(Player *s, char **newgdesc);
  * @param s a pointer to player
  * @return a double char array with the graphical description, or NULL if there was some error.
  */
-char **player_get_gdesc(Player *s);
+char **player_get_gdesc(Player *p);
 
 #endif
