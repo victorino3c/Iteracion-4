@@ -17,6 +17,10 @@
 #o:302|Apple3|Recovers 1 health when used|121|1|-1|-1|0|0|1|0|1|
 #o:310|Elixir1|Recovers 3 health when used|124|1|-1|-1|0|0|1|0|1|
 #o:311|Elixir2|Recovers 3 health when used|124|1|-1|-1|0|0|1|0|1|
+#o:312|Elixir3|Recovers 3 health when used|14|1|-1|-1|0|0|1|0|1|
+#o:313|Elixir4|Recovers 3 health when used|14|1|-1|-1|0|0|1|0|1|
+#o:314|Elixir5|Recovers 3 health when used|17|1|-1|-1|0|0|1|0|1|
+#o:315|Elixir6|Recovers 3 health when used|17|1|-1|-1|0|0|1|0|1|
 #o:320|Armor1|Gives +1 Max_health when used|14|1|-1|-1|0|0|1|0|1|    
 #o:321|Armor2|Gives +1 Max_health when used|124|1|-1|-1|0|0|1|0|1|
 #o:322|Armor3|Gives +1 Max_health when used|126|1|-1|-1|0|0|0|0|1|
@@ -47,8 +51,8 @@
 #e:43|Guard2|126|5|0|1| <F>  |\()[] | LL   |
 #e:44|Dusk_Assassin|15|7|5|1| /"\  |\$#$/ | L L  |
 #e:45|Dusk_King|123|10|2|2| /""\ |·$##$·| L  L |
-#e:46|Rat1|-2|2|0|1|      |-(_^> |      |
-#e:47|Rat2|-2|2|0|1|      |-(_^> |      |
+#e:46|Rat1|-2|2|0|1|~(_^> |      |      |
+#e:47|Rat2|-2|2|0|1|~(_^> |      |      |
 #l:504|A_Alcove_w|17|127|3|1|
 #l:505|Door1|127|17|2|0|
 #l:506|A_Corridor_w|127|12|3|1|
@@ -64,7 +68,7 @@
 #l:516|Corridor1_e|121|16|2|0|
 #l:517|Secret_Chamber_w|16|121|3|1|
 #l:518|D_Treasury_s|124|15|1|1|
-#l:519|D_Chamber_n|15|124|0|0|
+#l:519|Treasure|15|124|0|0|
 #l:529|D_Chamber_u|15|14|4|1|
 #l:520|Hall_e|122|125|2|1|
 #l:521|Dining_Room_w|125|122|3|1|
