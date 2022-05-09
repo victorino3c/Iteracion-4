@@ -1992,7 +1992,7 @@ STATUS game_command_use(Game *game, char *arg)
   else if (type == BED && st == OK) /*Case bed*/
   {
     printf("Es cama\n");
-    st = set_del_id(space_get_objects(game_get_space(game, player_get_location(player))), id);
+    /*st = set_del_id(space_get_objects(game_get_space(game, player_get_location(player))), id);*/
     if (game_get_time(game) == DAY)
     {
       st = game_set_time(game, NIGHT);
