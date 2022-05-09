@@ -894,7 +894,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   screen_area_clear(ge->help);
   sprintf(str, "                         The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, " m(MOVE), c(TAKE), v(DROP), q(ATTACK), i(INSPECT), e(EXIT), s (SAVE), l (LOAD)");
+  sprintf(str, " m(MOVE), t(TAKE), d(DROP), a(ATTACK), i(INSPECT), e(EXIT), s(SAVE), l(LOAD)");
   screen_area_puts(ge->help, str);
   sprintf(str, "               o (OPEN), ton (TURNON), toff (TURNOFF), u(USE)");
   screen_area_puts(ge->help, str);
