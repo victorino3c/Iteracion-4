@@ -1980,8 +1980,8 @@ STATUS game_command_use(Game *game, char *arg)
     st = inventory_remove_object(player_get_inventory(player), id);
     if (player_get_location(player) == 125)
     {
-      st = obj_set_location(game_get_object(game, 32), -1);
-      st = inventory_add_object(player_get_inventory(player), 32);
+      st = obj_set_location(game_get_object(game, 398), -1);
+      st = inventory_add_object(player_get_inventory(player), 398);
 
       st = obj_set_location(game_get_object(game, id), -1);
       dialogue_set_command(game->dialogue, DC_USE_HOOK, NULL, NULL, NULL);
