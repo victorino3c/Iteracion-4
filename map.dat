@@ -26,8 +26,8 @@
 #o:322|Armor3|Gives +1 Max_health when used|126|1|-1|-1|0|0|0|0|1|
 #o:323|Armor4|Gives +1 Max_health when used|123|1|-1|-1|0|0|0|0|1|   
 #o:330|Hook|is used to grab something unreachable|124|1|-1|-1|0|0|1|0|-1|
-#o:340|Bed1|Makes it night or day time |17|0|-1|-1|0|0|1|0|-1|
-#o:341|Bed2|Makes it night or day time |14|0|-1|-1|0|0|1|0|-1|
+#o:340|Bed1|Makes it night or day time |17|0|-1|-1|0|0|0|0|-1|
+#o:341|Bed2|Makes it night or day time |14|0|-1|-1|0|0|0|0|-1|
 #o:350|Bread_Crumbs|might be appreciated by someone when used|125|1|-1|-1|0|0|1|0|1|
 #o:399|Key1|opens the Alcove from the A_Corridor(127)|-1|1|-1|505|0|0|1|0|1|               
 #o:385|Key2|opens the Library from Corridor2(126)|-1|1|-1|524|0|0|1|0|1| 
