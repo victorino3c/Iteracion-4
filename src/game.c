@@ -2408,6 +2408,18 @@ STATUS game_update_object(Game *game)
     enemy_set_health(e2, -1);
     enemy_set_location(e2, -1);
   }
+  
+  if (object_get_durability(game_get_object(game, 392)) <= 0)
+  {
+    inventory_remove_object(player_get_inventory(game_get_player(game, 21)), 392);
+    obj_set_location(game_get_object(game, 392), NO_ID);
+  }
+
+  if (object_get_durability(game_get_object(game, 393)) <= 0)
+  {
+    inventory_remove_object(player_get_inventory(game_get_player(game, 21)), 393);
+    obj_set_location(game_get_object(game, 393), NO_ID);
+  }
 
   return OK;
 }
