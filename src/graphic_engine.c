@@ -789,17 +789,32 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       }
     }
     
-    sprintf(str, "  ");
-    screen_area_puts(ge->descript, str);
+  if (game_get_time(game) == DAY)
+  {
+    sprintf(str, "  Time: DAY");
+  } 
+  else
+  {
+    sprintf(str, "  Time: NIGHT");
+  }
+  screen_area_puts(ge->descript, str);
 
-    if (game_get_time(game) == DAY)
+  if (player_get_health(game_get_player(game, 21)) <= 0)
+  {
+    screen_area_clear(ge->descript);
+    screen_area_clear(ge->map);
+    for (i = 0; i < 12; i++)
     {
-      sprintf(str, "  Time: DAY");
-    } 
-    else
-    {
-      sprintf(str, "  Time: NIGHT");
+      sprintf(str, "             ");
+      screen_area_puts(ge->map, str);
     }
+    sprintf(str, "                                 GAME IS OVER");
+    screen_area_puts(ge->map, str);
+    sprintf(str, "                           Press e to exit the game");
+    screen_area_puts(ge->map, str);
+  }
+    
+    sprintf(str, "  ");
     screen_area_puts(ge->descript, str);
   }
 
