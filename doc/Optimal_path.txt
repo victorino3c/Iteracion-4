@@ -14,15 +14,16 @@ before using this guide.
 We first need to inspect space (keep info in mind, speacially
 the hungry dude)
 
-Take sticks
+Take torch1
 
-Lit sticks up with fire (on the cell), torches were made.
+Lit torch1 up with fire (on the cell).
 
 Move then once to the south.
 
 Then inspect the dark room, in which we are now,
-to notice something strange, like a glowing locked door 
-which can only be seen in the dark. We need the info for much later.
+to notice something strange, at its right. We need the info for much later.
+
+Take the sword1 and apple3 there 
 
 Move south again
 
@@ -30,28 +31,18 @@ Inspect space to find the ladder and a sword.
 
 Move East
 
-Inspect the Dining_Room to notice a glowing key, but out of reach. 
-Keep that in mind.
-
-Lit up the dark room by using one torch
-
 Take the candle and the Bread_Crumbs
 
-Take the torch back, that room is better off dark
-(Unreachable key can be seen this way)
+turn off Torch1
+
+Inspect the Dining_Room to notice a key, but out of reach. 
+Keep that in mind.
 
 Move West
 
 Take the ladder
 
-Move north (dark room)
-
-Lit up the dark room by using one torch
-
-Take sword and apple
-
-Take the torch back, that room is better off dark
-(Hidden door can be seen this way)
+Move north 
 
 Move north (to the cell)
 
@@ -59,17 +50,21 @@ Drop the ladder to gain access to the attic (ladder cannot be moved again)
 
 Move up (to the attic)
 
-Take both apples and the elixir
+Take both apples 
 
 Move East
 
 Defeat the guard, attack any times needed.
 
-Use key to unlock that same door (key is deleted once used)
+Take Key1
+
+open door1 with key1
 
 Move East
 
-Take Treasure_key
+Take Treasure_key 
+
+Take elixirs
 
 Move West twice
 
@@ -79,8 +74,6 @@ Use Bread_Crumbs to feed your cellmate
 inspect space, he will now tell
 us something that leads to thinking that the unreachable
 key in the Dining_Room will open the hidden door (Corridor1).
-
-Lit up the candle
 
 Move south twice
 
@@ -125,6 +118,8 @@ Move East twice(Bedroom again)
 
 Recover health, use both elixirs
 
+Take elixirs there
+
 Venture into the dungeon by moving down(stairs).
 
 Defeat the assassin, just attack and pray as many times as needed 
@@ -155,19 +150,20 @@ Move West, then North (Corridor1)
 
 Use the Dawn_Key 
 
-Move west to enter the Secret_Chamber
+Move east to enter the Secret_Chamber
 
-Inspect space then inspect each object carefully for 
+LOOK at the dialogue 
+
+Inspect space for 
 once you choose either, the other will desapear
 
-Choose Sun_Armor, it is more reliable
+Take Moon_Armor, it is more reliable
 
 Move East
 
 Move south (Hall)
 
 Use the Dusk_Key to open the door that leads to the Throne_Room
-
 
 Move south to enter the final room 
 
@@ -186,28 +182,4 @@ Defeat the Dusk_King by attacking any times you need.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Written by: Atonio Van-Oers Luis
