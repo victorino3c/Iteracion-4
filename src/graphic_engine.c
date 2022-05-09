@@ -793,11 +793,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     screen_area_puts(ge->descript, str);
     for (i = 0; i < MAX_ENEMYS; i++) {
       if (en_loc[i] == id_act) {
-        screen_area_puts(ge->descript, str);
-        /*
-        sprintf(str, "  Enemy location:%d", (int)en_loc[i]);
-        screen_area_puts(ge->descript, str);
-        */
         sprintf(str, "    Enemy name:%s", en_name[i]);
         screen_area_puts(ge->descript, str);
         sprintf(str, "    Enemy health:%d", (int)en_health[i]);
