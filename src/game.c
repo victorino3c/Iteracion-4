@@ -2154,7 +2154,7 @@ STATUS game_event_daynight(Game *game){
 STATUS game_event_spawn(Game *game){
 
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY || game->day_time != MOVE){
+  if(game->day_time == DAY || game->last_cmd != MOVE){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
