@@ -2025,7 +2025,6 @@ STATUS game_command_use(Game *game, char *arg)
   st = ERROR;
   return st;  
 }
-
 /**
  * @brief It executes MOVE event
  * 
@@ -2036,59 +2035,31 @@ STATUS game_command_use(Game *game, char *arg)
  */
 STATUS game_event_move(Game *game){
   
-  int rand_num;
-  Object *apple = game_get_object_byName(game, "_Apple1");
-  Object *elixir = game_get_object_byName(game, "_Elixir1");
-  Id apple_loc = game_get_object_location(game, obj_get_id(apple));
-  Id elixir_loc = game_get_object_location(game, obj_get_id(elixir));
+  Object *elixir;
 
-  if(apple_loc == -1){
-    apple = game_get_object_byName(game, "_Apple2");
-    apple_loc = game_get_object_location(game, obj_get_id(apple));
-    if(apple_loc == -1){
-      apple = game_get_object_byName(game, "Apple3");
-      apple_loc = game_get_object_location(game, obj_get_id(apple));      
-    }
-  }
-
-  if(elixir_loc == -1){
-    elixir = game_get_object_byName(game, "_Elixir2");
-    elixir_loc = game_get_object_location(game, obj_get_id(elixir));
-  }
-
-  /*Events only Occurs at Night*/
-  if(game->day_time == DAY|| game->last_cmd == ATTACK){
+  if(game->day_time == DAY || game->last_cmd != MOVE){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
-  /*Generates a random number between 0-1
-  This is for moving Elixir or Apple*/
-  rand_num = rand() % 2;
+  elixir = game_get_object_byName(game, "Elixir4");
 
-  /*If elixir is not in the map, cant be moved*/
-  if(apple_loc == -1 && elixir_loc == -1){
+  if(obj_get_location(elixir) != 14){
+    elixir = game_get_object_byName(game, "Elixir6");
+  }
+
+  if(obj_get_location(elixir) != 17){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
 
-  if(apple_loc != -1 || rand_num == 0){
-    if (obj_set_location(apple, player_get_location(game->player[0])) == ERROR){
-      return ERROR;
-    }
+  if (obj_set_location(elixir, game_get_player_location(game, MAX_PLAYERS - 1)) == OK){
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
     return OK;
   }
 
-  if(elixir_loc != -1 || rand_num == 1){
-    if (obj_set_location(elixir, player_get_location(game->player[0])) == ERROR){
-      return ERROR;
-    }
-    dialogue_set_event(game->dialogue, DE_MOVEOBJ);
-    return OK;
-  }
-
-  return game_event_move(game);
+  dialogue_set_event(game->dialogue, DE_NOTHING);
+  return ERROR;
 }
 
 /**
@@ -2102,7 +2073,7 @@ STATUS game_event_move(Game *game){
 STATUS game_event_trap(Game *game){
 
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY|| game->last_cmd == ATTACK){
+  if(game->day_time == DAY|| game->last_cmd != MOVE){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
@@ -2183,7 +2154,7 @@ STATUS game_event_daynight(Game *game){
 STATUS game_event_spawn(Game *game){
 
   /*Events only Occurs at Night*/
-  if(game->day_time == DAY){
+  if(game->day_time == DAY || game->day_time != MOVE){
     dialogue_set_event(game->dialogue, DE_NOTHING);
     return ERROR;
   }
