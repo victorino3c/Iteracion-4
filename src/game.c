@@ -2036,6 +2036,9 @@ STATUS game_command_use(Game *game, char *arg)
 STATUS game_event_move(Game *game){
   
   Object *elixir;
+  Id id, current_id, elixir_loc;
+  Space *current_location, *elixir_space;
+
 
   if(game->day_time == DAY || game->last_cmd != MOVE){
     dialogue_set_event(game->dialogue, DE_NOTHING);
@@ -2044,22 +2047,38 @@ STATUS game_event_move(Game *game){
 
   elixir = game_get_object_byName(game, "Elixir4");
 
-  if(obj_get_location(elixir) != 14){
+  if(elixir == NULL || obj_get_location(elixir) == -1){
     elixir = game_get_object_byName(game, "Elixir6");
+    if(elixir == NULL || obj_get_location(elixir) == -1){
+      dialogue_set_event(game->dialogue, DE_NOTHING);
+      return ERROR;
+    }
   }
 
-  if(obj_get_location(elixir) != 17){
+  current_id = player_get_location(game->player[MAX_PLAYERS - 1]);
+  current_location = game_get_space(game, current_id);
+  elixir_loc = obj_get_location(elixir);
+  elixir_space = game_get_space(game, elixir_loc);
+
+  id = obj_get_id(elixir);
+
+  if(space_del_objectid(elixir_space, id) == ERROR){
     dialogue_set_event(game->dialogue, DE_NOTHING);
-    return ERROR;
+    return ERROR; 
   }
 
-  if (obj_set_location(elixir, game_get_player_location(game, MAX_PLAYERS - 1)) == OK){
+  if(space_add_objectid(current_location, id)==ERROR){
+    dialogue_set_event(game->dialogue, DE_NOTHING);
+    return ERROR; 
+  }
+
+  if(obj_set_location(elixir, current_id)){
     dialogue_set_event(game->dialogue, DE_MOVEOBJ);
-    return OK;
+    return ERROR; 
   }
 
-  dialogue_set_event(game->dialogue, DE_NOTHING);
-  return ERROR;
+  dialogue_set_event(game->dialogue, DE_MOVEOBJ);
+  return OK; 
 }
 
 /**
@@ -2095,7 +2114,7 @@ STATUS game_event_trap(Game *game){
  */
 STATUS game_event_slime(Game *game){
   
-   Enemy *slime = game_get_enemy_byName(game, "Rat1");
+  Enemy *slime = game_get_enemy_byName(game, "Rat1");
   Id slime_loc = enemy_get_location(slime);
   
     if(slime == NULL){
