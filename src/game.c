@@ -2009,8 +2009,9 @@ STATUS game_command_use(Game *game, char *arg)
   {
     if (player_get_location(player) == 11) 
     {
-      st = inventory_remove_object(player_get_inventory(player), id);
       dialogue_set_command(game->dialogue, DC_BREAD, NULL, NULL, NULL);
+      st = inventory_remove_object(player_get_inventory(player), id);
+      return st;
     }
     else 
     {
