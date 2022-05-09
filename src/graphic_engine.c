@@ -360,19 +360,36 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
         gdesc_right = space_get_gdesc(game_get_space(game, id_right));
+        enemy = NULL;
+        enemy = game_get_enemy_in_space(game, id_act);
+        if (enemy)
+        {
+          enemy_gdesc = enemy_get_gdesc(enemy);
+        }
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
           if (id_right == 16 && game_get_time(game) == DAY)
           {
             strcpy(gdesc_right[i], "¬¬¬¬ ");
           }
-          if (i != 3) {
+          if (i < ENEMY_GDESC_Y && enemy)
+          {
+            sprintf(str, "  | %s %s|   |    %s    |", enemy_gdesc[i], gdesc[i], gdesc_right[i]);
+          }
+          else if (enemy && i != 3)
+          {
+            sprintf(str, "  |        %s|   |    %s    |", gdesc[i], gdesc_right[i]);
+          }
+          else if (enemy)
+          {
+            sprintf(str, "  |        %s| %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
+          }
+          else if (i != 3) {
             sprintf(str, "  |    %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
-            screen_area_puts(ge->map, str);
           } else {
             sprintf(str, "  |    %s    | %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
-            screen_area_puts(ge->map, str);
           }
+          screen_area_puts(ge->map, str);
         }
         
         sprintf(str, "  |                 |   |                 |");
@@ -571,9 +588,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
           {
             sprintf(str, "  |    %s    |   | %s %s|   |    %s    |", gdesc_left[i], enemy_gdesc[i], gdesc[i], gdesc_right[i]);
           }
-          else if (enemy)
+          else if (enemy && i != 3)
           {
             sprintf(str, "  |    %s    |   |        %s|   |    %s    |", gdesc_left[i], gdesc[i], gdesc_right[i]);
+          }
+          else if (enemy)
+          {
+            sprintf(str,  "|    %s    | %c |        %s| %c |    %s    |", gdesc_left[i], link_left, gdesc[i], link_right, gdesc_right[i]);
           }
           else if (i != 3) {
             sprintf(str, "  |    %s    |   |    %s    |   |    %s    |", gdesc_left[i], gdesc[i], gdesc_right[i]);
