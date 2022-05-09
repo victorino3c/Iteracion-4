@@ -217,6 +217,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   
     if (id_act != NO_ID)
     {
+      if (id_up == NO_ID)
+      {
+        for (i = 0; i < 6; i++)
+        {
+          sprintf(str, " ");
+          screen_area_puts(ge->map, str);
+        }
+      }
       
       for(i = 0; i < set_get_nids(object_set); i++)
       {
@@ -476,11 +484,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       /* Checks that there are both spaces to the left and right */    
       if (id_left != NO_ID && id_right != NO_ID)
       {
+        /*
         for (i = 0; i < 4; i++) 
         {
         sprintf(str, " ");
         screen_area_puts(ge->map, str);
         }
+        */
 
         for(i = 0; i < set_get_nids(object_set); i++)
         {
@@ -585,13 +595,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
       /* Checks that there is no space to the right but there is one to the left */    
       if (id_right == NO_ID && id_left != NO_ID && id_act==14)
-      {  
+      {
+        /*
         for (i = 0; i < 4; i++) 
         {
         sprintf(str, " ");
         screen_area_puts(ge->map, str);
         }
-
+        */
         for(i = 0; i < set_get_nids(object_set); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set, i);
