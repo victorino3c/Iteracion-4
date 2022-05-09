@@ -182,7 +182,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, char *flog_name, char *f
     }
   }
 
-  for (; (command != EXIT) && !game_is_over(game);)
+  for (; (command != EXIT) /*&& !game_is_over(game)*/;)
   {
     graphic_engine_paint_game(gengine, game, st);
 
