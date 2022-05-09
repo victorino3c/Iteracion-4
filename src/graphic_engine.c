@@ -107,13 +107,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
   T_Command last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i;
-  char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL;
+  char **gdesc = NULL, **gdesc_right = NULL, **gdesc_left = NULL, aux_gdesc[10][10];
   char **enemy_gdesc = NULL;
   char *description;
   char *en_name[MAX_ENEMYS];
   char *inspection, *dialogue, *events;
   char link_up = '\0', link_down = '\0', link_right = '\0', link_left = '\0';
-  char *space_name, *space_name2, *space_name3, blank20[] = "                   ";
+  char *space_name, *space_name2, *space_name3, aux_name1[20] = "", aux_name2[20] = "", blank20[] = "                   ";
   Set *object_set = NULL, *object_set_r = NULL, *object_set_l = NULL;
   Enemy *enemy = NULL;
 
@@ -155,10 +155,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     /* Space to the north of the current space */
     if (id_up != NO_ID)
     {
+      obj = ' ';
       for(i = 0; i < set_get_nids(object_set); i++)
       {
         aux_obj_id = set_get_ids_by_number(object_set, i);
-
+        
         if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
           obj = ' ';
@@ -170,16 +171,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
 
       space_name = (char *)space_get_name(game_get_space(game, id_up));
       strncat(space_name, blank20, 15 - strlen(space_name));
-      sprintf(str, "  | %s |", space_name);
+      sprintf(str, "  %.19s   | %s |", blank20, space_name);
       screen_area_puts(ge->map, str);
 
-      sprintf(str, "  |                 |");
+      sprintf(str, "  %.19s   |                 |", blank20);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |        %c        |", obj);
+      sprintf(str, "  %.19s   |        %c        |", blank20, obj);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |                 |");
+      sprintf(str, "  %.19s   |                 |", blank20);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------------+");
+      sprintf(str, "  %.19s   +-----------------+", blank20);
       screen_area_puts(ge->map, str);
       
       if (game_get_connection_status(game, id_act, N) == OPEN_L)
@@ -209,7 +210,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_left = ' ';
       }
 
-      sprintf(str, "          %c", link_up);
+      sprintf(str, "  %.19s            %c", blank20, link_up);
       screen_area_puts(ge->map, str);
     }
 
@@ -225,6 +226,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
       }
       
+      obj = ' ';
       for(i = 0; i < set_get_nids(object_set); i++)
       {
         aux_obj_id = set_get_ids_by_number(object_set, i);
@@ -242,18 +244,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
        /* Checks that there are no other spaces to the left or right */    
       if(id_left==NO_ID && id_right==NO_ID)  
       {
-        sprintf(str, "  +-----------------+");
+        sprintf(str, "  %.19s   +-----------------+", blank20);
         screen_area_puts(ge->map, str);
 
         space_name = (char *)space_get_name(game_get_space(game, id_act));
         strncat(space_name, blank20, 15 - strlen(space_name));
-        sprintf(str, "  | %s |", space_name);
+        sprintf(str, "  %.19s   | %s |", blank20, space_name);
         screen_area_puts(ge->map, str);
 
-        sprintf(str, "  |           gpp0^ | ");
+        sprintf(str, "  %.19s   |           gpp0^ | ", blank20);
         screen_area_puts(ge->map, str);
 
-        sprintf(str, "  |                 |");
+        sprintf(str, "  %.19s   |                 |", blank20);
         screen_area_puts(ge->map, str);
 
         gdesc = space_get_gdesc(game_get_space(game, id_act));
@@ -267,33 +269,34 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         {
           if (i < ENEMY_GDESC_Y && enemy)
           {
-            sprintf(str, "  | %s %s|", enemy_gdesc[i], gdesc[i]);
+            sprintf(str, "  %.19s   | %s %s|", blank20, enemy_gdesc[i], gdesc[i]);
           }
           else if (enemy)
           {
-            sprintf(str, "  |        %s|", gdesc[i]);
+            sprintf(str, "  %.19s   |        %s|", blank20, gdesc[i]);
           }
           else
           {
-            sprintf(str, "  |    %s    |", gdesc[i]);
+            sprintf(str, "  %.19s   |    %s    |", blank20, gdesc[i]);
           }
           
           screen_area_puts(ge->map, str);
         }
         
-        sprintf(str, "  |                 |");
+        sprintf(str, "  %.19s   |                 |", blank20);
         screen_area_puts(ge->map, str);
         
-        sprintf(str, "  |        %c        |", obj);
+        sprintf(str, "  %.19s   |        %c        |", blank20, obj);
         screen_area_puts(ge->map, str);
 
-        sprintf(str, "  +-----------------+");
+        sprintf(str, "  %.19s   +-----------------+", blank20);
         screen_area_puts(ge->map, str);
       } 
       
       /* Checks that there is no space to the left but there is one to the right */    
       if (id_right != NO_ID && id_left == NO_ID)
       {  
+        obj = ' ';
         for(i = 0; i < set_get_nids(object_set); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set, i);
@@ -307,6 +310,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
           }
         }
 
+        obj_r = ' ';
         for(i = 0; i < set_get_nids(object_set_r); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set_r, i);
@@ -338,24 +342,26 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
           link_left = ' ';
         }
 
-        sprintf(str, "  +-----------------+   +-----------------+");
+        sprintf(str, "  %.19s   +-----------------+   +-----------------+", blank20);
         screen_area_puts(ge->map, str);
 
         space_name = (char *)space_get_name(game_get_space(game, id_act));
-        strncat(space_name, blank20, 15 - strlen(space_name));
+        strcpy(aux_name1, space_name);
+        strncat(aux_name1, blank20, 15 - strlen(space_name));
         space_name2 = (char *)space_get_name(game_get_space(game, id_right));
-        strncat(space_name2, blank20, 15 - strlen(space_name2));
+        strcpy(aux_name2, space_name2);
+        strncat(aux_name2, blank20, 15 - strlen(space_name2));
         if (id_right == 16 && game_get_time(game) == DAY)
         {
-          strcpy(space_name2, "¬¬¬¬¬¬¬ ");
+          strcpy(aux_name2, "¬¬¬¬¬¬¬ ");
         }
-        sprintf(str, "  | %s |   | %s |", space_name, space_name2);
+        sprintf(str, "  %.19s   | %s |   | %s |", blank20, space_name, aux_name2);
         screen_area_puts(ge->map, str);
 
-        sprintf(str, "  |           gpp0^ |   |                 |");
+        sprintf(str, "  %.19s   |           gpp0^ |   |                 |", blank20);
         screen_area_puts(ge->map, str);
         
-        sprintf(str, "  |                 |   |                 |");
+        sprintf(str, "  %.19s   |                 |   |                 |", blank20);
         screen_area_puts(ge->map, str);
 
         gdesc = space_get_gdesc(game_get_space(game, id_act)); 
@@ -368,46 +374,50 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         }
         for (i = 0; i < TAM_GDESC_Y; i++)
         {
+          strcpy(aux_gdesc[i], gdesc_right[i]);
           if (id_right == 16 && game_get_time(game) == DAY)
           {
-            strcpy(gdesc_right[i], "¬¬¬¬ ");
+            strcpy(aux_gdesc[i], "¬¬¬¬ ");
           }
           if (i < ENEMY_GDESC_Y && enemy)
           {
-            sprintf(str, "  | %s %s|   |    %s    |", enemy_gdesc[i], gdesc[i], gdesc_right[i]);
+            sprintf(str, "  %.19s   | %s %s|   |    %s    |", blank20, enemy_gdesc[i], gdesc[i], aux_gdesc[i]);
           }
           else if (enemy && i != 3)
           {
-            sprintf(str, "  |        %s|   |    %s    |", gdesc[i], gdesc_right[i]);
+            sprintf(str, "  %.19s   |        %s|   |    %s    |", blank20, gdesc[i], aux_gdesc[i]);
           }
           else if (enemy)
           {
-            sprintf(str, "  |        %s| %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
+            sprintf(str, "  %.19s   |        %s| %c |    %s    |", blank20, gdesc[i], link_right, aux_gdesc[i]);
           }
           else if (i != 3) {
-            sprintf(str, "  |    %s    |   |    %s    |", gdesc[i], gdesc_right[i]);
+            sprintf(str, "  %.19s   |    %s    |   |    %s    |", blank20, gdesc[i], aux_gdesc[i]);
           } else {
-            sprintf(str, "  |    %s    | %c |    %s    |", gdesc[i], link_right, gdesc_right[i]);
+            sprintf(str, "  %.19s   |    %s    | %c |    %s    |", blank20, gdesc[i], link_right, aux_gdesc[i]);
           }
           screen_area_puts(ge->map, str);
         }
         
-        sprintf(str, "  |                 |   |                 |");
+        sprintf(str, "  %.19s   |                 |   |                 |", blank20);
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |                 |   |                 |");
+        sprintf(str, "  %.19s   |                 |   |                 |", blank20);
         screen_area_puts(ge->map, str);
-        sprintf(str, "  |        %c        |   |        %c        |", obj, obj_r);
+        sprintf(str, "  %.19s   |        %c        |   |        %c        |", blank20, obj, obj_r);
         screen_area_puts(ge->map, str);
-        sprintf(str, "  +-----------------+   +-----------------+");
+        sprintf(str, "  %.19s   +-----------------+   +-----------------+", blank20);
         screen_area_puts(ge->map, str);  
       }
       
+
+
       if (id_left != NO_ID && id_right == NO_ID)
-      {  
+      {
+        obj = ' ';
         for(i = 0; i < set_get_nids(object_set); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set, i);
-
+          
           if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
           {
             obj = ' ';
@@ -416,11 +426,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
             i = set_get_nids(object_set) + 1;
           }
         }
-
+        obj_l = ' ';
         for(i = 0; i < set_get_nids(object_set_r); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set_r, i);
-
+          
           if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
           {
             obj_l = ' ';
@@ -455,10 +465,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         strncat(space_name, blank20, 15 - strlen(space_name));
         space_name2 = (char *)space_get_name(game_get_space(game, id_left));
         strncat(space_name2, blank20, 15 - strlen(space_name2));
+        /*
         if (id_right == 16 && game_get_time(game) == DAY)
         {
           strcpy(space_name2, "¬¬¬¬¬¬¬ ");
         }
+        */
         sprintf(str, "  | %s |   | %s |", space_name2, space_name);
         screen_area_puts(ge->map, str);
 
@@ -498,10 +510,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
       /* Checks that there are both spaces to the left and right */    
       if (id_left != NO_ID && id_right != NO_ID)
       {
+        obj = ' ';
         for(i = 0; i < set_get_nids(object_set); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set, i);
-
+          
           if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
           {
             obj = ' ';
@@ -510,11 +523,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
             i = set_get_nids(object_set) + 1;
           }
         }
-
+        obj_r = ' ';
         for(i = 0; i < set_get_nids(object_set_r); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set_r, i);
-
+          
           if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_right))) ==  FALSE) 
           {
             obj_r = ' ';
@@ -524,11 +537,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
           }
         }
 
-        obj = ' ';
+        obj_l = ' ';
         for(i = 0; i < set_get_nids(object_set_l); i++)
         {
           aux_obj_id = set_get_ids_by_number(object_set_l, i);
-
+          
           if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_left))) ==  FALSE) 
           {
             obj_l = ' ';
@@ -594,7 +607,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
           }
           else if (enemy)
           {
-            sprintf(str,  "|    %s    | %c |        %s| %c |    %s    |", gdesc_left[i], link_left, gdesc[i], link_right, gdesc_right[i]);
+            sprintf(str,  "  |    %s    | %c |        %s| %c |    %s    |", gdesc_left[i], link_left, gdesc[i], link_right, gdesc_right[i]);
           }
           else if (i != 3) {
             sprintf(str, "  |    %s    |   |    %s    |   |    %s    |", gdesc_left[i], gdesc[i], gdesc_right[i]);
