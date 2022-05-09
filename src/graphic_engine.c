@@ -819,8 +819,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     sprintf(str, "  Time: NIGHT");
   }
   screen_area_puts(ge->descript, str);
-
-  if (player_get_health(game_get_player(game, 21)) <= 0)
+    
+  if (player_get_health(game_get_player(game, 21)) <= 0 || enemy_get_health(game_get_enemy(game, 45)) <= 0)
   {
     screen_area_clear(ge->descript);
     screen_area_clear(ge->map);
