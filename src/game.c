@@ -2422,7 +2422,7 @@ STATUS game_update_object(Game *game)
     return ERROR;
   }
 
-  if (enemy_get_health(e1) <= 0 && space_has_object(game_get_space(game, 127), obj_get_id(key1)) == FALSE)
+  if (enemy_get_health(e1) <= 0 && space_has_object(game_get_space(game, 127), obj_get_id(key1)) == FALSE && enemy_get_location(e1) != NO_ID)
   {
     obj_set_location(key1, 127);
     space_add_objectid(game_get_space(game, 127), obj_get_id(key1));
@@ -2430,7 +2430,7 @@ STATUS game_update_object(Game *game)
     enemy_set_location(e1, -1);
   }
 
-    if (enemy_get_health(e2) <= 0 && space_has_object(game_get_space(game, 126), obj_get_id(key2)) == FALSE)
+    if (enemy_get_health(e2) <= 0 && space_has_object(game_get_space(game, 126), obj_get_id(key2)) == FALSE && enemy_get_location(e2) != NO_ID)
   {
     obj_set_location(key2, 126);
     space_add_objectid(game_get_space(game, 126), obj_get_id(key2));
