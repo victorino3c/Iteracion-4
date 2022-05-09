@@ -629,12 +629,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
     }
 
     /* Space to the south of the current space */
-    if (id_down != NO_ID && id_act != 14)
+    if (id_down != NO_ID)
     {
+      obj = ' ';
       for(i = 0; i < set_get_nids(object_set); i++)
       {
         aux_obj_id = set_get_ids_by_number(object_set, i);
-
         if (obj_is_visible(game_get_object(game, aux_obj_id), space_get_light_status(game_get_space(game, id_act))) ==  FALSE) 
         {
           obj = ' ';
@@ -653,23 +653,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, int st)
         link_down = ' ';
       }
 
-      sprintf(str, "           %c", link_down);
+      sprintf(str, "  %.19s            %c", blank20, link_down);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------------+");
+      sprintf(str, "  %.19s   +-----------------+", blank20);
       screen_area_puts(ge->map, str);
 
       space_name = (char *)space_get_name(game_get_space(game, id_down));
       strncat(space_name, blank20, 15 - strlen(space_name));
-      sprintf(str, "  | %s |", space_name);
+      sprintf(str, "  %.19s   | %s |", blank20, space_name);
       screen_area_puts(ge->map, str);
 
-      sprintf(str, "  |                 |");
+      sprintf(str, "  %.19s   |                 |", blank20);
       screen_area_puts(ge->map, str);
 
-      sprintf(str, "  |        %c        |", obj);
+      sprintf(str, "  %.19s   |        %c        |", blank20, obj);
       screen_area_puts(ge->map, str);
 
-      sprintf(str, "  |                 |");
+      sprintf(str, "  %.19s   |                 |", blank20);
       screen_area_puts(ge->map, str);
     }
   }
