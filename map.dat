@@ -63,9 +63,9 @@
 #l:511|Corridor1_n|121|11|0|1|
 #l:512|Corridor1_s|121|122|1|1|
 #l:513|Hall_n|122|121|0|1|
-#l:514|Hall_s|122|123|1|0|
+#l:514|Throne_Room|122|123|1|0|
 #l:515|Throne_Room_n|123|122|0|1|
-#l:516|Corridor1_e|121|16|2|0|
+#l:516|Passage|121|16|2|0|
 #l:517|Secret_Chamber_w|16|121|3|1|
 #l:518|D_Treasury_s|124|15|1|1|
 #l:519|Treasure|15|124|0|0|
